@@ -15,7 +15,8 @@
         }
     ],
     "require": {
-        "tipoff/support": "^1.0"
+        "tipoff/support": "^1.0",
+        "drewroberts/media": "^3.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",

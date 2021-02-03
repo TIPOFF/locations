@@ -393,7 +393,6 @@ class Location extends Model
     /**
      * Find existing or virtual slot.
      *
-     * @param string|Location|int $location
      * @param string $slotNumber
      * @return Slot|null
      */

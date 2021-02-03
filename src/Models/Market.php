@@ -9,6 +9,7 @@ class Market extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
     protected $casts = [
         'entered_at' => 'datetime',
         'closed_at' => 'datetime',
@@ -57,42 +58,42 @@ class Market extends Model
 
     public function competitors()
     {
-        return $this->hasMany(Competitor::class);
+        return $this->hasMany(config('locations.model_class.competitor'));
     }
 
     public function rooms()
     {
-        return $this->hasManyThrough(Room::class, Location::class);
+        return $this->hasManyThrough(config('locations.model_class.room'), Location::class);
     }
 
     public function image()
     {
-        return $this->belongsTo(\DrewRoberts\Media\Models\Image::class);
+        return $this->belongsTo(config('locations.model_class.image'));
     }
 
     public function ogimage()
     {
-        return $this->belongsTo(\DrewRoberts\Media\Models\Image::class, 'ogimage_id');
+        return $this->belongsTo(config('locations.model_class.image'), 'ogimage_id');
     }
 
     public function map()
     {
-        return $this->belongsTo(\DrewRoberts\Media\Models\Image::class, 'map_image_id');
+        return $this->belongsTo(config('locations.model_class.image'), 'map_image_id');
     }
 
     public function video()
     {
-        return $this->belongsTo(\DrewRoberts\Media\Models\Video::class);
+        return $this->belongsTo(config('locations.model_class.video'));
     }
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'creator_id');
+        return $this->belongsTo(config('locations.model_class.user'), 'creator_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(User::class, 'updater_id');
+        return $this->belongsTo(config('locations.model_class.user'), 'updater_id');
     }
 
     /**
@@ -177,7 +178,7 @@ class Market extends Model
     {
         $locations = $this->locations;
 
-        $rooms = Room::whereIn('location_id', $locations->pluck('id'))->whereNull('closed_at')->get();
+        $rooms = config('locations.model_class.room')::whereIn('location_id', $locations->pluck('id'))->whereNull('closed_at')->get();
 
         return $this->title.' has '.$rooms->count().' different escape rooms and offers private escape games for groups & parties. Book your escape room today!';
     }
@@ -187,7 +188,7 @@ class Market extends Model
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = Room::whereIn('location_id', $locations->pluck('id'))
+        $rooms = config('locations.model_class.room')::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -195,7 +196,7 @@ class Market extends Model
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = Theme::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = config('locations.model_class.theme')::whereIn('id', $rooms->pluck('theme_id'))
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {
                 return $roomPriority[$theme->id];
@@ -213,7 +214,7 @@ class Market extends Model
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = Room::whereIn('location_id', $locations->pluck('id'))
+        $rooms = config('locations.model_class.room')::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -221,7 +222,7 @@ class Market extends Model
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = Theme::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = config('locations.model_class.theme')::whereIn('id', $rooms->pluck('theme_id'))
             ->where('scavenger_level', '<', 4)
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {
@@ -240,7 +241,7 @@ class Market extends Model
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = Room::whereIn('location_id', $locations->pluck('id'))
+        $rooms = config('locations.model_class.room')::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -248,7 +249,7 @@ class Market extends Model
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = Theme::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = config('locations.model_class.theme')::whereIn('id', $rooms->pluck('theme_id'))
             ->where('scavenger_level', '>=', 4)
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {

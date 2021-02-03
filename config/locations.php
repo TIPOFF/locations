@@ -12,8 +12,6 @@ return [
 
         'fee' => \App\Models\Fee::class,
 
-        'image' => \App\Models\Image::class,
-
         'order' => \App\Models\Order::class,
 
         'review' => \App\Models\Review::class,
@@ -33,6 +31,12 @@ return [
         'slot' => \App\Models\Slot::class,
 
         'booking' => \App\Models\Booking::class,
+
+        'theme' => \App\Models\Theme::class,
+
+        'image' => \DrewRoberts\Media\Models\Image::class, // https://github.com/drewroberts/media
+
+        'video' => \DrewRoberts\Media\Models\Video::class, // https://github.com/drewroberts/media
 
     ],
 
