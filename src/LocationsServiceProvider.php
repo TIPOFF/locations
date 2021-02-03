@@ -22,7 +22,7 @@ class LocationsServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasMigrations([
                 '2020_02_17_170000_create_markets_table',
-                '2020_02_17_180000_create_locations_table'
+                '2020_02_17_180000_create_locations_table',
             ])
             ->hasCommand(LocationsCommand::class);
     }
