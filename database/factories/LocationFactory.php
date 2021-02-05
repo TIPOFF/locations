@@ -30,10 +30,10 @@ class LocationFactory extends Factory
             'timezone'              => $this->faker->timezone,
             'market_id'             => randomOrCreate(Market::class),
             'corporate'             => $this->faker->boolean,
-            'booking_tax_id'        => randomOrCreate(config('locations.model_class.tax')),
-            'product_tax_id'        => randomOrCreate(config('locations.model_class.tax')),
-            'creator_id'            => randomOrCreate(config('locations.model_class.user')),
-            'updater_id'            => randomOrCreate(config('locations.model_class.user')),
+            'booking_tax_id'        => randomOrCreate(config('tipoff.model_class.tax')),
+            'product_tax_id'        => randomOrCreate(config('tipoff.model_class.tax')),
+            'creator_id'            => randomOrCreate(config('tipoff.model_class.user')),
+            'updater_id'            => randomOrCreate(config('tipoff.model_class.user')),
             'stripe_secret'         => rand(100000, 900000),
         ];
     }

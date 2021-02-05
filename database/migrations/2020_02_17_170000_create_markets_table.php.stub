@@ -9,13 +9,13 @@ class CreateMarketsTable extends Migration
     public function up()
     {
         Schema::create('markets', function (Blueprint $table) {
-            $userModel = config('locations.model_class.user');
+            $userModel = config('tipoff.model_class.user');
             $userTable = (new $userModel)->getTable();
 
-            $imageModel = config('locations.model_class.image');
+            $imageModel = config('tipoff.model_class.image');
             $imageTable = (new $imageModel)->getTable();
 
-            $videoModel = config('locations.model_class.video');
+            $videoModel = config('tipoff.model_class.video');
             $videoTable = (new $videoModel)->getTable();
 
             $table->id();

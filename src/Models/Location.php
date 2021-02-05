@@ -72,97 +72,97 @@ class Location extends Model
 
     public function manager()
     {
-        return $this->belongsTo(config('locations.model_class.user'), 'manager_id');
+        return $this->belongsTo(config('tipoff.model_class.user'), 'manager_id');
     }
 
     public function contacts()
     {
-        return $this->hasMany(config('locations.model_class.contact'));
+        return $this->hasMany(config('tipoff.model_class.contact'));
     }
 
     public function bookingTax()
     {
-        return $this->belongsTo(config('locations.model_class.tax'), 'booking_tax_id');
+        return $this->belongsTo(config('tipoff.model_class.tax'), 'booking_tax_id');
     }
 
     public function productTax()
     {
-        return $this->belongsTo(config('locations.model_class.tax'), 'product_tax_id');
+        return $this->belongsTo(config('tipoff.model_class.tax'), 'product_tax_id');
     }
 
     public function bookingFee()
     {
-        return $this->belongsTo(config('locations.model_class.fee'), 'booking_fee_id');
+        return $this->belongsTo(config('tipoff.model_class.fee'), 'booking_fee_id');
     }
 
     public function productFee()
     {
-        return $this->belongsTo(config('locations.model_class.fee'), 'product_fee_id');
+        return $this->belongsTo(config('tipoff.model_class.fee'), 'product_fee_id');
     }
 
     public function teamPhoto()
     {
-        return $this->belongsTo(config('locations.model_class.image'), 'team_image_id');
+        return $this->belongsTo(config('tipoff.model_class.image'), 'team_image_id');
     }
 
     public function users()
     {
-        return $this->belongsToMany(config('locations.model_class.user'))->withTimestamps();
+        return $this->belongsToMany(config('tipoff.model_class.user'))->withTimestamps();
     }
 
     public function orders()
     {
-        return $this->hasMany(config('locations.model_class.order'));
+        return $this->hasMany(config('tipoff.model_class.order'));
     }
 
     public function reviews()
     {
-        return $this->hasMany(config('locations.model_class.review'));
+        return $this->hasMany(config('tipoff.model_class.review'));
     }
 
     public function insights()
     {
-        return $this->hasMany(config('locations.model_class.insight'));
+        return $this->hasMany(config('tipoff.model_class.insight'));
     }
 
     public function feedbacks()
     {
-        return $this->hasMany(config('locations.model_class.feedback'));
+        return $this->hasMany(config('tipoff.model_class.feedback'));
     }
 
     public function rooms()
     {
-        return $this->hasMany(config('locations.model_class.room'));
+        return $this->hasMany(config('tipoff.model_class.room'));
     }
 
     public function creator()
     {
-        return $this->belongsTo(config('locations.model_class.user'), 'creator_id');
+        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(config('locations.model_class.user'), 'updater_id');
+        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
     }
 
     public function signatures()
     {
-        return $this->hasManyThrough(config('locations.model_class.signature'), config('locations.model_class.room'));
+        return $this->hasManyThrough(config('tipoff.model_class.signature'), config('tipoff.model_class.room'));
     }
 
     public function competitor()
     {
-        return $this->hasOne(config('locations.model_class.competitor'));
+        return $this->hasOne(config('tipoff.model_class.competitor'));
     }
 
     public function snapshots()
     {
-        return $this->hasManyThrough(config('locations.model_class.snapshot'), config('locations.model_class.competitor'));
+        return $this->hasManyThrough(config('tipoff.model_class.snapshot'), config('tipoff.model_class.competitor'));
     }
 
     public function slots()
     {
-        return $this->hasManyThrough(config('locations.model_class.slot'), config('locations.model_class.room'));
+        return $this->hasManyThrough(config('tipoff.model_class.slot'), config('tipoff.model_class.room'));
     }
 
     public function getSelectorTitleAttribute()
@@ -307,7 +307,7 @@ class Location extends Model
 
     public function getBookingsYesterdayAttribute()
     {
-        return config('locations.model_class.booking')::yesterday()
+        return config('tipoff.model_class.booking')::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->count();
@@ -315,12 +315,12 @@ class Location extends Model
 
     public function getRevenueBookedYesterdayAttribute()
     {
-        return number_format((config('locations.model_class.booking')::yesterday()
+        return number_format((config('tipoff.model_class.booking')::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                config('locations.model_class.booking')::yesterday()
+                config('tipoff.model_class.booking')::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -328,7 +328,7 @@ class Location extends Model
 
     public function getBookingsLastWeekAttribute()
     {
-        return config('locations.model_class.booking')::week()
+        return config('tipoff.model_class.booking')::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->count();
@@ -336,12 +336,12 @@ class Location extends Model
 
     public function getRevenueBookedLastWeekAttribute()
     {
-        return number_format((config('locations.model_class.booking')::week()
+        return number_format((config('tipoff.model_class.booking')::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                config('locations.model_class.booking')::week()
+                config('tipoff.model_class.booking')::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -360,7 +360,7 @@ class Location extends Model
      */
     public function findBySlot($slot)
     {
-        $slotModel = config('locations.model_class.slot');
+        $slotModel = config('tipoff.model_class.slot');
 
         if ($slot instanceof $slotModel) {
             return $slot->room->location;
@@ -379,7 +379,7 @@ class Location extends Model
      */
     public function findBySlotOrFail($slot)
     {
-        $slotModel = config('locations.model_class.slot');
+        $slotModel = config('tipoff.model_class.slot');
 
         if ($slot instanceof $slotModel) {
             return $slot->room->location;
@@ -398,7 +398,7 @@ class Location extends Model
      */
     public function findOrGenerateSlot($slotNumber)
     {
-        $slot = config('locations.model_class.slot')::where('slot_number', $slotNumber)
+        $slot = config('tipoff.model_class.slot')::where('slot_number', $slotNumber)
             ->location($this)
             ->first();
 

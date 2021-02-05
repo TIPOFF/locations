@@ -10,13 +10,13 @@ class CreateLocationsTable extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $userModel = config('locations.model_class.user');
+            $userModel = config('tipoff.model_class.user');
             $userTable = (new $userModel)->getTable();
 
-            $taxModel = config('locations.model_class.tax');
+            $taxModel = config('tipoff.model_class.tax');
             $taxTable = (new $taxModel)->getTable();
 
-            $feeModel = config('locations.model_class.fee');
+            $feeModel = config('tipoff.model_class.fee');
             $feeTable = (new $feeModel)->getTable();
 
             $table->id();

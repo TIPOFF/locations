@@ -33,8 +33,8 @@ class MarketFactory extends Factory
             'rooms_content'       => $this->faker->sentences(7, true),
             'faq_content'         => $this->faker->sentences(7, true),
             'competitors_content' => $this->faker->sentences(7, true),
-            'creator_id'          => randomOrCreate(config('locations.model_class.user')),
-            'updater_id'          => randomOrCreate(config('locations.model_class.user')),
+            'creator_id'          => randomOrCreate(config('tipoff.model_class.user')),
+            'updater_id'          => randomOrCreate(config('tipoff.model_class.user')),
         ];
     }
 }
