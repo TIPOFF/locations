@@ -366,7 +366,7 @@ class Location extends Model
             return $slot->room->location;
         }
 
-        $locationId = app(config('locations.service.calendar'))->getLocationIdBySlotNumber($slot);
+        $locationId = app(config('locations.service_class.calendar'))->getLocationIdBySlotNumber($slot);
 
         return self::find($locationId);
     }
@@ -385,7 +385,7 @@ class Location extends Model
             return $slot->room->location;
         }
 
-        $locationId = app(config('locations.service.calendar'))->getLocationIdBySlotNumber($slot);
+        $locationId = app(config('locations.service_class.calendar'))->getLocationIdBySlotNumber($slot);
 
         return self::findOrFail($locationId);
     }
@@ -404,7 +404,7 @@ class Location extends Model
 
         // Virtual  Slots
         if (! $slot) {
-            $calendarService = app(config('locations.service.calendar'));
+            $calendarService = app(config('locations.service_class.calendar'));
             $date = $calendarService->generateDateFromSlotNumber($slotNumber);
             $recurringSchedules = $calendarService->getLocationRecurringScheduleForDateRange($this->id, $date, $date);
             $slots = new SlotsCollection(); //@TODO phuclh Need to refactor this later since we do not have this collection in this package.
