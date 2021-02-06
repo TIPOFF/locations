@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Tipoff\Support\Models\BaseModel;
 
-class Market extends Model
+class Market extends BaseModel
 {
     use HasFactory;
 
