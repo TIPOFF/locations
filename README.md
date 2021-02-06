@@ -1,7 +1,7 @@
 # Laravel Package for locations in markets
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tipoff/locations.svg?style=flat-square)](https://packagist.org/packages/tipoff/locations)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/tipoff/locations/run-tests?label=tests)](https://github.com/tipoff/locations/actions?query=workflow%3ATests+branch%3Amaster)
+![Tests](https://github.com/tipoff/locations/workflows/Tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/tipoff/locations.svg?style=flat-square)](https://packagist.org/packages/tipoff/locations)
 
 
