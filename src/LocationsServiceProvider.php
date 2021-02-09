@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations;
 
-use Illuminate\Support\Str;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Tipoff\Locations\Commands\LocationsCommand;
 
 class LocationsServiceProvider extends PackageServiceProvider
 {
