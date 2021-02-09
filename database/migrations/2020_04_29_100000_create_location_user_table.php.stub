@@ -9,8 +9,8 @@ class CreateLocationUserTable extends Migration
     public function up()
     {
         Schema::create('location_user', function (Blueprint $table) {
-            $table->foreignId('location_id')->index()->references('id')->on(app('location')->getTable());
-            $table->foreignId('user_id')->index()->references('id')->on(app('user')->getTable());
+            $table->foreignIdFor(app('location'), 'location_id')->index();
+            $table->foreignIdFor(app('user'), 'user_id')->index();
             $table->timestamps();
         });
     }

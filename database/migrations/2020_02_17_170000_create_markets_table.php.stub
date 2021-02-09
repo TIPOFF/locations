@@ -26,13 +26,13 @@ class CreateMarketsTable extends Migration
             $table->text('faq_content')->nullable(); // Frequently Asked Questions about the market (such as where to park at each location in the market). Written in Markdown.
             $table->text('competitors_content')->nullable(); // Nice paragraph about the other escape rooms in each market. First used on /escape-rooms page. Written in Markdown.
 
-            $table->foreignId('image_id')->nullable()->references('id')->on(app('image')->getTable()); // Cover image for market
-            $table->foreignId('ogimage_id')->nullable()->references('id')->on(app('image')->getTable()); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
-            $table->foreignId('map_image_id')->nullable()->references('id')->on(app('image')->getTable()); // Image of location map for the market.
-            $table->foreignId('video_id')->nullable()->references('id')->on(app('video')->getTable()); // Featured video for the market.
+            $table->foreignIdFor(app('image'), 'image_id')->nullable(); // Cover image for market
+            $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
+            $table->foreignIdFor(app('image'), 'map_image_id')->nullable(); // Image of location map for the market.
+            $table->foreignIdFor(app('video'), 'video_id')->nullable(); // Featured video for the market.
 
-            $table->foreignId('creator_id')->references('id')->on(app('user')->getTable());
-            $table->foreignId('updater_id')->references('id')->on(app('user')->getTable());
+            $table->foreignIdFor(app('user'), 'creator_id');
+            $table->foreignIdFor(app('user'), 'updater_id');
             $table->timestamps();
         });
     }
