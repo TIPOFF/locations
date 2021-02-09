@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Tipoff\Locations\Models\Market;
 
 class MarketFactory extends Factory
 {
@@ -11,7 +10,7 @@ class MarketFactory extends Factory
      *
      * @var string
      */
-    protected $model = Market::class;
+    protected $model = app('market');
 
     /**
      * Define the model's default state.
@@ -33,8 +32,8 @@ class MarketFactory extends Factory
             'rooms_content'       => $this->faker->sentences(7, true),
             'faq_content'         => $this->faker->sentences(7, true),
             'competitors_content' => $this->faker->sentences(7, true),
-            'creator_id'          => randomOrCreate(config('tipoff.model_class.user')),
-            'updater_id'          => randomOrCreate(config('tipoff.model_class.user')),
+            'creator_id'          => randomOrCreate(app('user')),
+            'updater_id'          => randomOrCreate(app('user')),
         ];
     }
 }

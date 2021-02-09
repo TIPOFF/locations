@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Tipoff\Locations\Models\Location;
-use Tipoff\Locations\Models\Market;
 
 class LocationFactory extends Factory
 {
@@ -12,7 +10,7 @@ class LocationFactory extends Factory
      *
      * @var string
      */
-    protected $model = Location::class;
+    protected $model = app('location');
 
     /**
      * Define the model's default state.
@@ -30,11 +28,11 @@ class LocationFactory extends Factory
             'timezone'              => $this->faker->timezone,
             'market_id'             => randomOrCreate(Market::class),
             'corporate'             => $this->faker->boolean,
-            'booking_tax_id'        => randomOrCreate(config('tipoff.model_class.tax')),
-            'product_tax_id'        => randomOrCreate(config('tipoff.model_class.tax')),
-            'creator_id'            => randomOrCreate(config('tipoff.model_class.user')),
-            'updater_id'            => randomOrCreate(config('tipoff.model_class.user')),
-            'stripe_secret'         => rand(100000, 900000),
+            'booking_tax_id'        => randomOrCreate(app('tax')),
+            'product_tax_id'        => randomOrCreate(app('tax')),
+            'creator_id'            => randomOrCreate(app('user')),
+            'updater_id'            => randomOrCreate(app('user')),
+            'stripe_secret'         => rand(100000, 900000)
         ];
     }
 }

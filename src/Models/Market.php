@@ -53,47 +53,47 @@ class Market extends BaseModel
 
     public function locations()
     {
-        return $this->hasMany(Location::class);
+        return $this->hasMany(app('location'));
     }
 
     public function competitors()
     {
-        return $this->hasMany(config('tipoff.model_class.competitor'));
+        return $this->hasMany(app('competitor'));
     }
 
     public function rooms()
     {
-        return $this->hasManyThrough(config('tipoff.model_class.room'), Location::class);
+        return $this->hasManyThrough(app('room'), app('location'));
     }
 
     public function image()
     {
-        return $this->belongsTo(config('tipoff.model_class.image'));
+        return $this->belongsTo(app('image'));
     }
 
     public function ogimage()
     {
-        return $this->belongsTo(config('tipoff.model_class.image'), 'ogimage_id');
+        return $this->belongsTo(app('image'), 'ogimage_id');
     }
 
     public function map()
     {
-        return $this->belongsTo(config('tipoff.model_class.image'), 'map_image_id');
+        return $this->belongsTo(app('image'), 'map_image_id');
     }
 
     public function video()
     {
-        return $this->belongsTo(config('tipoff.model_class.video'));
+        return $this->belongsTo(app('video'));
     }
 
     public function creator()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
+        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     /**
@@ -178,7 +178,7 @@ class Market extends BaseModel
     {
         $locations = $this->locations;
 
-        $rooms = config('tipoff.model_class.room')::whereIn('location_id', $locations->pluck('id'))->whereNull('closed_at')->get();
+        $rooms = app('room')::whereIn('location_id', $locations->pluck('id'))->whereNull('closed_at')->get();
 
         return $this->title.' has '.$rooms->count().' different escape rooms and offers private escape games for groups & parties. Book your escape room today!';
     }
@@ -188,7 +188,7 @@ class Market extends BaseModel
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = config('tipoff.model_class.room')::whereIn('location_id', $locations->pluck('id'))
+        $rooms = app('room')::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -196,7 +196,7 @@ class Market extends BaseModel
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = config('tipoff.model_class.theme')::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = app('theme')::whereIn('id', $rooms->pluck('theme_id'))
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {
                 return $roomPriority[$theme->id];
@@ -214,7 +214,7 @@ class Market extends BaseModel
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = config('tipoff.model_class.room')::whereIn('location_id', $locations->pluck('id'))
+        $rooms = app('room')::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -222,7 +222,7 @@ class Market extends BaseModel
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = config('tipoff.model_class.theme')::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = app('theme')::whereIn('id', $rooms->pluck('theme_id'))
             ->where('scavenger_level', '<', 4)
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {
@@ -241,7 +241,7 @@ class Market extends BaseModel
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = config('tipoff.model_class.room')::whereIn('location_id', $locations->pluck('id'))
+        $rooms = app('room')::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -249,7 +249,7 @@ class Market extends BaseModel
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = config('tipoff.model_class.theme')::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = app('theme')::whereIn('id', $rooms->pluck('theme_id'))
             ->where('scavenger_level', '>=', 4)
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {
