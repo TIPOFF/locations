@@ -315,7 +315,7 @@ class Location extends BaseModel
 
     public function getRevenueBookedYesterdayAttribute()
     {
-        return number_format(app('booking')::yesterday()
+        return number_format((app('booking')::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
@@ -336,7 +336,7 @@ class Location extends BaseModel
 
     public function getRevenueBookedLastWeekAttribute()
     {
-        return number_format(app('booking')::week()
+        return number_format((app('booking')::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
