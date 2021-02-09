@@ -10,27 +10,18 @@ class CreateLocationsTable extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $userModel = config('tipoff.model_class.user');
-            $userTable = (new $userModel)->getTable();
-
-            $taxModel = config('tipoff.model_class.tax');
-            $taxTable = (new $taxModel)->getTable();
-
-            $feeModel = config('tipoff.model_class.fee');
-            $feeTable = (new $feeModel)->getTable();
-
             $table->id();
             $table->string('slug')->unique()->index();
             $table->string('name')->unique(); // Internal reference name
             $table->string('abbreviation', 4)->unique(); // 3 digit abbreviation (all caps) for location. Option to add 4th digit character if necessary.
             $table->string('title_part')->nullable(); // For when have more than one location in a market, this is used to generate formal title.
             $table->string('timezone'); // Informal symbol such as EST or CST
-            $table->foreignId('market_id')->references('id')->on((new Market)->getTable());
+            $table->foreignIdFor(app('market'));
             $table->boolean('corporate')->default(true); // Mark false for Miami & DC
-            $table->foreignId('booking_tax_id')->nullable()->references('id')->on($taxTable); // Location's tax rate for bookings.
-            $table->foreignId('product_tax_id')->nullable()->references('id')->on($taxTable); // Different tax rate for products.
-            $table->foreignId('booking_fee_id')->nullable()->references('id')->on($feeTable); // Multiple types of fees cannot be charged to a booking. We currently use a per participant fee on bookings.
-            $table->foreignId('product_fee_id')->nullable()->references('id')->on($feeTable);
+            $table->foreignIdFor(app('tax'), 'booking_tax_id')->nullable(); // Location's tax rate for bookings.
+            $table->foreignIdFor(app('tax'), 'product_tax_id')->nullable(); // Different tax rate for products.
+            $table->foreignIdFor(app('fee'), 'booking_fee_id')->nullable(); // Multiple types of fees cannot be charged to a booking. We currently use a per participant fee on bookings.
+            $table->foreignIdFor(app('fee'), 'product_fee_id')->nullable();
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
             $table->string('gmb_account')->nullable();
             $table->string('contact_email');
@@ -79,13 +70,13 @@ class CreateLocationsTable extends Migration
             $table->string('tripadvisor')->nullable()->unique(); // URL for location's TripAdvisor page
             $table->string('yelp')->nullable()->unique(); // URL for location's Yelp page
 
-            $table->foreignId('manager_id')->nullable()->references('id')->on($userTable);
+            $table->foreignIdFor(app('user'), 'manager_id')->nullable();
             $table->text('waiver')->nullable(); // Waiver agreement for the location
             $table->text('waiver_minor')->nullable(); // Waiver statement for parent/legal gaurdian of minors at the location
             $table->date('closed_at')->nullable();
 
-            $table->foreignId('creator_id')->references('id')->on($userTable);
-            $table->foreignId('updater_id')->references('id')->on($userTable);
+            $table->foreignIdFor(app('user'), 'creator_id');
+            $table->foreignIdFor(app('user'), 'updater_id');
             $table->timestamps();
         });
     }

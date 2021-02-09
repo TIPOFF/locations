@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Tipoff\Support\Models\BaseModel;
 
@@ -72,97 +73,97 @@ class Location extends BaseModel
 
     public function manager()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'manager_id');
+        return $this->belongsTo(app('user'), 'manager_id');
     }
 
     public function contacts()
     {
-        return $this->hasMany(config('tipoff.model_class.contact'));
+        return $this->hasMany(app('contact'));
     }
 
     public function bookingTax()
     {
-        return $this->belongsTo(config('tipoff.model_class.tax'), 'booking_tax_id');
+        return $this->belongsTo(app('tax'), 'booking_tax_id');
     }
 
     public function productTax()
     {
-        return $this->belongsTo(config('tipoff.model_class.tax'), 'product_tax_id');
+        return $this->belongsTo(app('tax'), 'product_tax_id');
     }
 
     public function bookingFee()
     {
-        return $this->belongsTo(config('tipoff.model_class.fee'), 'booking_fee_id');
+        return $this->belongsTo(app('fee'), 'booking_fee_id');
     }
 
     public function productFee()
     {
-        return $this->belongsTo(config('tipoff.model_class.fee'), 'product_fee_id');
+        return $this->belongsTo(app('fee'), 'product_fee_id');
     }
 
     public function teamPhoto()
     {
-        return $this->belongsTo(config('tipoff.model_class.image'), 'team_image_id');
+        return $this->belongsTo(app('image'), 'team_image_id');
     }
 
     public function users()
     {
-        return $this->belongsToMany(config('tipoff.model_class.user'))->withTimestamps();
+        return $this->belongsToMany(app('user'))->withTimestamps();
     }
 
     public function orders()
     {
-        return $this->hasMany(config('tipoff.model_class.order'));
+        return $this->hasMany(app('order'));
     }
 
     public function reviews()
     {
-        return $this->hasMany(config('tipoff.model_class.review'));
+        return $this->hasMany(app('review'));
     }
 
     public function insights()
     {
-        return $this->hasMany(config('tipoff.model_class.insight'));
+        return $this->hasMany(app('insight'));
     }
 
     public function feedbacks()
     {
-        return $this->hasMany(config('tipoff.model_class.feedback'));
+        return $this->hasMany(app('feedback'));
     }
 
     public function rooms()
     {
-        return $this->hasMany(config('tipoff.model_class.room'));
+        return $this->hasMany(app('room'));
     }
 
     public function creator()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
+        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     public function signatures()
     {
-        return $this->hasManyThrough(config('tipoff.model_class.signature'), config('tipoff.model_class.room'));
+        return $this->hasManyThrough(app('signature'), app('room'));
     }
 
     public function competitor()
     {
-        return $this->hasOne(config('tipoff.model_class.competitor'));
+        return $this->hasOne(app('competitor'));
     }
 
     public function snapshots()
     {
-        return $this->hasManyThrough(config('tipoff.model_class.snapshot'), config('tipoff.model_class.competitor'));
+        return $this->hasManyThrough(app('snapshot'), app('competitor'));
     }
 
     public function slots()
     {
-        return $this->hasManyThrough(config('tipoff.model_class.slot'), config('tipoff.model_class.room'));
+        return $this->hasManyThrough(app('slot'), app('room'));
     }
 
     public function getSelectorTitleAttribute()
@@ -307,7 +308,10 @@ class Location extends BaseModel
 
     public function getBookingsYesterdayAttribute()
     {
-        return config('tipoff.model_class.booking')::yesterday()
+        /** @var Model $bookingModel */
+        $bookingModel = app('booking');
+
+        return $bookingModel::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->count();
@@ -315,12 +319,15 @@ class Location extends BaseModel
 
     public function getRevenueBookedYesterdayAttribute()
     {
-        return number_format((config('tipoff.model_class.booking')::yesterday()
+        /** @var Model $bookingModel */
+        $bookingModel = app('booking');
+
+        return number_format(($bookingModel::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                config('tipoff.model_class.booking')::yesterday()
+                $bookingModel::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -328,7 +335,10 @@ class Location extends BaseModel
 
     public function getBookingsLastWeekAttribute()
     {
-        return config('tipoff.model_class.booking')::week()
+        /** @var Model $bookingModel */
+        $bookingModel = app('booking');
+
+        return $bookingModel::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->count();
@@ -336,12 +346,15 @@ class Location extends BaseModel
 
     public function getRevenueBookedLastWeekAttribute()
     {
-        return number_format((config('tipoff.model_class.booking')::week()
+        /** @var Model $bookingModel */
+        $bookingModel = app('booking');
+
+        return number_format(($bookingModel::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                config('tipoff.model_class.booking')::week()
+                $bookingModel::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -360,7 +373,7 @@ class Location extends BaseModel
      */
     public function findBySlot($slot)
     {
-        $slotModel = config('tipoff.model_class.slot');
+        $slotModel = app('slot');
 
         if ($slot instanceof $slotModel) {
             return $slot->room->location;
@@ -379,7 +392,7 @@ class Location extends BaseModel
      */
     public function findBySlotOrFail($slot)
     {
-        $slotModel = config('tipoff.model_class.slot');
+        $slotModel = app('slot');
 
         if ($slot instanceof $slotModel) {
             return $slot->room->location;
@@ -394,20 +407,26 @@ class Location extends BaseModel
      * Find existing or virtual slot.
      *
      * @param string $slotNumber
-     * @return Slot|null
+     * @return mixed
      */
     public function findOrGenerateSlot($slotNumber)
     {
-        $slot = config('tipoff.model_class.slot')::where('slot_number', $slotNumber)
+        /** @var Model $slotModel */
+        $slotModel = app('slot');
+
+        $slot = $slotModel::where('slot_number', $slotNumber)
             ->location($this)
             ->first();
 
         // Virtual  Slots
         if (! $slot) {
+            /** @var string $slotCollection */
+            $slotCollection = config('locations.collection_class.slot'); //@TODO phuclh Need to refactor this later since we do not have this collection in this package.
+
             $calendarService = app(config('locations.service_class.calendar'));
             $date = $calendarService->generateDateFromSlotNumber($slotNumber);
             $recurringSchedules = $calendarService->getLocationRecurringScheduleForDateRange($this->id, $date, $date);
-            $slots = new SlotsCollection(); //@TODO phuclh Need to refactor this later since we do not have this collection in this package.
+            $slots = new $slotCollection;
             $slot = $slots
                 ->applyRecurringSchedules($recurringSchedules, $date)
                 ->where('slot_number', $slotNumber);

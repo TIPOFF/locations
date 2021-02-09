@@ -9,15 +9,6 @@ class CreateMarketsTable extends Migration
     public function up()
     {
         Schema::create('markets', function (Blueprint $table) {
-            $userModel = config('tipoff.model_class.user');
-            $userTable = (new $userModel)->getTable();
-
-            $imageModel = config('tipoff.model_class.image');
-            $imageTable = (new $imageModel)->getTable();
-
-            $videoModel = config('tipoff.model_class.video');
-            $videoTable = (new $videoModel)->getTable();
-
             $table->id();
             $table->string('slug')->unique()->index();
             $table->string('name')->unique();
@@ -35,13 +26,13 @@ class CreateMarketsTable extends Migration
             $table->text('faq_content')->nullable(); // Frequently Asked Questions about the market (such as where to park at each location in the market). Written in Markdown.
             $table->text('competitors_content')->nullable(); // Nice paragraph about the other escape rooms in each market. First used on /escape-rooms page. Written in Markdown.
 
-            $table->foreignId('image_id')->nullable()->references('id')->on($imageTable); // Cover image for market
-            $table->foreignId('ogimage_id')->nullable()->references('id')->on($imageTable); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
-            $table->foreignId('map_image_id')->nullable()->references('id')->on($imageTable); // Image of location map for the market.
-            $table->foreignId('video_id')->nullable()->references('id')->on($videoTable); // Featured video for the market.
+            $table->foreignIdFor(app('image'))->nullable(); // Cover image for market
+            $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
+            $table->foreignIdFor(app('image'), 'map_image_id')->nullable(); // Image of location map for the market.
+            $table->foreignIdFor(app('video'))->nullable(); // Featured video for the market.
 
-            $table->foreignId('creator_id')->references('id')->on($userTable);
-            $table->foreignId('updater_id')->references('id')->on($userTable);
+            $table->foreignIdFor(app('user'), 'creator_id');
+            $table->foreignIdFor(app('user'), 'updater_id');
             $table->timestamps();
         });
     }
