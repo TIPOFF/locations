@@ -27,6 +27,7 @@ class Location extends BaseModel
     }
 
     protected $slot = app('slot');
+    protected $booking = app('booking');
 
     protected static function boot()
     {
@@ -309,7 +310,7 @@ class Location extends BaseModel
 
     public function getBookingsYesterdayAttribute()
     {
-        return app('booking')::yesterday()
+        return $this->booking::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->count();
@@ -317,12 +318,12 @@ class Location extends BaseModel
 
     public function getRevenueBookedYesterdayAttribute()
     {
-        return number_format((app('booking')::yesterday()
+        return number_format(($this->booking::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                app('booking')::yesterday()
+                $this->booking::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -330,7 +331,7 @@ class Location extends BaseModel
 
     public function getBookingsLastWeekAttribute()
     {
-        return app('booking')::week()
+        return $this->booking::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->count();
@@ -338,12 +339,12 @@ class Location extends BaseModel
 
     public function getRevenueBookedLastWeekAttribute()
     {
-        return number_format((app('booking')::week()
+        return number_format(($this->booking::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                app('booking')::week()
+                $this->booking::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
