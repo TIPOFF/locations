@@ -20,6 +20,9 @@ class Market extends BaseModel
         return 'slug';
     }
 
+    protected $room = app('room');
+    protected $theme = app('theme');
+
     protected static function boot()
     {
         parent::boot();
@@ -178,7 +181,7 @@ class Market extends BaseModel
     {
         $locations = $this->locations;
 
-        $rooms = app('room')::whereIn('location_id', $locations->pluck('id'))->whereNull('closed_at')->get();
+        $rooms = $this->room::whereIn('location_id', $locations->pluck('id'))->whereNull('closed_at')->get();
 
         return $this->title.' has '.$rooms->count().' different escape rooms and offers private escape games for groups & parties. Book your escape room today!';
     }
@@ -188,7 +191,7 @@ class Market extends BaseModel
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = app('room')::whereIn('location_id', $locations->pluck('id'))
+        $rooms = $this->room::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -196,7 +199,7 @@ class Market extends BaseModel
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = app('theme')::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = $this->theme::whereIn('id', $rooms->pluck('theme_id'))
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {
                 return $roomPriority[$theme->id];
@@ -214,7 +217,7 @@ class Market extends BaseModel
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = app('room')::whereIn('location_id', $locations->pluck('id'))
+        $rooms = $this->room::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -222,7 +225,7 @@ class Market extends BaseModel
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = app('theme')::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = $this->theme::whereIn('id', $rooms->pluck('theme_id'))
             ->where('scavenger_level', '<', 4)
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {
@@ -241,7 +244,7 @@ class Market extends BaseModel
         $locations = $this->locations;
 
         // Get all rooms for those locations
-        $rooms = app('room')::whereIn('location_id', $locations->pluck('id'))
+        $rooms = $this->room::whereIn('location_id', $locations->pluck('id'))
             ->whereNull('closed_at')
             ->orderByDesc('priority')
             ->get();
@@ -249,7 +252,7 @@ class Market extends BaseModel
         $roomPriority = $rooms->pluck('priority', 'theme_id');
 
         // Get the themes, ordered by rooms->priority exclude closed themes and remove duplicates
-        $themes = app('theme')::whereIn('id', $rooms->pluck('theme_id'))
+        $themes = $this->theme::whereIn('id', $rooms->pluck('theme_id'))
             ->where('scavenger_level', '>=', 4)
             ->get()
             ->sortBy(function ($theme) use ($roomPriority) {

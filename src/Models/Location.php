@@ -26,6 +26,8 @@ class Location extends BaseModel
         return 'slug';
     }
 
+    protected $slot = app('slot');
+
     protected static function boot()
     {
         parent::boot();
@@ -398,7 +400,7 @@ class Location extends BaseModel
      */
     public function findOrGenerateSlot($slotNumber)
     {
-        $slot = app('slot')::where('slot_number', $slotNumber)
+        $slot = $this->slot::where('slot_number', $slotNumber)
             ->location($this)
             ->first();
 
