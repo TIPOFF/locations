@@ -2,9 +2,9 @@
 
 namespace Tipoff\Locations\Policies;
 
-use Tipoff\Locations\Models\Market;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Tipoff\Locations\Models\Market;
 
 class MarketPolicy
 {
