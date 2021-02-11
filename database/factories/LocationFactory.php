@@ -27,7 +27,7 @@ class LocationFactory extends Factory
             'slug'                  => Str::slug($city),
             'title_part'            => $city,
             'timezone'              => $this->faker->timezone,
-            'market_id'             => randomOrCreate(Market::class),
+            'market_id'             => randomOrCreate(app('market')),
             'corporate'             => $this->faker->boolean,
             'booking_tax_id'        => randomOrCreate(app('tax')),
             'product_tax_id'        => randomOrCreate(app('tax')),

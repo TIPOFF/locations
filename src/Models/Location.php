@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Tipoff\Support\Models\BaseModel;
 
@@ -310,7 +311,10 @@ class Location extends BaseModel
 
     public function getBookingsYesterdayAttribute()
     {
-        return $this->booking::yesterday()
+        /** @var Model $bookingModel */
+        $bookingModel = app('booking');
+
+        return $bookingModel::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->count();
@@ -318,12 +322,15 @@ class Location extends BaseModel
 
     public function getRevenueBookedYesterdayAttribute()
     {
-        return number_format(($this->booking::yesterday()
+        /** @var Model $bookingModel */
+        $bookingModel = app('booking');
+
+        return number_format(($bookingModel::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                $this->booking::yesterday()
+                $bookingModel::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -331,7 +338,10 @@ class Location extends BaseModel
 
     public function getBookingsLastWeekAttribute()
     {
-        return $this->booking::week()
+        /** @var Model $bookingModel */
+        $bookingModel = app('booking');
+
+        return $bookingModel::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->count();
@@ -339,12 +349,15 @@ class Location extends BaseModel
 
     public function getRevenueBookedLastWeekAttribute()
     {
-        return number_format(($this->booking::week()
+        /** @var Model $bookingModel */
+        $bookingModel = app('booking');
+
+        return number_format(($bookingModel::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                $this->booking::week()
+                $bookingModel::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -397,20 +410,26 @@ class Location extends BaseModel
      * Find existing or virtual slot.
      *
      * @param string $slotNumber
-     * @return Slot|null
+     * @return mixed
      */
     public function findOrGenerateSlot($slotNumber)
     {
-        $slot = $this->slot::where('slot_number', $slotNumber)
+        /** @var Model $slotModel */
+        $slotModel = app('slot');
+
+        $slot = $slotModel::where('slot_number', $slotNumber)
             ->location($this)
             ->first();
 
         // Virtual  Slots
         if (! $slot) {
-            $calendarService = app(app('calendar'));
+            /** @var string $slotCollection */
+            $slotCollection = config('locations.collection_class.slot'); //@TODO phuclh Need to refactor this later since we do not have this collection in this package.
+
+            $calendarService = app(config('locations.service_class.calendar'));
             $date = $calendarService->generateDateFromSlotNumber($slotNumber);
             $recurringSchedules = $calendarService->getLocationRecurringScheduleForDateRange($this->id, $date, $date);
-            $slots = new SlotsCollection(); //@TODO phuclh Need to refactor this later since we do not have this collection in this package.
+            $slots = new $slotCollection;
             $slot = $slots
                 ->applyRecurringSchedules($recurringSchedules, $date)
                 ->where('slot_number', $slotNumber);

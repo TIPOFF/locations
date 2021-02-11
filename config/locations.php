@@ -6,6 +6,12 @@ return [
 
         'calendar' => \App\Services\CalendarService::class
 
+    ],
+
+    'collection_class' => [
+
+        'slot' => 'SlotsCollection'
+
     ]
 
 ];
