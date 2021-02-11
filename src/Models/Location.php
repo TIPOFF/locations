@@ -27,9 +27,6 @@ class Location extends BaseModel
         return 'slug';
     }
 
-    protected $slot = app('slot');
-    protected $booking = app('booking');
-
     protected static function boot()
     {
         parent::boot();
