@@ -21,9 +21,6 @@ class Market extends BaseModel
         return 'slug';
     }
 
-    protected $room = app('room');
-    protected $theme = app('theme');
-
     protected static function boot()
     {
         parent::boot();
