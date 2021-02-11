@@ -54,7 +54,7 @@ class Market extends BaseModel
 
     public function locations()
     {
-        return $this->hasMany(Location::class);
+        return $this->hasMany(app('location'));
     }
 
     public function competitors()
@@ -64,7 +64,7 @@ class Market extends BaseModel
 
     public function rooms()
     {
-        return $this->hasManyThrough(app('room'), Location::class);
+        return $this->hasManyThrough(app('room'), app('location'));
     }
 
     public function image()

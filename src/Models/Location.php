@@ -68,7 +68,7 @@ class Location extends BaseModel
 
     public function market()
     {
-        return $this->belongsTo(Market::class);
+        return $this->belongsTo(app('market'));
     }
 
     public function manager()
