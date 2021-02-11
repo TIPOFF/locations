@@ -25,16 +25,7 @@ class Market extends BaseModel
     {
         parent::boot();
 
-        static::creating(function ($market) {
-            if (auth()->check()) {
-                $market->creator_id = auth()->id();
-            }
-        });
-
         static::saving(function ($market) {
-            if (auth()->check()) {
-                $market->updater_id = auth()->id();
-            }
             if (empty($market->entered_at)) {
                 $market->entered_at = '2016-01-01';
             }
@@ -85,16 +76,6 @@ class Market extends BaseModel
     public function video()
     {
         return $this->belongsTo(app('video'));
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(app('user'), 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     /**
