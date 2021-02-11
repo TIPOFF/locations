@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Tipoff\Locations\Models\Market;
 
 class MarketFactory extends Factory
 {
@@ -10,7 +11,7 @@ class MarketFactory extends Factory
      *
      * @var string
      */
-    protected $model = app('market');
+    protected $model = Market::class;
 
     /**
      * Define the model's default state.
