@@ -10,7 +10,7 @@ use Tipoff\Support\Traits\HasUpdater;
 
 class Market extends BaseModel
 {
-    use HasFactory;
+    use HasFactory, HasCreator, HasUpdater;
 
     protected $guarded = ['id'];
 
