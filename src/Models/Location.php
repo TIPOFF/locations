@@ -382,7 +382,7 @@ class Location extends BaseModel
             return $slot->room->location;
         }
 
-        $locationId = app('calendar')->getLocationIdBySlotNumber($slot);
+        $locationId = app(config('locations.service_class.calendar'))->getLocationIdBySlotNumber($slot);
 
         return self::find($locationId);
     }
@@ -401,7 +401,7 @@ class Location extends BaseModel
             return $slot->room->location;
         }
 
-        $locationId = app('calendar')->getLocationIdBySlotNumber($slot);
+        $locationId = app(config('locations.service_class.calendar'))->getLocationIdBySlotNumber($slot);
 
         return self::findOrFail($locationId);
     }
