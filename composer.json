@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "drewroberts/media": "^3.0",
+        "drewroberts/media": "^3.0.5",
         "tipoff/support": "^1.2.1"
     },
     "require-dev": {
