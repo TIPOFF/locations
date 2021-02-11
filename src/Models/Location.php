@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Tipoff\Support\Models\BaseModel;
+use Tipoff\Support\Traits\HasCreator;
+use Tipoff\Support\Traits\HasUpdater;
 
 class Location extends BaseModel
 {
     use HasFactory;
+    use HasCreator;
+    use HasUpdater;
 
     protected $guarded = ['id'];
 
@@ -31,18 +35,9 @@ class Location extends BaseModel
     {
         parent::boot();
 
-        static::creating(function ($location) {
-            if (auth()->check()) {
-                $location->creator_id = auth()->id();
-            }
-        });
-
         static::saving(function ($location) {
             if (empty($location->market_id)) {
                 throw new \Exception('A location must be in a market.');
-            }
-            if (auth()->check()) {
-                $location->updater_id = auth()->id();
             }
             if (empty($location->timezone)) {
                 $location->timezone = 'EST';
@@ -134,16 +129,6 @@ class Location extends BaseModel
     public function rooms()
     {
         return $this->hasMany(app('room'));
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(app('user'), 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     public function signatures()
