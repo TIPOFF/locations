@@ -13,8 +13,6 @@ class Market extends BaseModel
     use HasCreator;
     use HasUpdater;
 
-    protected $guarded = ['id'];
-
     protected $casts = [
         'entered_at' => 'datetime',
         'closed_at' => 'datetime',
