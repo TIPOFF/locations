@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Waivers\Tests\Unit\Migrations;
+namespace Tipoff\Locations\Tests\Unit\Migrations;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Schema;
-use Tipoff\Waivers\Tests\TestCase;
+use Tipoff\Locations\Tests\TestCase;
 
 class PermissionsMigrationTest extends TestCase
 {
