@@ -8,8 +8,6 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
-use Tipoff\Support\TipoffPackage;
-use Tipoff\Support\TipoffServiceProvider;
 
 class LocationsServiceProvider extends PackageServiceProvider
 {
