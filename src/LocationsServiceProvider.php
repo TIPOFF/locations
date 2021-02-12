@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations;
 
+use Illuminate\Support\Facades\Gate;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
+use Tipoff\Locations\Policies\LocationPolicy;
+use Tipoff\Locations\Policies\MarketPolicy;
 
 class LocationsServiceProvider extends PackageServiceProvider
 {
@@ -33,5 +36,11 @@ class LocationsServiceProvider extends PackageServiceProvider
             ])
             ->name('locations')
             ->hasConfigFile();
+    }
+
+    public function registeringPackage()
+    {
+        Gate::policy(Location::class, LocationPolicy::class);
+        Gate::policy(Market::class, MarketPolicy::class);
     }
 }
