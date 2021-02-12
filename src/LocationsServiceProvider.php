@@ -6,6 +6,10 @@ namespace Tipoff\Locations;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Tipoff\Locations\Models\Location;
+use Tipoff\Locations\Models\Market;
+use Tipoff\Support\TipoffPackage;
+use Tipoff\Support\TipoffServiceProvider;
 
 class LocationsServiceProvider extends PackageServiceProvider
 {
@@ -23,6 +27,12 @@ class LocationsServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
+            ->hasModelInterfaces([
+                LocationInterface::class => Location::class,
+            ])
+            ->hasModelInterfaces([
+                MarketInterface::class => Market::class,
+            ])
             ->name('locations')
             ->hasConfigFile();
     }
