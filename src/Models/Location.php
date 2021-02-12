@@ -15,8 +15,6 @@ class Location extends BaseModel
     use HasCreator;
     use HasUpdater;
 
-    protected $guarded = ['id'];
-
     protected $casts = [
         'opened_at' => 'datetime',
         'closed_at' => 'datetime',
