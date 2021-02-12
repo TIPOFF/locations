@@ -8,6 +8,8 @@ use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
 use Tipoff\Locations\Policies\LocationPolicy;
 use Tipoff\Locations\Policies\MarketPolicy;
+use Tipoff\Support\TipoffPackage;
+use Tipoff\Support\TipoffServiceProvider;
 
 class LocationsServiceProvider extends TipoffServiceProvider
 {
