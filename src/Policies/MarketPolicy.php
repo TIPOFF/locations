@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tipoff\Locations\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Tipoff\Support\Contracts\Models\UserInterface;
 use Tipoff\Locations\Models\Market;
+use Tipoff\Support\Contracts\Models\UserInterface;
 
 class MarketPolicy
 {
