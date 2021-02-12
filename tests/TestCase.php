@@ -6,9 +6,9 @@ namespace Tipoff\Locations\Tests;
 
 use Spatie\Permission\PermissionServiceProvider;
 use Tipoff\Authorization\AuthorizationServiceProvider;
+use Tipoff\Locations\LocationsServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
-use Tipoff\Locations\LocationsServiceProvider;
 
 class TestCase extends BaseTestCase
 {
