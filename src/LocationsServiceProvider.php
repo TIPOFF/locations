@@ -6,8 +6,8 @@ namespace Tipoff\Locations;
 
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
-use Tipoff\Locations\Policies\Location;
-use Tipoff\Locations\Policies\Market;
+use Tipoff\Locations\Policies\LocationPolicy;
+use Tipoff\Locations\Policies\MarketPolicy;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 
