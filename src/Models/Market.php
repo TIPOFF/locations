@@ -1,4 +1,8 @@
-<?php namespace Tipoff\Locations\Models;
+<?php 
+
+declare(strict_types=1);
+
+namespace Tipoff\Locations\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

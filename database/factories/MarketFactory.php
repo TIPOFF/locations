@@ -1,4 +1,8 @@
-<?php namespace Tipoff\Locations\Database\Factories;
+<?php 
+
+declare(strict_types=1);
+
+namespace Tipoff\Locations\Database\Factories;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
