@@ -6,16 +6,16 @@ namespace Tipoff\Locations\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
+use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
 
 class Location extends BaseModel
 {
-    use HasFactory;
+    use HasPackageFactory;
     use HasCreator;
     use HasUpdater;
 
