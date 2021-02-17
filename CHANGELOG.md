@@ -23,3 +23,8 @@ All notable changes to `locations` will be documented in this file.
 - register policies
 - add nova resources
 - add nova filters
+
+
+## 2.0.1 - 2021-02-17
+
+- add orderlocation nova filter
