@@ -18,7 +18,7 @@ class CreateLocationsTable extends Migration
             $table->string('abbreviation', 4)->unique(); // 3 digit abbreviation (all caps) for location. Option to add 4th digit character if necessary.
             $table->string('title_part')->nullable(); // For when have more than one location in a market, this is used to generate formal title.
             $table->string('timezone'); // Informal symbol such as EST or CST
-            $table->foreignIdFor(app('market'));
+            $table->foreignIdFor(Market::class);
             $table->boolean('corporate')->default(true); // Mark false for Miami & DC
             $table->foreignIdFor(app('tax'), 'booking_tax_id')->nullable(); // Location's tax rate for bookings.
             $table->foreignIdFor(app('tax'), 'product_tax_id')->nullable(); // Different tax rate for products.
