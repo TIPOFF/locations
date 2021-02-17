@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -7,6 +7,7 @@ namespace Tipoff\Locations\Database\Factories;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tipoff\Locations\Models\Location;
+use Tipoff\Locations\Models\Market;
 
 class LocationFactory extends Factory
 {
@@ -31,7 +32,7 @@ class LocationFactory extends Factory
             'slug'                  => Str::slug($city),
             'title_part'            => $city,
             'timezone'              => $this->faker->timezone,
-            'market_id'             => randomOrCreate(app('market')),
+            'market_id'             => randomOrCreate(Market::class),
             'corporate'             => $this->faker->boolean,
             'booking_tax_id'        => randomOrCreate(app('tax')),
             'product_tax_id'        => randomOrCreate(app('tax')),
