@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Nova\Filters;
+declare(strict_types=1);
+
+namespace Tipoff\Locations\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
@@ -44,6 +46,6 @@ class OrderLocation extends Filter
      */
     public function options(Request $request)
     {
-        return \App\Models\Location::pluck('id', 'name');
+        return \Tipoff\Locations\Models\Location::pluck('id', 'name');
     }
 }
