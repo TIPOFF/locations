@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Nova\Filters;
+declare(strict_types=1);
+
+namespace Tipoff\Locations\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
@@ -35,6 +37,6 @@ class Market extends Filter
      */
     public function options(Request $request)
     {
-        return \App\Models\Market::pluck('id', 'name');
+        return \Tipoff\Locations\Models\Market::pluck('id', 'name');
     }
 }
