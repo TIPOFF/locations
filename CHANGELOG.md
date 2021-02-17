@@ -14,3 +14,12 @@ All notable changes to `locations` will be documented in this file.
 ## 1.1.1 - 2021-02-11
 
 - modify location migration
+
+## 2.0.0 - 2021-02-17
+
+- add models
+- add factories
+- add policies
+- register policies
+- add nova resources
+- add nova filters
