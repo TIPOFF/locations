@@ -20,8 +20,6 @@ class CreateLocationsTable extends Migration
             $table->string('timezone'); // Informal symbol such as EST or CST
             $table->foreignIdFor(Market::class);
             $table->boolean('corporate')->default(true); // Mark false for Miami & DC
-            $table->foreignIdFor(app('tax'), 'booking_tax_id')->nullable(); // Location's tax rate for bookings.
-            $table->foreignIdFor(app('tax'), 'product_tax_id')->nullable(); // Different tax rate for products.
             $table->foreignIdFor(app('fee'), 'booking_fee_id')->nullable(); // Multiple types of fees cannot be charged to a booking. We currently use a per participant fee on bookings.
             $table->foreignIdFor(app('fee'), 'product_fee_id')->nullable();
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
