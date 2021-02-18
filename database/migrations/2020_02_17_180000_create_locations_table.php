@@ -64,8 +64,6 @@ class CreateLocationsTable extends Migration
             $table->string('yelp')->nullable()->unique(); // URL for location's Yelp page
 
             $table->foreignIdFor(app('user'), 'manager_id')->nullable();
-            $table->text('waiver')->nullable(); // Waiver agreement for the location
-            $table->text('waiver_minor')->nullable(); // Waiver statement for parent/legal gaurdian of minors at the location
             $table->date('closed_at')->nullable();
 
             $table->foreignIdFor(app('user'), 'creator_id');
