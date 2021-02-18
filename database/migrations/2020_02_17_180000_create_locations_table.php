@@ -19,16 +19,9 @@ class CreateLocationsTable extends Migration
             $table->string('title_part')->nullable(); // For when have more than one location in a market, this is used to generate formal title.
             $table->string('timezone'); // Informal symbol such as EST or CST
             $table->foreignIdFor(Market::class);
-            $table->boolean('corporate')->default(true); // Mark false for Miami & DC
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
             $table->string('gmb_account')->nullable();
             $table->string('contact_email');
-            $table->string('team_names')->nullable();
-            $table->foreignIdFor(app('image'), 'team_image_id')->nullable();
-            $table->unsignedTinyInteger('booking_cutoff'); // Minutes before a game/slot to cutoff the booking window.
-            $table->boolean('covid')->default(false); // Mark true if location closed due to COVID-19
-            $table->boolean('use_iframe')->default(false); // If yes, use the booking iframe below
-            $table->text('booking_iframe')->nullable(); // Iframe code for Resova/Bookeo or other 3rd parting booking software
 
             // Number/ID/Public Key for location account on Stripe.
             $table->string('stripe_publishable')->nullable()->unique();
