@@ -17,11 +17,10 @@ class CreateMarketsTable extends Migration
             $table->string('title')->unique(); // Market Title for Display. Used publicly.
             $table->string('state'); // Just the 2-digit abbreviation.
             $table->string('timezone');
-            $table->string('redirect')->nullable();
-
             $table->text('content')->nullable(); // Market specific content. Written in Markdown.
             $table->date('entered_at'); // Date first location opened in the market.
             $table->date('closed_at')->nullable();
+            $table->string('redirect')->nullable();
 
             $table->foreignIdFor(app('image'))->nullable(); // Cover image for market
             $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
