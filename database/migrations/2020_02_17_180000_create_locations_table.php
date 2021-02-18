@@ -23,10 +23,6 @@ class CreateLocationsTable extends Migration
             $table->string('gmb_account')->nullable();
             $table->string('contact_email');
 
-            // Number/ID/Public Key for location account on Stripe.
-            $table->string('stripe_publishable')->nullable()->unique();
-            $table->text('stripe_secret')->nullable();
-
             // All updated from GMB so have one place as source of truth
             $table->string('title')->nullable()->unique(); // Location Title for display from GMB.
             $table->date('opened_at')->nullable();
