@@ -4,7 +4,6 @@ namespace Tipoff\Locations\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -50,7 +49,6 @@ class Market extends BaseResource
             Text::make('Title'),
             Text::make('State'),
             Text::make('Timezone'),
-            Boolean::make('Corporate'),
             DateTime::make('Entered At', 'entered_at'),
             DateTime::make('Closed At', 'closed_at')->nullable(),
 
@@ -70,9 +68,6 @@ class Market extends BaseResource
     {
         return [
             Markdown::make('Content'),
-            Markdown::make('Rooms Content'),
-            Markdown::make('FAQ Content', 'faq_content'),
-            Markdown::make('Competitors Content'),
         ];
     }
 
