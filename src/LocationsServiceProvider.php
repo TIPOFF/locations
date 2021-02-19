@@ -20,6 +20,10 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 Location::class => LocationPolicy::class,
                 Market::class => MarketPolicy::class,
             ])
+            ->hasNovaResources([
+                \Tipoff\Locations\Nova\Location::class,
+                \Tipoff\Locations\Nova\Market::class,
+            ])
             ->name('locations')
             ->hasConfigFile();
     }
