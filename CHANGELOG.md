@@ -40,3 +40,7 @@ All notable changes to `locations` will be documented in this file.
 - location payments to tipoff/payments
 - location waivers to tipoff/waivers
 - escape room fields on locations & markets to tipoff/escape-room
+
+## 2.1.1 - 2021-02-19
+
+- register nova resources
