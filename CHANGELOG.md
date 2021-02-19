@@ -32,3 +32,11 @@ All notable changes to `locations` will be documented in this file.
 ## 2.0.2 - 2021-02-18
 
 - add market nova filter
+
+## 2.1.0 - 2021-02-19
+
+- location fees to tipoff/fees
+- location taxes to tipoff/taxes
+- location payments to tipoff/payments
+- location waivers to tipoff/waivers
+- escape room fields on locations & markets to tipoff/escape-room
