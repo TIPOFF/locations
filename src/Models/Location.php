@@ -44,9 +44,6 @@ class Location extends BaseModel
             if (empty($location->timezone)) {
                 $location->timezone = 'EST';
             }
-            if (empty($location->booking_cutoff)) {
-                $location->booking_cutoff = 10;
-            }
             if (empty($location->contact_email)) {
                 $location->contact_email = $location->slug . '@thegreatescaperoom.com';
             }
@@ -76,31 +73,6 @@ class Location extends BaseModel
     public function contacts()
     {
         return $this->hasMany(app('contact'));
-    }
-
-    public function bookingTax()
-    {
-        return $this->belongsTo(app('tax'), 'booking_tax_id');
-    }
-
-    public function productTax()
-    {
-        return $this->belongsTo(app('tax'), 'product_tax_id');
-    }
-
-    public function bookingFee()
-    {
-        return $this->belongsTo(app('fee'), 'booking_fee_id');
-    }
-
-    public function productFee()
-    {
-        return $this->belongsTo(app('fee'), 'product_fee_id');
-    }
-
-    public function teamPhoto()
-    {
-        return $this->belongsTo(app('image'), 'team_image_id');
     }
 
     public function users()
@@ -345,11 +317,6 @@ class Location extends BaseModel
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
-    }
-
-    public function stripeEnabled()
-    {
-        return $this->stripe_publishable && $this->stripe_secret;
     }
 
     /**

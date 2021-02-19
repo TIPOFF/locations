@@ -33,12 +33,8 @@ class LocationFactory extends Factory
             'title_part'            => $city,
             'timezone'              => $this->faker->timezone,
             'market_id'             => randomOrCreate(Market::class),
-            'corporate'             => $this->faker->boolean,
-            'booking_tax_id'        => randomOrCreate(app('tax')),
-            'product_tax_id'        => randomOrCreate(app('tax')),
             'creator_id'            => randomOrCreate(app('user')),
-            'updater_id'            => randomOrCreate(app('user')),
-            'stripe_secret'         => rand(100000, 900000)
+            'updater_id'            => randomOrCreate(app('user'))
         ];
     }
 }

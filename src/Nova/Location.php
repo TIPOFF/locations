@@ -4,7 +4,6 @@ namespace Tipoff\Locations\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
@@ -12,7 +11,6 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Place;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Tipoff\Support\Nova\BaseResource;
@@ -49,11 +47,8 @@ class Location extends BaseResource
             Text::make('Title')->required(),
             Text::make('Abbreviation')->required(),
             Text::make('Timezone')->required(),
-            Boolean::make('Corporate'),
 
             new Panel('Address Information', $this->addressFields()),
-
-            new Panel('Location Team', $this->teamFields()),
 
             nova('room') ? HasMany::make('Rooms', 'rooms', nova('room')) : null,
 
@@ -69,15 +64,7 @@ class Location extends BaseResource
 
             nova('insight') ? HasMany::make('Insights', 'insights', nova('insight')) : null,
 
-            new Panel('Waiver Agreements', $this->waiverFields()),
-
-            new Panel('Configuration', $this->configurationFields()),
-
             nova('user') ? BelongsTo::make('Manager', 'manager', nova('user'))->searchable()->withSubtitles()->withoutTrashed() : null,
-            nova('tax') ? BelongsTo::make('Booking Tax', 'bookingTax', nova('tax')) : null,
-            nova('tax') ? BelongsTo::make('Product Tax', 'productTax', nova('tax')) : null,
-            nova('fee') ? BelongsTo::make('Booking Fee', 'bookingFee', nova('fee')) : null,
-            nova('fee') ? BelongsTo::make('Product Fee', 'productFee', nova('fee')) : null,
 
             new Panel('Data Fields', $this->dataFields()),
         ]);
@@ -93,14 +80,6 @@ class Location extends BaseResource
             Text::make('ZIP')->nullable(),
             Text::make('Phone')->nullable(),
         ];
-    }
-
-    protected function teamFields()
-    {
-        return array_filter([
-            Text::make('Team Names')->nullable(),
-            nova('image') ? BelongsTo::make('Team Photo', 'teamPhoto', nova('image'))->nullable()->showCreateRelationButton() : null,
-        ]);
     }
 
     protected function reviewFields()
@@ -148,19 +127,8 @@ class Location extends BaseResource
     protected function bookingFields()
     {
         return [
-            Boolean::make('Covid'),
-            Boolean::make('Use Iframe?', 'use_iframe'),
-            Textarea::make('Booking Iframe')->nullable(),
             Date::make('Opened At')->required(),
             Date::make('Closed At')->required(),
-        ];
-    }
-
-    protected function waiverFields()
-    {
-        return [
-            Textarea::make('Waiver Agreement', 'waiver'),
-            Textarea::make('Minor Agreement', 'waiver_minor'),
         ];
     }
 
@@ -173,23 +141,5 @@ class Location extends BaseResource
             nova('user') ? BelongsTo::make('Updated By', 'updater', nova('user'))->exceptOnForms() : null,
             DateTime::make('Updated At')->exceptOnForms(),
         ]);
-    }
-
-    protected function configurationFields()
-    {
-        return [
-            Text::make('Stripe Publishable Key', 'stripe_publishable')
-                ->nullable()
-                ->hideFromDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->hasRole(['Admin', 'Owner']);
-                }),
-            Text::make('Stripe Secret Key', 'stripe_secret')
-                ->nullable()
-                ->hideFromDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->hasRole(['Admin', 'Owner']);
-                }),
-        ];
     }
 }
