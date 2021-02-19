@@ -28,3 +28,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.0.1 - 2021-02-17
 
 - add orderlocation nova filter
+
+## 2.0.2 - 2021-02-18
+
+- add market nova filter
