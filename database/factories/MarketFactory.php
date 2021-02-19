@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -34,9 +34,6 @@ class MarketFactory extends Factory
             'timezone'            => 'EST',
             'content'             => $this->faker->sentences(3, true),
             'entered_at'          => $this->faker->date(),
-            'rooms_content'       => $this->faker->sentences(7, true),
-            'faq_content'         => $this->faker->sentences(7, true),
-            'competitors_content' => $this->faker->sentences(7, true),
             'creator_id'          => randomOrCreate(app('user')),
             'updater_id'          => randomOrCreate(app('user')),
         ];
