@@ -27,6 +27,10 @@ class CreateLocationsTable extends Migration
             $table->string('tripadvisor')->nullable()->unique(); // URL for location's TripAdvisor page
             $table->string('yelp')->nullable()->unique(); // URL for location's Yelp page
             
+            $table->foreignIdFor(app('image'))->nullable(); // Cover image for location
+            $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
+            $table->foreignIdFor(app('video'))->nullable(); // Featured video for the location
+            
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
             $table->string('gmb_account')->nullable();
 
