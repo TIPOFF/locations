@@ -57,6 +57,8 @@ class Location extends BaseResource
             new Panel('Review Data', $this->reviewFields()),
 
             new Panel('Hours of Operation', $this->hoursFields()),
+            
+            new Panel('Media Fields', $this->mediaFields()),
 
             nova('order') ? HasMany::make('Orders', 'orders', nova('order')) : null,
 
@@ -132,6 +134,15 @@ class Location extends BaseResource
             Date::make('Opened At')->required(),
             Date::make('Closed At')->required(),
         ];
+    }
+    
+    protected function mediaFields()
+    {
+        return array_filter([
+            nova('image') ? BelongsTo::make('Image', 'image', nova('image'))->nullable()->showCreateRelationButton() : null,
+            nova('image') ? BelongsTo::make('OG Image', 'ogimage', nova('image'))->nullable()->showCreateRelationButton() : null,
+            nova('video') ? BelongsTo::make('Video', 'video', nova('video'))->nullable()->showCreateRelationButton() : null,
+        ]);
     }
 
     protected function dataFields(): array
