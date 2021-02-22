@@ -44,3 +44,8 @@ All notable changes to `locations` will be documented in this file.
 ## 2.1.1 - 2021-02-19
 
 - register nova resources
+
+## 2.2.0 - 2021-02-22
+
+- modify location migration
+- refactor with has media trait
