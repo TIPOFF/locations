@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Models;
 
+use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Tipoff\Support\Models\BaseModel;
@@ -14,6 +15,7 @@ use Tipoff\Support\Traits\HasUpdater;
 class Market extends BaseModel
 {
     use HasPackageFactory;
+    use HasMedia;
     use HasCreator;
     use HasUpdater;
 
@@ -64,24 +66,9 @@ class Market extends BaseModel
         return $this->hasManyThrough(app('room'), app('location'));
     }
 
-    public function image()
-    {
-        return $this->belongsTo(app('image'));
-    }
-
-    public function ogimage()
-    {
-        return $this->belongsTo(app('image'), 'ogimage_id');
-    }
-
     public function map()
     {
         return $this->belongsTo(app('image'), 'map_image_id');
-    }
-
-    public function video()
-    {
-        return $this->belongsTo(app('video'));
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tipoff\Locations\Models;
 
 use Carbon\Carbon;
+use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -16,6 +17,7 @@ use Tipoff\Support\Traits\HasUpdater;
 class Location extends BaseModel
 {
     use HasPackageFactory;
+    use HasMedia;
     use HasCreator;
     use HasUpdater;
 
