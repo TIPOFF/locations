@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tippoff\Locations\Nova\Filters;
 
 use Illuminate\Database\Eloquent\Model;
