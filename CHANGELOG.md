@@ -49,3 +49,7 @@ All notable changes to `locations` will be documented in this file.
 
 - modify location migration
 - refactor with has media trait
+
+## 2.2.1 - 2021-02-24
+
+- require tipoff seo package
