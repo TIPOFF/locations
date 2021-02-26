@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations;
 
+use Tipoff\Locations\Commands\SyncLocations;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
 use Tipoff\Locations\Policies\LocationPolicy;
@@ -23,6 +24,9 @@ class LocationsServiceProvider extends TipoffServiceProvider
             ->hasNovaResources([
                 \Tipoff\Locations\Nova\Location::class,
                 \Tipoff\Locations\Nova\Market::class,
+            ])
+            ->hasCommands([
+                SyncLocations::class,
             ])
             ->name('locations')
             ->hasConfigFile();
