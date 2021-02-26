@@ -10,6 +10,7 @@ use Tipoff\Locations\Policies\LocationPolicy;
 use Tipoff\Locations\Policies\MarketPolicy;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
+use Tipoff\Locations\Commands\SyncLocations;
 
 class LocationsServiceProvider extends TipoffServiceProvider
 {
@@ -23,6 +24,9 @@ class LocationsServiceProvider extends TipoffServiceProvider
             ->hasNovaResources([
                 \Tipoff\Locations\Nova\Location::class,
                 \Tipoff\Locations\Nova\Market::class,
+            ])
+            ->hasCommands([
+                SyncLocations::class,
             ])
             ->name('locations')
             ->hasConfigFile();
