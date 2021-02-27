@@ -23,7 +23,6 @@ class CreateLocationsTable extends Migration
             $table->string('contact_email');
             $table->date('closed_at')->nullable();
             
-            $table->string('tripadvisor')->nullable()->unique(); // URL for location's TripAdvisor page
             $table->string('yelp')->nullable()->unique(); // URL for location's Yelp page
             
             $table->foreignIdFor(app('image'))->nullable(); // Cover image for location
