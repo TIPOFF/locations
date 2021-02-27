@@ -23,8 +23,6 @@ class CreateLocationsTable extends Migration
             $table->string('contact_email');
             $table->date('closed_at')->nullable();
             
-            $table->string('yelp')->nullable()->unique(); // URL for location's Yelp page
-            
             $table->foreignIdFor(app('image'))->nullable(); // Cover image for location
             $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
             $table->foreignIdFor(app('video'))->nullable(); // Featured video for the location
