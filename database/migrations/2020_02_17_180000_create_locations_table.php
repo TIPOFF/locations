@@ -23,7 +23,6 @@ class CreateLocationsTable extends Migration
             $table->string('contact_email');
             $table->date('closed_at')->nullable();
             
-            $table->string('facebook')->nullable()->unique(); // Username for location's facebook page. Prefix for link: https://www.facebook.com/ with trailing backslash. Will also use for link to facebook messenger, with prefix: https://m.me/
             $table->string('tripadvisor')->nullable()->unique(); // URL for location's TripAdvisor page
             $table->string('yelp')->nullable()->unique(); // URL for location's Yelp page
             
