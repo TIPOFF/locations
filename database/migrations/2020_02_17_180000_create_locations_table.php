@@ -31,6 +31,7 @@ class CreateLocationsTable extends Migration
             $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
             $table->foreignIdFor(app('video'))->nullable(); // Featured video for the location
             
+            $table->foreignIdFor(app('gmb_account'));
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
 
             // Remaining fields updated from GMB so have one place as source of truth
