@@ -32,7 +32,6 @@ class CreateLocationsTable extends Migration
             $table->foreignIdFor(app('video'))->nullable(); // Featured video for the location
             
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
-            $table->string('gmb_account')->nullable();
 
             // Remaining fields updated from GMB so have one place as source of truth
             $table->string('title')->nullable()->unique(); // Location Title for display from GMB.
