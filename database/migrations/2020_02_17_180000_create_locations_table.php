@@ -34,37 +34,11 @@ class CreateLocationsTable extends Migration
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
             $table->string('gmb_account')->nullable();
 
-            // Remaining fields updated from GMB so have one place as source of truth
-            $table->string('title')->nullable()->unique(); // Location Title for display from GMB.
-            $table->date('opened_at')->nullable();
-            $table->string('address')->nullable();
-            $table->string('address2')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('zip', 5)->nullable();
-            $table->string('phone', 25)->nullable();
-            $table->string('monday_open')->nullable();
-            $table->string('monday_close')->nullable();
-            $table->string('tuesday_open')->nullable();
-            $table->string('tuesday_close')->nullable();
-            $table->string('wednesday_open')->nullable();
-            $table->string('wednesday_close')->nullable();
-            $table->string('thursday_open')->nullable();
-            $table->string('thursday_close')->nullable();
-            $table->string('friday_open')->nullable();
-            $table->string('friday_close')->nullable();
-            $table->string('saturday_open')->nullable();
-            $table->string('saturday_close')->nullable();
-            $table->string('sunday_open')->nullable();
-            $table->string('sunday_close')->nullable();
             $table->string('maps_url')->nullable()->unique(); // URL for location's Google My Business / Google Maps page.
             $table->string('review_url')->nullable()->unique(); // URL for a new review at the location.
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
-            $table->string('place_location')->nullable()->unique(); // Google Places ID
             
-            $table->smallInteger('gmb_reviews')->nullable(); // Number of Google Reviews for Location
-            $table->unsignedDecimal('gmb_rating', 2, 1)->nullable(); // Google Review Aggregate for Location
+            $table->smallInteger('reviews')->nullable(); // Number of Reviews for Location
+            $table->unsignedDecimal('rating', 2, 1)->nullable(); // Aggregate Review Rating for Location
 
             $table->foreignIdFor(app('user'), 'creator_id');
             $table->foreignIdFor(app('user'), 'updater_id');
