@@ -7,8 +7,8 @@ namespace Tipoff\Locations\Commands;
 use Google_Client;
 use Google_Service_MyBusiness;
 use Illuminate\Console\Command;
-use Tipoff\Locations\Models\Location;
 use Tipoff\GoogleApi\Models\Key;
+use Tipoff\Locations\Models\Location;
 
 class SyncLocations extends Command
 {
