@@ -23,16 +23,12 @@ class CreateLocationsTable extends Migration
             $table->string('contact_email');
             $table->date('closed_at')->nullable();
             
-            $table->string('facebook')->nullable()->unique(); // Username for location's facebook page. Prefix for link: https://www.facebook.com/ with trailing backslash. Will also use for link to facebook messenger, with prefix: https://m.me/
-            $table->string('tripadvisor')->nullable()->unique(); // URL for location's TripAdvisor page
-            $table->string('yelp')->nullable()->unique(); // URL for location's Yelp page
-            
             $table->foreignIdFor(app('image'))->nullable(); // Cover image for location
             $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
             $table->foreignIdFor(app('video'))->nullable(); // Featured video for the location
             
+            $table->foreignIdFor(app('gmb_account'));
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
-            $table->string('gmb_account')->nullable();
 
             $table->string('maps_url')->nullable()->unique(); // URL for location's Google My Business / Google Maps page.
             $table->string('review_url')->nullable()->unique(); // URL for a new review at the location.
