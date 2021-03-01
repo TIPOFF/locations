@@ -8,7 +8,7 @@ use Google_Client;
 use Google_Service_MyBusiness;
 use Illuminate\Console\Command;
 use Tipoff\Locations\Models\Location;
-use Tipoff\Reviews\Models\Key;
+use Tipoff\GoogleApi\Models\Key;
 
 class SyncLocations extends Command
 {
