@@ -22,17 +22,17 @@ class CreateLocationsTable extends Migration
             $table->foreignIdFor(app('user'), 'manager_id')->nullable();
             $table->string('contact_email');
             $table->date('closed_at')->nullable();
-            
+
             $table->foreignIdFor(app('image'))->nullable(); // Cover image for location
             $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
             $table->foreignIdFor(app('video'))->nullable(); // Featured video for the location
-            
-            $table->foreignIdFor(app('gmb_account'));
+
+            $table->foreignIdFor(app('gmb_account'))->nullable();
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
 
             $table->string('maps_url')->nullable()->unique(); // URL for location's Google My Business / Google Maps page.
             $table->string('review_url')->nullable()->unique(); // URL for a new review at the location.
-            
+
             $table->smallInteger('reviews')->nullable(); // Number of Reviews for Location
             $table->unsignedDecimal('rating', 2, 1)->nullable(); // Aggregate Review Rating for Location
 
