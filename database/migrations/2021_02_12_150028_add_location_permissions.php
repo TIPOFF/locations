@@ -21,7 +21,11 @@ class AddLocationPermissions extends Migration
                          'view markets',
                          'create markets',
                          'update markets',
-                         'delete markets'
+                         'delete markets',
+                         'view timezones',
+                         'create timezones',
+                         'update timezones',
+                         'delete timezones'
                      ] as $name) {
                 app(Permission::class)::findOrCreate($name, null);
             };
