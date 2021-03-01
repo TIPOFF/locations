@@ -53,3 +53,8 @@ All notable changes to `locations` will be documented in this file.
 ## 2.2.1 - 2021-02-24
 
 - require tipoff seo package
+
+## 2.3.0 - 2021-03-01
+
+- update migrations
+- add commands
