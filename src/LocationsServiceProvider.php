@@ -22,7 +22,7 @@ class LocationsServiceProvider extends TipoffServiceProvider
             ->hasPolicies([
                 Location::class => LocationPolicy::class,
                 Market::class => MarketPolicy::class,
-                Timezone::class => TimezonePolicy::class
+                Timezone::class => TimezonePolicy::class,
             ])
             ->hasNovaResources([
                 \Tipoff\Locations\Nova\Location::class,
