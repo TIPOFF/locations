@@ -17,7 +17,7 @@ class CreateLocationsTable extends Migration
             $table->string('name')->unique(); // Internal reference name
             $table->string('abbreviation', 4)->unique(); // 3 digit abbreviation (all caps) for location. Option to add 4th digit character if necessary.
             $table->string('title_part')->nullable(); // For when have more than one location in a market, this is used to generate formal title.
-            $table->string('timezone'); // Informal symbol such as EST or CST
+            $table->foreignIdFor(app('timezone'));
             $table->foreignIdFor(Market::class);
             $table->foreignIdFor(app('user'), 'manager_id')->nullable();
             $table->string('contact_email');
