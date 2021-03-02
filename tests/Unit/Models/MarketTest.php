@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tipoff\Locations\Tests\Unit\Models;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
 use Tipoff\Locations\Tests\TestCase;
 

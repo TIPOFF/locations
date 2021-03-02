@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Exceptions;
 
-use Tipoff\Locations\Models\Market;
 use Exception;
+use Tipoff\Locations\Models\Market;
 
 class UnresolvedLocation extends Exception
 {
