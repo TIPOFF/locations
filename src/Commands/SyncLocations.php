@@ -38,8 +38,6 @@ class SyncLocations extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
@@ -58,14 +56,17 @@ class SyncLocations extends Command
             if ($client->isAccessTokenExpired()) {
                 $client->refreshToken(array_search('refresh_token', $token));
                 $newtoken = $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-                $savetoken = Key::updateOrCreate(
+                Key::updateOrCreate(
                     ['slug' => 'gmb-token'],
                     ['value' => json_encode($newtoken)]
                 );
             }
 
+            // TODO - This class needs to be defined!!!
+            /** @psalm-suppress UndefinedClass */
             $myBusiness = new Google_Service_MyBusiness($client);
 
+            /** @psalm-suppress UndefinedClass */
             $gmblocations = $myBusiness->accounts_locations->get($account)->toSimpleObject()->locations;
 
             foreach ($gmblocations as $gmb) {

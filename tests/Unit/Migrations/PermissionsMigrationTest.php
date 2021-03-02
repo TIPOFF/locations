@@ -6,6 +6,7 @@ namespace Tipoff\Locations\Tests\Unit\Migrations;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
 use Tipoff\Locations\Tests\TestCase;
 
 class PermissionsMigrationTest extends TestCase
@@ -16,6 +17,18 @@ class PermissionsMigrationTest extends TestCase
     public function permissions_seeded()
     {
         $this->assertTrue(Schema::hasTable('permissions'));
-        $this->assertDatabaseCount('permissions', 13);
+
+        $seededPermissions = app(Permission::class)->whereIn('name', [
+             'view locations',
+             'create locations',
+             'update locations',
+             'delete locations',
+             'view markets',
+             'create markets',
+             'update markets',
+             'delete markets',
+        ])->pluck('name');
+
+        $this->assertCount(8, $seededPermissions);
     }
 }
