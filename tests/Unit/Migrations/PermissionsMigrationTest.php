@@ -25,7 +25,7 @@ class PermissionsMigrationTest extends TestCase
              'view markets',
              'create markets',
              'update markets',
-             'delete markets'
+             'delete markets',
         ])->pluck('name');
 
         $this->assertCount(8, $seededPermissions);
