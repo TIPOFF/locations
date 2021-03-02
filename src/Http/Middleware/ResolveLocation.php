@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Http\Middleware;
 
+use Closure;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
 use Tipoff\Locations\Services\LocationResolver;
-use Closure;
 
 class ResolveLocation
 {
