@@ -20,16 +20,24 @@ class UnresolvedLocation extends Exception
 
     public function render()
     {
-        return view('website.markets.select', [
-            'market' => $this->market,
-            'html' => null,
-            'seotitle' => $this->market->title,
-            'seodescription' => "{ $this->market->title } has { $this->market->rooms->count() } different escape rooms and offers private escape games for groups & parties. Book your escape room today!",
-            'ogtitle' => $this->market->title,
-            'ogdescription' => "{ $this->market->title } has { $this->market->rooms->count() } different escape rooms and offers private escape games for groups & parties. Book your escape room today!",
-            'canonical' => "https://thegreatescaperoom.com{ $this->market->bookings_path }",
-            'image' => $this->market->image_id === null ? null : $this->market->image,
-            'ogimage' => $this->market->ogimage_id === null ? url('public/img/ogimage.png') : $this->market->ogimage,
-        ]);
+        if (view()->exists('website.markets.select')) {
+            return view('website.markets.select', [
+                'market' => $this->market,
+                'html' => null,
+                'seotitle' => $this->market->title,
+                'seodescription' => "{ $this->market->title } has { $this->market->rooms->count() } different escape rooms and offers private escape games for groups & parties. Book your escape room today!",
+                'ogtitle' => $this->market->title,
+                'ogdescription' => "{ $this->market->title } has { $this->market->rooms->count() } different escape rooms and offers private escape games for groups & parties. Book your escape room today!",
+                // TODO - tipoff specific helper for canonical url?
+                'canonical' => url($this->market->bookings_path),
+                'image' => $this->market->image_id === null ? null : $this->market->image,
+                // TODO - default image from config/tipoff.php?
+                'ogimage' => $this->market->ogimage_id === null ? url('public/img/ogimage.png') : $this->market->ogimage,
+            ]);
+        }
+
+        // If view doesnt exist, repackage and rethrow new exception
+        // TODO - this may not work.  Might be too late for this.
+        throw new Exception($this->getMessage(), $this->code, $this);
     }
 }
