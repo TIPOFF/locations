@@ -16,7 +16,7 @@ class CreateMarketsTable extends Migration
             $table->string('name')->unique();
             $table->string('title')->unique(); // Market Title for Display. Used publicly.
             $table->string('state'); // Just the 2-digit abbreviation.
-            $table->string('timezone');
+            $table->foreignIdFor(app('timezone'));
             $table->text('content')->nullable(); // Market specific content. Written in Markdown.
             $table->date('entered_at'); // Date first location opened in the market.
             $table->date('closed_at')->nullable();
