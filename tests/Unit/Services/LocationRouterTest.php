@@ -6,10 +6,8 @@ namespace Tipoff\Locations\Tests\Unit\Services;
 
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tipoff\Locations\Exceptions\UnresolvedLocation;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
-use Tipoff\Locations\Services\LocationResolver;
 use Tipoff\Locations\Services\LocationRouter;
 use Tipoff\Locations\Tests\TestCase;
 
