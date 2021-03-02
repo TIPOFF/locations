@@ -6,6 +6,7 @@ namespace Tipoff\Locations\Tests\Unit\Migrations;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
 use Tipoff\Locations\Tests\TestCase;
 
 class PermissionsMigrationTest extends TestCase
