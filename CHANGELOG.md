@@ -62,3 +62,8 @@ All notable changes to `locations` will be documented in this file.
 
 - allow nullable field in migration
 - fix tests
+
+## 2.3.2 - 2021-03-02
+
+- location router service
+- package permissions assigned to admin role
