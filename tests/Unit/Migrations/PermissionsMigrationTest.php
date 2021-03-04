@@ -25,8 +25,11 @@ class PermissionsMigrationTest extends TestCase
             'view markets',
             'create markets',
             'update markets',
+            'view profile links',
+            'create profile links',
+            'update profile links',
         ])->pluck('name');
 
-        $this->assertCount(6, $seededPermissions);
+        $this->assertCount(9, $seededPermissions);
     }
 }
