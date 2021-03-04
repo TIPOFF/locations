@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Tipoff\Locations\Models\Location;
 
-class CreateProfileLinkTable extends Migration
+class CreateProfileLinksTable extends Migration
 {
     public function up()
     {
