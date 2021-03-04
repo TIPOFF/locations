@@ -24,7 +24,6 @@ All notable changes to `locations` will be documented in this file.
 - add nova resources
 - add nova filters
 
-
 ## 2.0.1 - 2021-02-17
 
 - add orderlocation nova filter
@@ -58,3 +57,13 @@ All notable changes to `locations` will be documented in this file.
 
 - update migrations
 - add commands
+
+## 2.3.1 - 2021-03-01
+
+- allow nullable field in migration
+- fix tests
+
+## 2.3.2 - 2021-03-02
+
+- location router service
+- package permissions assigned to admin role
