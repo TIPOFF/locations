@@ -12,15 +12,9 @@ class AddLocationPermissions extends BasePermissionsMigration
             'view locations',
             'create locations',
             'update locations',
-            'delete locations',
             'view markets',
             'create markets',
             'update markets',
-            'delete markets',
-            'view timezones',
-            'create timezones',
-            'update timezones',
-            'delete timezones',
         ];
 
         $this->createPermissions($permissions);

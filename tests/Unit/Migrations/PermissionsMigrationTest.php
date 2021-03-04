@@ -22,17 +22,11 @@ class PermissionsMigrationTest extends TestCase
             'view locations',
             'create locations',
             'update locations',
-            'delete locations',
             'view markets',
             'create markets',
             'update markets',
-            'delete markets',
-            'view timezones',
-            'create timezones',
-            'update timezones',
-            'delete timezones',
         ])->pluck('name');
 
-        $this->assertCount(12, $seededPermissions);
+        $this->assertCount(6, $seededPermissions);
     }
 }
