@@ -31,8 +31,11 @@ class PermissionsMigrationTest extends TestCase
             'view gmb details',
             'create gmb details',
             'update gmb details',
+            'view gmb hours',
+            'create gmb hours',
+            'update gmb hours',
         ])->pluck('name');
 
-        $this->assertCount(12, $seededPermissions);
+        $this->assertCount(15, $seededPermissions);
     }
 }
