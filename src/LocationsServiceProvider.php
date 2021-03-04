@@ -24,11 +24,11 @@ class LocationsServiceProvider extends TipoffServiceProvider
     {
         $package
             ->hasPolicies([
-                GmbDetail::class    => GmbDetailPolicy::class,
-                GmbHour::class      => GmbHourPolicy::class,
-                Location::class     => LocationPolicy::class,
-                Market::class       => MarketPolicy::class,
-                ProfileLink::class  => ProfileLinkPolicy::class,
+                GmbDetail::class => GmbDetailPolicy::class,
+                GmbHour::class => GmbHourPolicy::class,
+                Location::class => LocationPolicy::class,
+                Market::class => MarketPolicy::class,
+                ProfileLink::class => ProfileLinkPolicy::class,
             ])
             ->hasNovaResources([
                 \Tipoff\Locations\Nova\Location::class,
