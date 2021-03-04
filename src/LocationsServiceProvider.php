@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Tipoff\Locations;
 
 use Tipoff\Locations\Commands\SyncLocations;
+use Tipoff\Locations\Models\GmbDetail;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
 use Tipoff\Locations\Models\ProfileLink;
+use Tipoff\Locations\Policies\GmbDetailPolicy;
 use Tipoff\Locations\Policies\LocationPolicy;
 use Tipoff\Locations\Policies\MarketPolicy;
 use Tipoff\Locations\Policies\ProfileLinkPolicy;
@@ -20,6 +22,7 @@ class LocationsServiceProvider extends TipoffServiceProvider
     {
         $package
             ->hasPolicies([
+                GmbDetail::class => GmbDetailPolicy::class,
                 Location::class => LocationPolicy::class,
                 Market::class => MarketPolicy::class,
                 ProfileLink::class => ProfileLinkPolicy::class,

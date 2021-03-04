@@ -28,8 +28,11 @@ class PermissionsMigrationTest extends TestCase
             'view profile links',
             'create profile links',
             'update profile links',
+            'view gmb details',
+            'create gmb details',
+            'update gmb details',
         ])->pluck('name');
 
-        $this->assertCount(9, $seededPermissions);
+        $this->assertCount(12, $seededPermissions);
     }
 }
