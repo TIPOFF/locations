@@ -7,10 +7,8 @@ namespace Tipoff\Locations;
 use Tipoff\Locations\Commands\SyncLocations;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
-use Tipoff\Locations\Models\Timezone;
 use Tipoff\Locations\Policies\LocationPolicy;
 use Tipoff\Locations\Policies\MarketPolicy;
-use Tipoff\Locations\Policies\TimezonePolicy;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 
@@ -22,7 +20,6 @@ class LocationsServiceProvider extends TipoffServiceProvider
             ->hasPolicies([
                 Location::class => LocationPolicy::class,
                 Market::class => MarketPolicy::class,
-                Timezone::class => TimezonePolicy::class,
             ])
             ->hasNovaResources([
                 \Tipoff\Locations\Nova\Location::class,
