@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class Location extends Filter
+class GmbHour extends Filter
 {
     /**
      * The filter's component.
@@ -27,7 +27,7 @@ class Location extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('location_id', $value);
+        return $query->where('gmb_hour_id', $value);
     }
 
     /**
@@ -39,8 +39,8 @@ class Location extends Filter
     public function options(Request $request)
     {
         /** @var Model $locationModel */
-        $locationModel = app('location');
+        $hour_model = app('gmb_hour');
 
-        return $locationModel::pluck('id', 'name');
+        return $hour_model::pluck('id');
     }
 }

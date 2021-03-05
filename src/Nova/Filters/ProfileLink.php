@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class Location extends Filter
+class ProfileLink extends Filter
 {
     /**
      * The filter's component.
@@ -27,7 +27,7 @@ class Location extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('location_id', $value);
+        return $query->where('profile_link_id', $value);
     }
 
     /**
@@ -39,8 +39,8 @@ class Location extends Filter
     public function options(Request $request)
     {
         /** @var Model $locationModel */
-        $locationModel = app('location');
+        $gmb_detail_model = app('profile_link');
 
-        return $locationModel::pluck('id', 'name');
+        return $gmb_detail_model::pluck('id');
     }
 }
