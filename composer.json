@@ -17,6 +17,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "drewroberts/media": "^3.2.2",
+        "tipoff/addresses": "^2.0.0",
         "tipoff/authorization": "^2.3.1",
         "tipoff/seo": "^1.0.8",
         "tipoff/support": "^1.5.7"
