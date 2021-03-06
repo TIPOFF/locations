@@ -24,12 +24,12 @@ class GmbDetailPolicy
 
     public function create(UserInterface $user): bool
     {
-        return $user->hasPermissionTo('create gmb details') ? true : false;
+        return false;
     }
 
     public function update(UserInterface $user, GmbDetail $gmb_detail): bool
     {
-        return $user->hasPermissionTo('update gmb details') ? true : false;
+        return false;
     }
 
     public function delete(UserInterface $user, GmbDetail $gmb_detail): bool

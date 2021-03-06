@@ -24,12 +24,12 @@ class GmbHourPolicy
 
     public function create(UserInterface $user): bool
     {
-        return $user->hasPermissionTo('create gmb hours') ? true : false;
+        return false;
     }
 
     public function update(UserInterface $user, GmbHour $gmb_hour): bool
     {
-        return $user->hasPermissionTo('update gmb hours') ? true : false;
+        return false;
     }
 
     public function delete(UserInterface $user, GmbHour $gmb_hour): bool
