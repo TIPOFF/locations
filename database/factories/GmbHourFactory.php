@@ -10,18 +10,8 @@ use Tipoff\Locations\Models\Location;
 
 class GmbHourFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = GmbHour::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         return [
