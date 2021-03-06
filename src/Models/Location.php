@@ -43,8 +43,9 @@ class Location extends BaseModel
             if (empty($location->market_id)) {
                 throw new \Exception('A location must be in a market.');
             }
-            if (empty($location->timezone)) {
-                $location->timezone = 'EST';
+            if (empty($location->timezone_id)) {
+                // @todo refactor to fetch EST timezone and save it here
+                $location->timezone_id = 1;
             }
             if (empty($location->contact_email)) {
                 $location->contact_email = $location->slug . '@thegreatescaperoom.com';
@@ -288,7 +289,7 @@ class Location extends BaseModel
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                $bookingModel::yesterday()
+            $bookingModel::yesterday()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -315,7 +316,7 @@ class Location extends BaseModel
                 $query->where('location_id', $this->id);
             })->sum('amount')
             +
-                $bookingModel::week()
+            $bookingModel::week()
             ->whereHas('order', function (Builder $query) {
                 $query->where('location_id', $this->id);
             })->sum('total_fees')) / 100, 2);
@@ -375,7 +376,7 @@ class Location extends BaseModel
             ->first();
 
         // Virtual  Slots
-        if (! $slot) {
+        if (!$slot) {
             /** @var string $slotCollection */
             $slotCollection = config('locations.collection_class.slot'); //@TODO phuclh Need to refactor this later since we do not have this collection in this package.
 

@@ -37,8 +37,9 @@ class Market extends BaseModel
             if (empty($market->entered_at)) {
                 $market->entered_at = '2016-01-01';
             }
-            if (empty($market->timezone)) {
-                $market->timezone = 'EST';
+            if (empty($market->timezone_id)) {
+                // @todo refactor to fetch EST timezone and save it here
+                $market->timezone_id = 1;
             }
         });
 
@@ -158,7 +159,7 @@ class Market extends BaseModel
 
         $rooms = $roomModel::whereIn('location_id', $locations->pluck('id'))->whereNull('closed_at')->get();
 
-        return $this->title.' has '.$rooms->count().' different escape rooms and offers private escape games for groups & parties. Book your escape room today!';
+        return $this->title . ' has ' . $rooms->count() . ' different escape rooms and offers private escape games for groups & parties. Book your escape room today!';
     }
 
     public function findAllThemes()
