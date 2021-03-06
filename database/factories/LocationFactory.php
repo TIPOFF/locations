@@ -31,8 +31,8 @@ class LocationFactory extends Factory
             'name'                  => $city,
             'slug'                  => Str::slug($city),
             'title_part'            => $city,
-            'timezone'              => $this->faker->timezone,
             'market_id'             => randomOrCreate(Market::class),
+            'timezone_id'           => randomOrCreate(app('timezone')),
             'creator_id'            => randomOrCreate(app('user')),
             'updater_id'            => randomOrCreate(app('user'))
         ];
