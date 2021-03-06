@@ -9,12 +9,10 @@ use Tipoff\Locations\Models\GmbDetail;
 use Tipoff\Locations\Models\GmbHour;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
-use Tipoff\Locations\Models\ProfileLink;
 use Tipoff\Locations\Policies\GmbDetailPolicy;
 use Tipoff\Locations\Policies\GmbHourPolicy;
 use Tipoff\Locations\Policies\LocationPolicy;
 use Tipoff\Locations\Policies\MarketPolicy;
-use Tipoff\Locations\Policies\ProfileLinkPolicy;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 
@@ -28,7 +26,6 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 GmbHour::class => GmbHourPolicy::class,
                 Location::class => LocationPolicy::class,
                 Market::class => MarketPolicy::class,
-                ProfileLink::class => ProfileLinkPolicy::class,
             ])
             ->hasNovaResources([
                 \Tipoff\Locations\Nova\Location::class,
