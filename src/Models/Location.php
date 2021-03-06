@@ -376,7 +376,7 @@ class Location extends BaseModel
             ->first();
 
         // Virtual  Slots
-        if (!$slot) {
+        if (! $slot) {
             /** @var string $slotCollection */
             $slotCollection = config('locations.collection_class.slot'); //@TODO phuclh Need to refactor this later since we do not have this collection in this package.
 
