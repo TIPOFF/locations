@@ -51,7 +51,7 @@ class Location extends BaseModel
             }
             if (empty($location->abbreviation)) {
                 do {
-                    $abbreviation = Str::upper(Str::limit(Str::slug($location->name), 3)) . Str::upper(Str::random(1));
+                    $abbreviation = Str::upper(Str::substr(Str::slug($location->name), 0, 3)) . Str::upper(Str::random(1));
                 } while (self::where('abbreviation', $abbreviation)->first()); //check if the token already exists and if it does, try again
                 $location->abbreviation = $abbreviation;
             }
