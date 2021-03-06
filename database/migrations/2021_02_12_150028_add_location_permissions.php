@@ -12,12 +12,12 @@ class AddLocationPermissions extends BasePermissionsMigration
             'view locations',
             'create locations',
             'update locations',
-            'delete locations',
             'view markets',
             'create markets',
             'update markets',
-            'delete markets'
-            ];
+            'view gmb details',
+            'view gmb hours',
+        ];
 
         $this->createPermissions($permissions);
     }

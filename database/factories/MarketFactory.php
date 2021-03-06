@@ -10,18 +10,8 @@ use Tipoff\Locations\Models\Market;
 
 class MarketFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Market::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         $city = $this->faker->city;
@@ -31,9 +21,9 @@ class MarketFactory extends Factory
             'name'                => $city,
             'title'               => $city,
             'state'               => $this->faker->stateAbbr,
-            'timezone'            => 'EST',
             'content'             => $this->faker->sentences(3, true),
             'entered_at'          => $this->faker->date(),
+            'timezone_id'         => randomOrCreate(app('timezone')),
             'creator_id'          => randomOrCreate(app('user')),
             'updater_id'          => randomOrCreate(app('user')),
         ];

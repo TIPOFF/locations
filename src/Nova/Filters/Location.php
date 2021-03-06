@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tippoff\Locations\Nova\Filters;
+namespace Tipoff\Locations\Nova\Filters;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;

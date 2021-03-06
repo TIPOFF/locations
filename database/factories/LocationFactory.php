@@ -11,18 +11,8 @@ use Tipoff\Locations\Models\Market;
 
 class LocationFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Location::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         $city = $this->faker->city;
@@ -31,8 +21,8 @@ class LocationFactory extends Factory
             'name'                  => $city,
             'slug'                  => Str::slug($city),
             'title_part'            => $city,
-            'timezone'              => $this->faker->timezone,
             'market_id'             => randomOrCreate(Market::class),
+            'timezone_id'           => randomOrCreate(app('timezone')),
             'creator_id'            => randomOrCreate(app('user')),
             'updater_id'            => randomOrCreate(app('user'))
         ];
