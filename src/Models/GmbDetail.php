@@ -15,6 +15,8 @@ class GmbDetail extends BaseModel
     use HasCreator;
     use HasUpdater;
 
+    public $timestamps = false;
+
     public function location()
     {
         return $this->belongsTo(Location::class);

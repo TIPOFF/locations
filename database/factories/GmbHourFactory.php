@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tipoff\Locations\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Date;
 use Tipoff\Locations\Models\GmbHour;
 use Tipoff\Locations\Models\Location;
 
@@ -29,7 +30,8 @@ class GmbHourFactory extends Factory
             'saturday_close'    => $this->faker->text,
             'sunday_open'       => $this->faker->text,
             'sunday_close'      => $this->faker->text,
-            'location_id'       => Location::factory()->create()->id
+            'location_id'       => Location::factory()->create()->id,
+            'created_at'        => Date::now()
         ];
     }
 }
