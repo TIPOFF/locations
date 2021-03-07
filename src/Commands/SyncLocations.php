@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Commands;
 
-use Google_Client;
 use Google_Service_MyBusiness;
 use Illuminate\Console\Command;
-use Tipoff\GoogleApi\Models\Key;
 use Tipoff\Locations\Models\Location;
 
 class SyncLocations extends Command
@@ -44,29 +42,9 @@ class SyncLocations extends Command
         // @todo Needs Refactoring
         $accounts = ['accounts/108772742689976468845/locations', 'accounts/116666006358174413896/locations'];
 
+        $myBusiness = app()->make(Google_Service_MyBusiness::class);
+
         foreach ($accounts as $account) {
-            $client = new Google_Client();
-            $client->setAuthConfig(resource_path('client_secret.json'));
-            $client->addScope(['https://www.googleapis.com/auth/business.manage']);
-            $client->setAccessType('offline');
-
-            $token = json_decode(Key::where('slug', 'gmb-token')->first()->value, true);
-            $client->setAccessToken($token);
-
-            if ($client->isAccessTokenExpired()) {
-                $client->refreshToken(array_search('refresh_token', $token));
-                $newtoken = $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-                Key::updateOrCreate(
-                    ['slug' => 'gmb-token'],
-                    ['value' => json_encode($newtoken)]
-                );
-            }
-
-            // TODO - This class needs to be defined!!!
-            /** @psalm-suppress UndefinedClass */
-            $myBusiness = new Google_Service_MyBusiness($client);
-
-            /** @psalm-suppress UndefinedClass */
             $gmblocations = $myBusiness->accounts_locations->get($account)->toSimpleObject()->locations;
 
             foreach ($gmblocations as $gmb) {
