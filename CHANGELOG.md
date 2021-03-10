@@ -71,3 +71,9 @@ All notable changes to `locations` will be documented in this file.
 ## 2.4.0 - 2021-03-06
 
 - gmb data
+
+## 2.5.0 - 2021-03-10
+
+- implement addresses
+- migrate permissions
+- grant permissions to roles
