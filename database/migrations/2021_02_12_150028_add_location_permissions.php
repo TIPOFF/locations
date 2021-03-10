@@ -9,14 +9,14 @@ class AddLocationPermissions extends BasePermissionsMigration
     public function up()
     {
         $permissions = [
-            'view locations',
-            'create locations',
-            'update locations',
-            'view markets',
-            'create markets',
-            'update markets',
-            'view gmb details',
-            'view gmb hours',
+            'view locations' => ['Owner', 'Staff'],
+            'create locations' => ['Owner'],
+            'update locations' => ['Owner'],
+            'view markets' => ['Owner', 'Staff'],
+            'create markets' => ['Owner'],
+            'update markets' => ['Owner'],
+            'view gmb details' => ['Owner', 'Staff'],
+            'view gmb hours' => ['Owner', 'Staff'],
         ];
 
         $this->createPermissions($permissions);
