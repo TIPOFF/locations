@@ -19,6 +19,7 @@ class CreateLocationsTable extends Migration
             $table->string('title_part')->nullable(); // For when have more than one location in a market, this is used to generate formal title.
             $table->foreignIdFor(app('timezone'));
             $table->foreignIdFor(Market::class);
+            $table->foreignIdFor(app('domestic_address'))->nullable();
             $table->foreignIdFor(app('user'), 'manager_id')->nullable();
             $table->string('contact_email');
             $table->date('closed_at')->nullable();
