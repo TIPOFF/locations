@@ -16,16 +16,12 @@ class CreateGmbDetailsTable extends Migration
             $table->id();
             $table->foreignIdFor(Location::class);
             $table->string('name');
-            $table->date('opened_at')->nullable();
-            $table->string('address')->nullable();
-            $table->string('address2')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('zip', 5)->nullable();
+            $table->foreignIdFor(app('domestic_address'))->nullable();
             $table->string('phone', 25)->nullable();
+            $table->foreignIdFor(Webpage::class)->nullable();
+            $table->date('opened_at')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->foreignIdFor(Webpage::class)->nullable();
 
             $table->foreignIdFor(app('user'), 'creator_id')->nullable(); // User that requested the place data to be updated
             $table->timestamp('created_at');
