@@ -19,7 +19,7 @@ class GmbHour extends BaseResource
     public static $title = 'id';
 
     public static $search = [
-        'id'
+        'id',
     ];
 
     public function fieldsForIndex(NovaRequest $request)

@@ -19,7 +19,7 @@ class GmbDetail extends BaseResource
     public static $title = 'id';
 
     public static $search = [
-        'id', 'name', 'address', 'address2', 'city', 'state', 'zip', 'phone', 'latitude', 'longitude'
+        'id', 'name', 'address', 'address2', 'city', 'state', 'zip', 'phone', 'latitude', 'longitude',
     ];
 
     public function fieldsForIndex(NovaRequest $request)
