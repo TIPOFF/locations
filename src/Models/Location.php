@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Models;
 
+use Assert\Assert;
 use Carbon\Carbon;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,9 +41,9 @@ class Location extends BaseModel
         parent::boot();
 
         static::saving(function ($location) {
-            if (empty($location->market_id)) {
-                throw new \Exception('A location must be in a market.');
-            }
+            Assert::lazy()
+                ->that($location->market_id)->notEmpty('A location must be in a market.')
+                ->verifyNow();
             if (empty($location->timezone_id)) {
                 // @todo refactor to fetch EST timezone and save it here
                 $location->timezone_id = 1;
