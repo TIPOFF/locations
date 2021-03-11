@@ -77,3 +77,7 @@ All notable changes to `locations` will be documented in this file.
 - implement addresses
 - migrate permissions
 - grant permissions to roles
+
+## 2.5.1 - 2021-03-10
+
+- gmb data nova resources
