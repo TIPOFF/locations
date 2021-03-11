@@ -28,6 +28,8 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 Market::class => MarketPolicy::class,
             ])
             ->hasNovaResources([
+                \Tipoff\Locations\Nova\GmbDetail::class,
+                \Tipoff\Locations\Nova\GmbHour::class,
                 \Tipoff\Locations\Nova\Location::class,
                 \Tipoff\Locations\Nova\Market::class,
             ])
