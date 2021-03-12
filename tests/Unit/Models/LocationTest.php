@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Tests\Unit\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Tests\TestCase;
 use Tipoff\Support\Contracts\Checkout\Filters\ItemFilter;
 use Tipoff\Support\Contracts\Checkout\OrderInterface;
 use Tipoff\Support\Contracts\Checkout\OrderItemInterface;
-use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Objects\DiscountableValue;
 
 class LocationTest extends TestCase
@@ -103,7 +103,7 @@ class LocationTest extends TestCase
             ->andReturnSelf();
         $itemFilter->shouldReceive('apply')
             ->once()
-            ->andReturn(collect([$item1, $item2]));
+            ->andReturn(new Collection([$item1, $item2]));
 
         $service = \Mockery::mock(OrderInterface::class);
         $service->shouldReceive('itemFilter')
