@@ -10,7 +10,6 @@ use Tipoff\Locations\Tests\TestCase;
 use Tipoff\Support\Contracts\Checkout\Filters\ItemFilter;
 use Tipoff\Support\Contracts\Checkout\OrderInterface;
 use Tipoff\Support\Contracts\Checkout\OrderItemInterface;
-use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Objects\DiscountableValue;
 
 class LocationTest extends TestCase
@@ -113,4 +112,3 @@ class LocationTest extends TestCase
         $this->app->instance(OrderInterface::class, $service);
     }
 }
-
