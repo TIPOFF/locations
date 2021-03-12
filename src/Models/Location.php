@@ -10,6 +10,8 @@ use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Tipoff\Support\Contracts\Checkout\OrderInterface;
+use Tipoff\Support\Contracts\Checkout\OrderItemInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -271,56 +273,70 @@ class Location extends BaseModel
 
     public function getBookingsYesterdayAttribute()
     {
-        /** @var Model $bookingModel */
-        $bookingModel = app('booking');
+        /** @var OrderInterface $service */
+        $service = findService(OrderInterface::class);
+        if ($service) {
+            return $service::itemFilter()
+                ->bySellableType(morphClass('booking') ?? '')
+                ->byLocation($this->id)
+                ->yesterday()
+                ->apply()
+                ->count();
+        }
 
-        return $bookingModel::yesterday()
-            ->whereHas('order', function (Builder $query) {
-                $query->where('location_id', $this->id);
-            })->count();
+        return 0;
     }
 
     public function getRevenueBookedYesterdayAttribute()
     {
-        /** @var Model $bookingModel */
-        $bookingModel = app('booking');
+        /** @var OrderInterface $service */
+        $service = findService(OrderInterface::class);
+        if ($service) {
+            $amount = $service::itemFilter()
+                ->bySellableType(morphClass('booking') ?? '')
+                ->byLocation($this->id)
+                ->yesterday()
+                ->apply()
+                ->sum(function (OrderItemInterface $orderItem) {
+                    return $orderItem->getAmountTotal()->getDiscountedAmount();
+                });
 
-        return number_format(($bookingModel::yesterday()
-            ->whereHas('order', function (Builder $query) {
-                $query->where('location_id', $this->id);
-            })->sum('amount')
-            +
-            $bookingModel::yesterday()
-            ->whereHas('order', function (Builder $query) {
-                $query->where('location_id', $this->id);
-            })->sum('total_fees')) / 100, 2);
+            return number_format($amount / 100, 2);
+        }
+
+        return 0;
     }
 
     public function getBookingsLastWeekAttribute()
     {
-        /** @var Model $bookingModel */
-        $bookingModel = app('booking');
-
-        return $bookingModel::week()
-            ->whereHas('order', function (Builder $query) {
-                $query->where('location_id', $this->id);
-            })->count();
+        /** @var OrderInterface $service */
+        $service = findService(OrderInterface::class);
+        if ($service) {
+            return $service::itemFilter()
+                ->bySellableType(morphClass('booking') ?? '')
+                ->byLocation($this->id)
+                ->week()
+                ->apply()
+                ->count();
+        }
     }
 
     public function getRevenueBookedLastWeekAttribute()
     {
-        /** @var Model $bookingModel */
-        $bookingModel = app('booking');
+        /** @var OrderInterface $service */
+        $service = findService(OrderInterface::class);
+        if ($service) {
+            $amount = $service::itemFilter()
+                ->bySellableType(morphClass('booking') ?? '')
+                ->byLocation($this->id)
+                ->week()
+                ->apply()
+                ->sum(function (OrderItemInterface $orderItem) {
+                    return $orderItem->getAmountTotal()->getDiscountedAmount();
+                });
 
-        return number_format(($bookingModel::week()
-            ->whereHas('order', function (Builder $query) {
-                $query->where('location_id', $this->id);
-            })->sum('amount')
-            +
-            $bookingModel::week()
-            ->whereHas('order', function (Builder $query) {
-                $query->where('location_id', $this->id);
-            })->sum('total_fees')) / 100, 2);
+            return number_format($amount / 100, 2);
+        }
     }
 
     /**

@@ -21,7 +21,7 @@
         "tipoff/authorization": "^2.5.2",
         "tipoff/laravel-google-api": "^1.3.2",
         "tipoff/seo": "^2.1.1",
-        "tipoff/support": "^1.6.0"
+        "tipoff/support": "dev-pdbreen/feature/checkout-item as 1.6.1"
     },
     "require-dev": {
         "tipoff/test-support": "^1.2.0"
