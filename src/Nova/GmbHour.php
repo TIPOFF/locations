@@ -21,6 +21,8 @@ class GmbHour extends BaseResource
     public static $search = [
         'id',
     ];
+    
+    public static $group = 'Locations';
 
     public function fieldsForIndex(NovaRequest $request)
     {

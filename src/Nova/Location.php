@@ -29,7 +29,7 @@ class Location extends BaseResource
         'id',
     ];
 
-    public static $group = 'Escape Rooms';
+    public static $group = 'Locations';
 
     public function fieldsForIndex(NovaRequest $request)
     {
