@@ -89,3 +89,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.5.3 - 2021-03-12
 
 - fix dependency
+
+## 2.5.4 - 2021-03-12
+
+- improve location calculated values
