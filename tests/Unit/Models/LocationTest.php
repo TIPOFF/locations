@@ -113,4 +113,3 @@ class LocationTest extends TestCase
         $this->app->instance(OrderInterface::class, $service);
     }
 }
-
