@@ -20,8 +20,8 @@
         "tipoff/addresses": "^2.4.3",
         "tipoff/authorization": "^2.5.4",
         "tipoff/laravel-google-api": "^1.3.2",
-        "tipoff/seo": "^2.1.1",
-        "tipoff/support": "dev-pdbreen/feature/checkout-item as 1.6.1"
+        "tipoff/seo": "^2.2.0",
+        "tipoff/support": "^1.6.2"
     },
     "require-dev": {
         "tipoff/test-support": "^1.2.0"
