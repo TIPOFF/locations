@@ -81,3 +81,11 @@ All notable changes to `locations` will be documented in this file.
 ## 2.5.1 - 2021-03-10
 
 - gmb data nova resources
+
+## 2.5.2 - 2021-03-12
+
+- nova resource group
+
+## 2.5.3 - 2021-03-12
+
+- fix dependency
