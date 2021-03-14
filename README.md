@@ -40,6 +40,8 @@ We include the following models:
 
 **List of Models**
 
+- GMB Detail
+- GMB Hour
 - Location
 - Market
 
