@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Tipoff\Locations\Models\Market;
 
 class CreateLocationsTable extends Migration
 {
@@ -18,8 +17,9 @@ class CreateLocationsTable extends Migration
             $table->string('abbreviation', 4)->unique(); // 3 digit abbreviation (all caps) for location. Option to add 4th digit character if necessary.
             $table->string('title_part')->nullable(); // For when have more than one location in a market, this is used to generate formal title.
             $table->foreignIdFor(app('timezone'));
-            $table->foreignIdFor(Market::class);
+            $table->foreignIdFor(app('market'));
             $table->foreignIdFor(app('domestic_address'))->nullable();
+            $table->foreignIdFor(app('phone'))->nullable();
             $table->foreignIdFor(app('user'), 'manager_id')->nullable();
             $table->string('contact_email');
             $table->date('closed_at')->nullable();

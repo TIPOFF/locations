@@ -18,7 +18,6 @@ class GmbDetailFactory extends Factory
         return [
             'name'          => $this->faker->name,
             'opened_at'     => $this->faker->date('Y-m-d'),
-            'phone'         => $this->faker->phoneNumber,
             'latitude'      => $this->faker->latitude,
             'longitude'     => $this->faker->longitude,
             'location_id'   => Location::factory()->create()->id,

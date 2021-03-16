@@ -17,7 +17,7 @@ class CreateGmbDetailsTable extends Migration
             $table->foreignIdFor(Location::class);
             $table->string('name');
             $table->foreignIdFor(app('domestic_address'))->nullable();
-            $table->string('phone', 25)->nullable();
+            $table->foreignIdFor(app('phone'))->nullable();
             $table->foreignIdFor(Webpage::class)->nullable();
             $table->date('opened_at')->nullable();
             $table->string('latitude')->nullable();
