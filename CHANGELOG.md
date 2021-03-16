@@ -93,3 +93,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.5.4 - 2021-03-12
 
 - improve location calculated values
+
+## 2.6.0 - 2021-03-15
+
+- phone relationship
