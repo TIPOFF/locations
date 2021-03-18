@@ -6,7 +6,6 @@ namespace Tipoff\Locations\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -64,10 +63,9 @@ class GmbDetail extends BaseResource
 
     protected function dataFields(): array
     {
-        return [
-            ID::make(),
-            DateTime::make('Created At')->exceptOnForms(),
-            nova('user') ? BelongsTo::make('Creator', 'creator', nova('user'))->exceptOnForms() : null,
-        ];
+        return array_merge(
+            parent::dataFields(),
+            $this->creatorDataFields(),
+        );
     }
 }
