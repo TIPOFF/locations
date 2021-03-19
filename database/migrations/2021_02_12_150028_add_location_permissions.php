@@ -9,6 +9,7 @@ class AddLocationPermissions extends BasePermissionsMigration
     public function up()
     {
         $permissions = [
+            'all locations' => ['Owner', 'Executive'],
             'view locations' => ['Owner', 'Executive', 'Staff'],
             'create locations' => ['Owner', 'Executive'],
             'update locations' => ['Owner', 'Executive'],
