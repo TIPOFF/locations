@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Tests\Unit\Traits;
 
-
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
 use Tipoff\Locations\Models\Location;
