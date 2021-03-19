@@ -97,3 +97,8 @@ All notable changes to `locations` will be documented in this file.
 ## 2.6.0 - 2021-03-15
 
 - phone relationship
+
+## 2.7.0 - 2021-03-15
+
+- all locations permission
+- migration changes
