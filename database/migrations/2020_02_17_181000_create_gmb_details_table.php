@@ -14,14 +14,14 @@ class CreateGmbDetailsTable extends Migration
     {
         Schema::create('gmb_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Location::class);
+            $table->foreignIdFor(app('location'));
             $table->string('name');
             $table->foreignIdFor(app('domestic_address'))->nullable();
             $table->foreignIdFor(app('phone'))->nullable();
-            $table->foreignIdFor(Webpage::class)->nullable();
+            $table->foreignIdFor(app('webpage'))->nullable();
             $table->date('opened_at')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude', 10, 6)->nullable();
+            $table->float('longitude', 10, 6)->nullable();
 
             $table->foreignIdFor(app('user'), 'creator_id')->nullable(); // User that requested the place data to be updated
             $table->timestamp('created_at');
