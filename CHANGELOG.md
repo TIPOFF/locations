@@ -102,3 +102,7 @@ All notable changes to `locations` will be documented in this file.
 
 - all locations permission
 - migration changes
+
+## 2.7.1 - 2021-03-20
+
+- change latitude & longitude in migration
