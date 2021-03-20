@@ -7,7 +7,6 @@ namespace Tipoff\Locations\Database\Factories;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tipoff\Locations\Models\Location;
-use Tipoff\Locations\Models\Market;
 
 class LocationFactory extends Factory
 {
@@ -21,7 +20,7 @@ class LocationFactory extends Factory
             'name'                  => $city,
             'slug'                  => Str::slug($city),
             'title_part'            => $city,
-            'market_id'             => randomOrCreate(Market::class),
+            'market_id'             => randomOrCreate(app('market')),
             'timezone_id'           => randomOrCreate(app('timezone')),
             'creator_id'            => randomOrCreate(app('user')),
             'updater_id'            => randomOrCreate(app('user'))

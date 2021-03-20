@@ -7,7 +7,6 @@ namespace Tipoff\Locations\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Date;
 use Tipoff\Locations\Models\GmbDetail;
-use Tipoff\Locations\Models\Location;
 
 class GmbDetailFactory extends Factory
 {
@@ -20,7 +19,7 @@ class GmbDetailFactory extends Factory
             'opened_at'     => $this->faker->date('Y-m-d'),
             'latitude'      => $this->faker->latitude,
             'longitude'     => $this->faker->longitude,
-            'location_id'   => Location::factory()->create()->id,
+            'location_id'   => randomOrCreate(app('location')),
             'created_at'    => Date::now()
         ];
     }
