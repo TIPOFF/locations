@@ -20,15 +20,15 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            SupportServiceProvider::class,
-            AddressesServiceProvider::class,
-            AuthorizationServiceProvider::class,
-            PermissionServiceProvider::class,
-            MediaServiceProvider::class,
-            LocationsServiceProvider::class,
-            SeoServiceProvider::class,
             NovaCoreServiceProvider::class,
             NovaPackageServiceProvider::class,
+            SupportServiceProvider::class,
+            PermissionServiceProvider::class,
+            AuthorizationServiceProvider::class,
+            AddressesServiceProvider::class,
+            MediaServiceProvider::class,
+            SeoServiceProvider::class,
+            LocationsServiceProvider::class,
         ];
     }
 }
