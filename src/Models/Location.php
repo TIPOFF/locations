@@ -50,9 +50,6 @@ class Location extends BaseModel
                 // @todo refactor to fetch EST timezone and save it here
                 $location->timezone_id = 1;
             }
-            if (empty($location->contact_email)) {
-                $location->contact_email = $location->slug . '@thegreatescaperoom.com';
-            }
             if (empty($location->abbreviation)) {
                 do {
                     $abbreviation = Str::upper(Str::substr(Str::slug($location->name), 0, 3)) . Str::upper(Str::random(1));
@@ -74,6 +71,11 @@ class Location extends BaseModel
     public function manager()
     {
         return $this->belongsTo(app('user'), 'manager_id');
+    }
+
+    public function email()
+    {
+        return $this->hasOne(app('email_address'));
     }
 
     public function contacts()
