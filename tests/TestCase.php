@@ -10,25 +10,25 @@ use Spatie\Permission\PermissionServiceProvider;
 use Tipoff\Addresses\AddressesServiceProvider;
 use Tipoff\Authorization\AuthorizationServiceProvider;
 use Tipoff\Locations\LocationsServiceProvider;
-use Tipoff\Locations\Tests\Support\Providers\NovaPackageServiceProvider;
 use Tipoff\Seo\SeoServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
+use Tipoff\TestSupport\Providers\NovaPackageServiceProvider;
 
 class TestCase extends BaseTestCase
 {
     protected function getPackageProviders($app)
     {
         return [
-            SupportServiceProvider::class,
-            AddressesServiceProvider::class,
-            AuthorizationServiceProvider::class,
-            PermissionServiceProvider::class,
-            MediaServiceProvider::class,
-            LocationsServiceProvider::class,
-            SeoServiceProvider::class,
             NovaCoreServiceProvider::class,
             NovaPackageServiceProvider::class,
+            SupportServiceProvider::class,
+            PermissionServiceProvider::class,
+            AuthorizationServiceProvider::class,
+            AddressesServiceProvider::class,
+            MediaServiceProvider::class,
+            SeoServiceProvider::class,
+            LocationsServiceProvider::class,
         ];
     }
 }
