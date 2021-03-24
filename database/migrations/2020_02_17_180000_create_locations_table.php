@@ -21,7 +21,7 @@ class CreateLocationsTable extends Migration
             $table->foreignIdFor(app('domestic_address'))->nullable();
             $table->foreignIdFor(app('phone'))->nullable();
             $table->foreignIdFor(app('user'), 'manager_id')->nullable();
-            $table->string('contact_email');
+            $table->foreignIdFor(app('email_address'), 'contact_email_id')->nullable();
             $table->date('closed_at')->nullable();
 
             $table->foreignIdFor(app('image'))->nullable(); // Cover image for location

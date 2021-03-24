@@ -48,6 +48,7 @@ class Location extends BaseResource
             Text::make('Title')->required(),
             Text::make('Abbreviation')->required(),
             Text::make('Timezone')->required(),
+            nova('email_address') ? BelongsTo::make('Email Address', 'email_address', nova('email_address'))->sortable() : null,
 
             new Panel('Address Information', $this->addressFields()),
 
@@ -56,7 +57,7 @@ class Location extends BaseResource
             new Panel('Review Data', $this->reviewFields()),
 
             new Panel('Hours of Operation', $this->hoursFields()),
-            
+
             new Panel('Media Fields', $this->mediaFields()),
 
             nova('order') ? HasMany::make('Orders', 'orders', nova('order')) : null,
@@ -134,7 +135,7 @@ class Location extends BaseResource
             Date::make('Closed At')->required(),
         ];
     }
-    
+
     protected function mediaFields()
     {
         return array_filter([
