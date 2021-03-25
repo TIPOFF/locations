@@ -44,7 +44,9 @@ class MarketControllerTest extends TestCase
     public function index_multiple_markets_single_locations()
     {
         $location = Location::factory()->count(3)->create([
-            'market_id' => function () { return Market::factory()->create(); },
+            'market_id' => function () {
+                return Market::factory()->create();
+            },
         ])->first();
         $market = $location->market;
 

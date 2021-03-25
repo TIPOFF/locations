@@ -44,7 +44,9 @@ class LocationControllerTest extends TestCase
     public function index_multiple_markets_single_locations()
     {
         $location = Location::factory()->count(3)->create([
-            'market_id' => function () { return Market::factory()->create(); },
+            'market_id' => function () {
+                return Market::factory()->create();
+            },
         ])->first();
         $market = $location->market;
 
@@ -52,5 +54,4 @@ class LocationControllerTest extends TestCase
         $this->get("{$prefix}/{$market->slug}/{$location->slug}")
             ->assertRedirect("{$prefix}/{$market->slug}");
     }
-
 }
