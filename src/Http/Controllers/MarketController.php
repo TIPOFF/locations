@@ -12,6 +12,12 @@ class MarketController extends BaseController
 {
     public function __invoke(Request $request, Market $market)
     {
+        if ($market->locations()->count() === 1 &&
+            Market::query()->count() === 1) {
+            // Single location, single market => go home
+            return redirect('/');
+        }
+
         return view('locations::market', [
             'market' => $market
         ]);
