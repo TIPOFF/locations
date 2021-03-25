@@ -13,7 +13,7 @@ class MarketController extends BaseController
     public function __invoke(Request $request, Market $market)
     {
         return view('locations::market', [
-            'market' => $market
+            'market' => $market,
         ]);
     }
 }

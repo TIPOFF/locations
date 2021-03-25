@@ -33,7 +33,7 @@ class LocationSelectComposerTest extends TestCase
     {
         $markets = Market::factory()->count(2)->create()->each(function (Market $market) {
             Location::factory()->count(2)->create([
-                'market_id' => $market
+                'market_id' => $market,
             ]);
         });
 

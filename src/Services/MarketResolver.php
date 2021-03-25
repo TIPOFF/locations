@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tipoff\Locations\Services;
 
 use Tipoff\Locations\Exceptions\UnresolvedMarket;
-use Tipoff\Locations\Http\Middleware\ResolveLocation;
 use Tipoff\Locations\Models\Market;
 
 class MarketResolver
@@ -20,7 +19,7 @@ class MarketResolver
     public function resolve($market = null): Market
     {
         $market = $market ?? static::market();
-        if (!$market instanceof Market) {
+        if (! $market instanceof Market) {
             if (Market::query()->count() !== 1) {
                 throw new UnresolvedMarket();
             }
@@ -29,6 +28,7 @@ class MarketResolver
         }
 
         app()->instance(self::TIPOFF_MARKET, $market);
+
         return $market;
     }
 }
