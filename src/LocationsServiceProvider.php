@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations;
 
+use Illuminate\Foundation\Http\Kernel;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Tipoff\Locations\Commands\SyncLocations;
+use Tipoff\Locations\Http\Middleware\ResolveLocation;
 use Tipoff\Locations\Models\GmbDetail;
 use Tipoff\Locations\Models\GmbHour;
 use Tipoff\Locations\Models\Location;
@@ -13,6 +17,7 @@ use Tipoff\Locations\Policies\GmbDetailPolicy;
 use Tipoff\Locations\Policies\GmbHourPolicy;
 use Tipoff\Locations\Policies\LocationPolicy;
 use Tipoff\Locations\Policies\MarketPolicy;
+use Tipoff\Locations\ViewComposers\LocationSelectComposer;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 
@@ -33,10 +38,53 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 \Tipoff\Locations\Nova\Location::class,
                 \Tipoff\Locations\Nova\Market::class,
             ])
+            ->hasWebRoute('web')
             ->hasCommands([
                 SyncLocations::class,
             ])
             ->name('locations')
+            ->hasViews()
             ->hasConfigFile();
+    }
+
+    public function bootingPackage()
+    {
+        parent::bootingPackage();
+
+        // Must happen AFTER SubstituteBindings middleware has been applied
+        app(Kernel::class)->appendToMiddlewarePriority(ResolveLocation::class);
+
+        Route::model('market', Market::class);
+        Route::model('location', Location::class);
+
+        /**
+         * Route macro for registering a location based route.  Note the `$routeName`, not the `$uri`,
+         * is the first parameter.
+         *
+         * Use `app(LocationRouter::class)::build($routeName, $location)` to construct proper URLs for
+         * the route.  `$location` can be omitted to use the current location in context.
+         */
+        Route::macro('getLocation', function (string $routeName, string $uri, $action = null) {
+            Route::middleware(config('tipoff.web.middleware_group'))
+                ->group(function () use ($uri, $action, $routeName) {
+
+                    // NOTE - all 3 variations are always being registered to allow
+                    // changes in location / market counts after routes have been cached!
+
+                    Route::middleware(ResolveLocation::class)
+                        ->get('company/' . $uri, $action)
+                        ->name($routeName);
+
+                    Route::middleware(ResolveLocation::class)
+                        ->get('{market}/{location}/' . $uri, $action)
+                        ->name('market.location.' . $routeName);
+
+                    Route::middleware(ResolveLocation::class)
+                        ->get('{market}/' . $uri, $action)
+                        ->name('market.' . $routeName);
+                });
+        });
+
+        View::composer('locations::location_select', LocationSelectComposer::class);
     }
 }

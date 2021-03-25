@@ -8,6 +8,7 @@ use Closure;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
 use Tipoff\Locations\Services\LocationResolver;
+use Tipoff\Locations\Services\MarketResolver;
 
 class ResolveLocation
 {
@@ -20,16 +21,13 @@ class ResolveLocation
      */
     public function handle($request, Closure $next)
     {
-        $market = $request->route()->parameter('market');
-        $location = $request->route()->parameter('location');
+        $market = app(MarketResolver::class)->resolve($request->route('market'));
+        $request->route()->setParameter('market', $market);
+
+        $location = app(LocationResolver::class)->resolve($market, $request->route('location'));
+        $request->route()->setParameter('location', $location);
 
         $this->ensureLocationBelongsToMarket($market, $location);
-
-        if (! $location) {
-            $location = (new LocationResolver)->resolve($market);
-
-            $request->route()->setParameter('location', $location);
-        }
 
         return $next($request);
     }
