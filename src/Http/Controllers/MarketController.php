@@ -19,7 +19,7 @@ class MarketController extends BaseController
         }
 
         return view('locations::market', [
-            'market' => $market
+            'market' => $market,
         ]);
     }
 }
