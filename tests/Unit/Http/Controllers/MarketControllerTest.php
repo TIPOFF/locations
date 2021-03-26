@@ -20,7 +20,7 @@ class MarketControllerTest extends TestCase
         $market = $location->market;
 
         $prefix = config('tipoff.web.uri_prefix');
-        $this->get("{$prefix}/{$market->slug}")
+        $this->get("{$prefix}/{$market->slug}/detail")
             ->assertRedirect('/');
     }
 
@@ -34,7 +34,7 @@ class MarketControllerTest extends TestCase
         ])->first();
 
         $prefix = config('tipoff.web.uri_prefix');
-        $this->get("{$prefix}/{$market->slug}")
+        $this->get("{$prefix}/{$market->slug}/detail")
             ->assertOk()
             ->assertDontSee($location->name)
             ->assertSee($market->name);
@@ -51,7 +51,7 @@ class MarketControllerTest extends TestCase
         $market = $location->market;
 
         $prefix = config('tipoff.web.uri_prefix');
-        $this->get("{$prefix}/{$market->slug}")
+        $this->get("{$prefix}/{$market->slug}/detail")
             ->assertOk()
             ->assertDontSee($location->name)
             ->assertSee($market->name);
