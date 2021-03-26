@@ -18,7 +18,7 @@ class LocationResolverTest extends TestCase
     /** @test */
     public function resolve_with_single_locations()
     {
-        $market = Market::factory()->create();
+        $market = Market::factory()->count(2)->create()->first();
         $location = Location::factory()->create([
             'market_id' => $market,
         ]);

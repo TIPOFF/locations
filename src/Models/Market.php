@@ -7,6 +7,7 @@ namespace Tipoff\Locations\Models;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -32,6 +33,14 @@ class Market extends BaseModel
     protected static function boot()
     {
         parent::boot();
+
+        static::creating(function (Market $market) {
+            $market->slug = $market->slug ?: Str::slug($market->city);
+            $invalidSlugs = config('locations.invalid_slugs') ?? [];
+            if (in_array($market->slug, $invalidSlugs)) {
+                $market->slug = Str::slug("{$market->slug}-{$market->state}");
+            }
+        });
 
         static::saving(function ($market) {
             if (empty($market->entered_at)) {

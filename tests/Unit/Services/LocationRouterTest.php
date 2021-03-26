@@ -16,14 +16,13 @@ class LocationRouterTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function build_with_single_locations()
+    public function build_with_single_market_single_location()
     {
         $url = \Mockery::mock(UrlGenerator::class);
         $url->shouldReceive('route')
             ->once()
             ->withArgs(function ($name, $parameters) {
-                return $name === 'route' &&
-                    $parameters instanceof Market;
+                return $name === 'route';
             })
             ->andReturn('success');
 
@@ -34,7 +33,31 @@ class LocationRouterTest extends TestCase
             'market_id' => $market,
         ]);
 
-        $result = LocationRouter::build('route', $market, $location);
+        $result = LocationRouter::build('route', $location);
+        $this->assertEquals('success', $result);
+    }
+
+    /** @test */
+    public function build_with_multiple_markets_single_location()
+    {
+        $url = \Mockery::mock(UrlGenerator::class);
+        $url->shouldReceive('route')
+            ->once()
+            ->withArgs(function ($name, $parameters) {
+                return $name === 'market.route' &&
+                    is_array($parameters) && count($parameters) === 1 &&
+                    $parameters['market'] instanceof Market;
+            })
+            ->andReturn('success');
+
+        $this->app->instance('url', $url);
+
+        $market = Market::factory()->count(2)->create()->first();
+        $location = Location::factory()->create([
+            'market_id' => $market,
+        ]);
+
+        $result = LocationRouter::build('route', $location);
         $this->assertEquals('success', $result);
     }
 
@@ -45,7 +68,10 @@ class LocationRouterTest extends TestCase
         $url->shouldReceive('route')
             ->once()
             ->withArgs(function ($name, $parameters) {
-                return $name === 'route' && is_array($parameters) && count($parameters) === 2;
+                return $name === 'market.location.route' &&
+                    is_array($parameters) && count($parameters) === 2 &&
+                    $parameters['market'] instanceof Market &&
+                    $parameters['location'] instanceof Location;
             })
             ->andReturn('success');
 
@@ -56,7 +82,7 @@ class LocationRouterTest extends TestCase
             'market_id' => $market,
         ]);
 
-        $result = LocationRouter::build('route', $market, $locations->first());
+        $result = LocationRouter::build('route', $locations->first());
         $this->assertEquals('success', $result);
     }
 }
