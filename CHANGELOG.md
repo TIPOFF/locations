@@ -106,3 +106,9 @@ All notable changes to `locations` will be documented in this file.
 ## 2.7.1 - 2021-03-20
 
 - change latitude & longitude in migration
+
+## 2.8.0 - 2021-03-26
+
+- email address relationship
+- web routes for market & location
+- extendable location routes
