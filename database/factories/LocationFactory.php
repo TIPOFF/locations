@@ -22,6 +22,8 @@ class LocationFactory extends Factory
             'title_part'            => $city,
             'market_id'             => randomOrCreate(app('market')),
             'timezone_id'           => randomOrCreate(app('timezone')),
+            'domestic_address_id'   => randomOrCreate(app('domestic_address')),
+            'phone_id'              => randomOrCreate(app('phone')),
             'creator_id'            => randomOrCreate(app('user')),
             'updater_id'            => randomOrCreate(app('user'))
         ];
