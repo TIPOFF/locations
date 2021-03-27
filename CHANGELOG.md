@@ -116,3 +116,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.8.1 - 2021-03-26
 
 - distinct web routes for market & location
+
+## 2.8.2 - 2021-03-27
+
+- require blog package as dependency
