@@ -112,3 +112,7 @@ All notable changes to `locations` will be documented in this file.
 - email address relationship
 - web routes for market & location
 - extendable location routes
+
+## 2.8.1 - 2021-03-26
+
+- distinct web routes for market & location
