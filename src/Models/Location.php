@@ -77,6 +77,11 @@ class Location extends BaseModel
     {
         return $this->hasOne(app('email_address'));
     }
+    
+    public function contactEmail()
+    {
+        return $this->hasOne(app('email_address'), 'contact_email_id');
+    }
 
     public function contacts()
     {
@@ -140,6 +145,11 @@ class Location extends BaseModel
         } else {
             return "{$this->market->state} - {$this->name}";
         }
+    }
+    
+    public function getContactEmailAddressAttribute()
+    {
+        return $this->contact_email->email;
     }
 
     public function getStreetAddressAttribute()
