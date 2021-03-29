@@ -168,6 +168,7 @@ class Location extends BaseModel
         if ($this->address()->address_line_2) {
             $add2 = ' ' . $this->address()->address_line_2;
         }
+
         return "{$this->address()->address_line_1}{$add2}";
     }
 
