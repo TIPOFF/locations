@@ -10,8 +10,6 @@ use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Tipoff\Support\Contracts\Checkout\OrderInterface;
-use Tipoff\Support\Contracts\Checkout\OrderItemInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
