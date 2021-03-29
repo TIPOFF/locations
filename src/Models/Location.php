@@ -63,6 +63,11 @@ class Location extends BaseModel
         });
     }
 
+    public function address()
+    {
+        return $this->hasOne('domestic_address');
+    }
+
     public function market()
     {
         return $this->belongsTo(app('market'));
@@ -77,7 +82,7 @@ class Location extends BaseModel
     {
         return $this->hasOne(app('email_address'));
     }
-    
+
     public function contactEmail()
     {
         return $this->hasOne(app('email_address'), 'contact_email_id');
@@ -146,25 +151,24 @@ class Location extends BaseModel
             return "{$this->market->state} - {$this->name}";
         }
     }
-    
+
     public function getContactEmailAddressAttribute()
     {
-        return $this->contact_email->email;
+        return $this->contactEmail()->email;
     }
 
     public function getStreetAddressAttribute()
     {
         $add2 = '';
-        if ($this->address2) {
-            $add2 = ' ' . $this->address2;
+        if ($this->address()->address_line_2) {
+            $add2 = ' ' . $this->address()->address_line_2;
         }
-
-        return "{$this->address}{$add2}";
+        return "{$this->address()->address_line_1}{$add2}";
     }
 
     public function getFullAddressAttribute()
     {
-        return "{$this->street_address}, {$this->city}, {$this->state} {$this->zip}";
+        return "{$this->address()->address_line_1}, {$this->address()->city}, {$this->address()->zip}";
     }
 
     public function getPathAttribute()
