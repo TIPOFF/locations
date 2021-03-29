@@ -192,28 +192,28 @@ class Location extends BaseModel
         return 'https://www.google.com/maps/dir/+Your+location/+' . Str::of($this->title)->replace(' ', '+') . ',@' . $this->latitude . ',' . $this->longitude;
     }
 
-        public function getBookingsYesterdayAttribute()
-        {
-            /** @var OrderInterface $service */
-            $service = findService(OrderInterface::class);
-            if ($service) {
-                return $service::itemFilter()
+    public function getBookingsYesterdayAttribute()
+    {
+        /** @var OrderInterface $service */
+        $service = findService(OrderInterface::class);
+        if ($service) {
+            return $service::itemFilter()
                     ->bySellableType(morphClass('booking') ?? '')
                     ->byLocation($this->id)
                     ->yesterday()
                     ->apply()
                     ->count();
-            }
-
-            return 0;
         }
 
-        public function getRevenueBookedYesterdayAttribute()
-        {
-            /** @var OrderInterface $service */
-            $service = findService(OrderInterface::class);
-            if ($service) {
-                $amount = $service::itemFilter()
+        return 0;
+    }
+
+    public function getRevenueBookedYesterdayAttribute()
+    {
+        /** @var OrderInterface $service */
+        $service = findService(OrderInterface::class);
+        if ($service) {
+            $amount = $service::itemFilter()
                     ->bySellableType(morphClass('booking') ?? '')
                     ->byLocation($this->id)
                     ->yesterday()
@@ -222,32 +222,32 @@ class Location extends BaseModel
                         return $orderItem->getAmountTotal()->getDiscountedAmount();
                     });
 
-                return number_format($amount / 100, 2);
-            }
-
-            return 0;
+            return number_format($amount / 100, 2);
         }
 
-        public function getBookingsLastWeekAttribute()
-        {
-            /** @var OrderInterface $service */
-            $service = findService(OrderInterface::class);
-            if ($service) {
-                return $service::itemFilter()
+        return 0;
+    }
+
+    public function getBookingsLastWeekAttribute()
+    {
+        /** @var OrderInterface $service */
+        $service = findService(OrderInterface::class);
+        if ($service) {
+            return $service::itemFilter()
                     ->bySellableType(morphClass('booking') ?? '')
                     ->byLocation($this->id)
                     ->week()
                     ->apply()
                     ->count();
-            }
         }
+    }
 
-        public function getRevenueBookedLastWeekAttribute()
-        {
-            /** @var OrderInterface $service */
-            $service = findService(OrderInterface::class);
-            if ($service) {
-                $amount = $service::itemFilter()
+    public function getRevenueBookedLastWeekAttribute()
+    {
+        /** @var OrderInterface $service */
+        $service = findService(OrderInterface::class);
+        if ($service) {
+            $amount = $service::itemFilter()
                     ->bySellableType(morphClass('booking') ?? '')
                     ->byLocation($this->id)
                     ->week()
@@ -256,9 +256,9 @@ class Location extends BaseModel
                         return $orderItem->getAmountTotal()->getDiscountedAmount();
                     });
 
-                return number_format($amount / 100, 2);
-            }
+            return number_format($amount / 100, 2);
         }
+    }
 
     /**
      * Find location by slot or slot number.
