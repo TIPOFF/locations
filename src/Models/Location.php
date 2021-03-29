@@ -93,6 +93,11 @@ class Location extends BaseModel
         return $this->hasMany(app('contact'));
     }
 
+    public function phone()
+    {
+        return $this->hasOne(app('phone'));
+    }
+
     public function users()
     {
         return $this->belongsToMany(app('user'))->withTimestamps();
@@ -279,7 +284,7 @@ class Location extends BaseModel
 
     public function getPhoneLinkAttribute()
     {
-        return 'tel:' . preg_replace("/[^0-9]/", "", $this->phone);
+        return 'tel:' . preg_replace("/[^0-9]/", "", $this->phone()->full_number);
     }
 
     public function getDirectionsUrlAttribute()
