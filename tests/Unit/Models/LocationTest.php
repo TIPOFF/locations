@@ -51,7 +51,7 @@ class LocationTest extends TestCase
         $location = Location::factory()->create();
         $this->assertEquals(0, $location->revenue_booked_last_week);
     }
-    
+
     /** @test */
     public function bookings_yesterday_with_service()
     {
