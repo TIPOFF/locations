@@ -172,7 +172,7 @@ class Location extends BaseModel
 
     public function getFullAddressAttribute()
     {
-        return "{$this->address()->address_line_1}, {$this->address()->city}, {$this->address()->zip}";
+        return "{$this->address()->address_line_1}, {$this->address()->city()->title}, {$this->address()->zip()->state()->title}, {$this->address()->zip()->code}";
     }
 
     public function getPathAttribute()
