@@ -51,6 +51,42 @@ class LocationTest extends TestCase
         $location = Location::factory()->create();
         $this->assertEquals(0, $location->revenue_booked_last_week);
     }
+    
+    /** @test */
+    public function bookings_yesterday_with_service()
+    {
+        $this->stubOrderInterfaceFiltering();
+
+        $location = Location::factory()->create();
+        $this->assertEquals(2, $location->bookings_yesterday);
+    }
+
+    /** @test */
+    public function revenue_booked_yesterday_with_service()
+    {
+        $this->stubOrderInterfaceFiltering();
+
+        $location = Location::factory()->create();
+        $this->assertEquals(35.79, $location->revenue_booked_yesterday);
+    }
+
+    /** @test */
+    public function bookings_last_week_with_service()
+    {
+        $this->stubOrderInterfaceFiltering();
+
+        $location = Location::factory()->create();
+        $this->assertEquals(2, $location->bookings_last_week);
+    }
+
+    /** @test */
+    public function revenue_booked_last_week_with_service()
+    {
+        $this->stubOrderInterfaceFiltering();
+
+        $location = Location::factory()->create();
+        $this->assertEquals(35.79, $location->revenue_booked_last_week);
+    }
 
     private function stubOrderInterfaceFiltering()
     {
