@@ -10,6 +10,8 @@ use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Tipoff\Support\Contracts\Checkout\OrderInterface;
+use Tipoff\Support\Contracts\Checkout\OrderItemInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -189,18 +191,18 @@ class Location extends BaseModel
     {
         return 'https://www.google.com/maps/dir/+Your+location/+' . Str::of($this->title)->replace(' ', '+') . ',@' . $this->latitude . ',' . $this->longitude;
     }
-    
+
     public function getBookingsYesterdayAttribute()
     {
         /** @var OrderInterface $service */
         $service = findService(OrderInterface::class);
         if ($service) {
             return $service::itemFilter()
-                    ->bySellableType(morphClass('booking') ?? '')
-                    ->byLocation($this->id)
-                    ->yesterday()
-                    ->apply()
-                    ->count();
+                ->bySellableType(morphClass('booking') ?? '')
+                ->byLocation($this->id)
+                ->yesterday()
+                ->apply()
+                ->count();
         }
 
         return 0;
@@ -212,13 +214,13 @@ class Location extends BaseModel
         $service = findService(OrderInterface::class);
         if ($service) {
             $amount = $service::itemFilter()
-                    ->bySellableType(morphClass('booking') ?? '')
-                    ->byLocation($this->id)
-                    ->yesterday()
-                    ->apply()
-                    ->sum(function (OrderItemInterface $orderItem) {
-                        return $orderItem->getAmountTotal()->getDiscountedAmount();
-                    });
+                ->bySellableType(morphClass('booking') ?? '')
+                ->byLocation($this->id)
+                ->yesterday()
+                ->apply()
+                ->sum(function (OrderItemInterface $orderItem) {
+                    return $orderItem->getAmountTotal()->getDiscountedAmount();
+                });
 
             return number_format($amount / 100, 2);
         }
@@ -232,12 +234,14 @@ class Location extends BaseModel
         $service = findService(OrderInterface::class);
         if ($service) {
             return $service::itemFilter()
-                    ->bySellableType(morphClass('booking') ?? '')
-                    ->byLocation($this->id)
-                    ->week()
-                    ->apply()
-                    ->count();
+                ->bySellableType(morphClass('booking') ?? '')
+                ->byLocation($this->id)
+                ->week()
+                ->apply()
+                ->count();
         }
+
+        return 0;
     }
 
     public function getRevenueBookedLastWeekAttribute()
@@ -246,16 +250,18 @@ class Location extends BaseModel
         $service = findService(OrderInterface::class);
         if ($service) {
             $amount = $service::itemFilter()
-                    ->bySellableType(morphClass('booking') ?? '')
-                    ->byLocation($this->id)
-                    ->week()
-                    ->apply()
-                    ->sum(function (OrderItemInterface $orderItem) {
-                        return $orderItem->getAmountTotal()->getDiscountedAmount();
-                    });
+                ->bySellableType(morphClass('booking') ?? '')
+                ->byLocation($this->id)
+                ->week()
+                ->apply()
+                ->sum(function (OrderItemInterface $orderItem) {
+                    return $orderItem->getAmountTotal()->getDiscountedAmount();
+                });
 
             return number_format($amount / 100, 2);
         }
+        
+        return 0;
     }
 
     /**
