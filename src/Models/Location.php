@@ -63,6 +63,11 @@ class Location extends BaseModel
         });
     }
 
+    public function address()
+    {
+        return $this->hasOne(app('domestic_address'));
+    }
+
     public function market()
     {
         return $this->belongsTo(app('market'));
@@ -78,9 +83,19 @@ class Location extends BaseModel
         return $this->hasOne(app('email_address'));
     }
 
+    public function contactEmail()
+    {
+        return $this->hasOne(app('email_address'), 'contact_email_id');
+    }
+
     public function contacts()
     {
         return $this->hasMany(app('contact'));
+    }
+
+    public function phone()
+    {
+        return $this->hasOne(app('phone'));
     }
 
     public function users()
@@ -142,19 +157,24 @@ class Location extends BaseModel
         }
     }
 
+    public function getContactEmailAddressAttribute()
+    {
+        return $this->contactEmail()->email;
+    }
+
     public function getStreetAddressAttribute()
     {
         $add2 = '';
-        if ($this->address2) {
-            $add2 = ' ' . $this->address2;
+        if ($this->address()->address_line_2) {
+            $add2 = ' ' . $this->address()->address_line_2;
         }
 
-        return "{$this->address}{$add2}";
+        return "{$this->address()->address_line_1}{$add2}";
     }
 
     public function getFullAddressAttribute()
     {
-        return "{$this->street_address}, {$this->city}, {$this->state} {$this->zip}";
+        return "{$this->address()->address_line_1}, {$this->address()->city()->title}, {$this->address()->zip()->state()->title}, {$this->address()->zip()->code}";
     }
 
     public function getPathAttribute()
@@ -162,110 +182,9 @@ class Location extends BaseModel
         return "/{$this->market->slug}";
     }
 
-    public function getWaiverPathAttribute()
-    {
-        return "/waiver/{$this->slug}";
-    }
-
-    public function getRoomsPathAttribute()
-    {
-        return "/{$this->market->slug}/rooms";
-    }
-
-    public function getPrecautionsPathAttribute()
-    {
-        return "/{$this->market->slug}/precautions";
-    }
-
-    public function getEmploymentPathAttribute()
-    {
-        return "/{$this->market->slug}/employment";
-    }
-
-    public function getTeamBuildingPathAttribute()
-    {
-        if ($this->market->locations_count === 1) {
-            return "/{$this->market->slug}/team-building";
-        }
-
-        return "/{$this->market->slug}/team-building/{$this->slug}";
-    }
-
-    public function getOnTheRunPathAttribute()
-    {
-        if ($this->market->locations_count === 1) {
-            return "/{$this->market->slug}/on-the-run";
-        }
-
-        return "/{$this->market->slug}/on-the-run/{$this->slug}";
-    }
-
-    public function getPartiesPathAttribute()
-    {
-        if ($this->market->locations_count === 1) {
-            return "/{$this->market->slug}/private-parties";
-        }
-
-        return "/{$this->market->slug}/private-parties/{$this->slug}";
-    }
-
-    public function getContactPathAttribute()
-    {
-        if ($this->market->locations_count === 1) {
-            return "/{$this->market->slug}/contact";
-        }
-
-        return "/{$this->market->slug}/contact/{$this->slug}";
-    }
-
-    public function getSubmitFormUrlAttribute()
-    {
-        if (config('app.env') == 'production') {
-            return 'https://thegreatescaperoom.com/api/contact/' . $this->slug;
-        }
-
-        return 'https://tger.dev/api/contact/' . $this->slug;
-    }
-
-    public function getGiftsPathAttribute()
-    {
-        if ($this->market->locations_count === 1) {
-            return "/{$this->market->slug}/gift-certificates";
-        }
-
-        return "/{$this->market->slug}/gift-certificates/{$this->slug}";
-    }
-
-    public function getFaqPathAttribute()
-    {
-        if ($this->market->locations_count === 1) {
-            return "/{$this->market->slug}/faq";
-        }
-
-        return "/{$this->market->slug}/faq/{$this->slug}";
-    }
-
-    public function getBookingsPathAttribute()
-    {
-        if ($this->market->locations_count === 1) {
-            return "/{$this->market->slug}/book-online";
-        }
-
-        return "/{$this->market->slug}/book-online/{$this->slug}";
-    }
-
-    public function getReservationsPathAttribute()
-    {
-        if ($this->market->locations_count === 1) {
-            return "/{$this->market->slug}/reservations";
-        }
-
-        return "/{$this->market->slug}/reservations/{$this->slug}";
-    }
-
     public function getPhoneLinkAttribute()
     {
-        return 'tel:' . preg_replace("/[^0-9]/", "", $this->phone);
+        return 'tel:' . preg_replace("/[^0-9]/", "", $this->phone()->full_number);
     }
 
     public function getDirectionsUrlAttribute()
@@ -321,6 +240,8 @@ class Location extends BaseModel
                 ->apply()
                 ->count();
         }
+
+        return 0;
     }
 
     public function getRevenueBookedLastWeekAttribute()
@@ -339,6 +260,8 @@ class Location extends BaseModel
 
             return number_format($amount / 100, 2);
         }
+        
+        return 0;
     }
 
     /**
