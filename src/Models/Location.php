@@ -63,7 +63,7 @@ class Location extends BaseModel
 
     public function address()
     {
-        return $this->hasOne('domestic_address');
+        return $this->hasOne(app('domestic_address'));
     }
 
     public function market()
