@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tipoff\Locations\Tests;
 
 use DrewRoberts\Media\MediaServiceProvider;
+use DrewRoberts\Blog\BlogServiceProvider;
 use Laravel\Nova\NovaCoreServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
 use Tipoff\Addresses\AddressesServiceProvider;
@@ -29,6 +30,7 @@ class TestCase extends BaseTestCase
             MediaServiceProvider::class,
             SeoServiceProvider::class,
             LocationsServiceProvider::class,
+            BlogServiceProvider::class
         ];
     }
 }
