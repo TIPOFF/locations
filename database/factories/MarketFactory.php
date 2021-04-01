@@ -17,11 +17,10 @@ class MarketFactory extends Factory
         $city = $this->faker->city;
 
         return [
-            'slug'                => Str::slug($city),
+            'page_id'             => randomOrCreate(app('page')),
             'name'                => $city,
             'title'               => $city,
-            'state'               => $this->faker->stateAbbr,
-            'content'             => $this->faker->sentences(3, true),
+            'state_id'            => randomOrCreate(app('state')),
             'entered_at'          => $this->faker->date(),
             'timezone_id'         => randomOrCreate(app('timezone')),
             'creator_id'          => randomOrCreate(app('user')),

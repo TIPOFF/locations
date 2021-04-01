@@ -18,8 +18,8 @@ class LocationFactory extends Factory
 
         return [
             'name'                  => $city,
-            'slug'                  => Str::slug($city),
             'title_part'            => $city,
+            'page_id'               => randomOrCreate(app('page')),
             'market_id'             => randomOrCreate(app('market')),
             'timezone_id'           => randomOrCreate(app('timezone')),
             'domestic_address_id'   => randomOrCreate(app('domestic_address')),
