@@ -47,9 +47,9 @@ class Market extends BaseResource
     {
         return array_filter([
             Text::make('Name')->required(),
-            Slug::make('Slug')->from('Name'),
+            nova('page') ? BelongsTo::make('Page', 'page', nova('page'))->required() : null,
             Text::make('Title'),
-            Text::make('State'),
+            nova('state') ? BelongsTo::make('State', 'state', nova('state'))->required() : null,
             Text::make('Timezone'),
             DateTime::make('Entered At', 'entered_at'),
             DateTime::make('Closed At', 'closed_at')->nullable(),
@@ -79,7 +79,6 @@ class Market extends BaseResource
             nova('image') ? BelongsTo::make('Image', 'image', nova('image'))->nullable()->showCreateRelationButton() : null,
             nova('image') ? BelongsTo::make('OG Image', 'ogimage', nova('image'))->nullable()->showCreateRelationButton() : null,
             nova('image') ? BelongsTo::make('Map Image', 'map', nova('image'))->nullable()->showCreateRelationButton() : null,
-            nova('video') ? BelongsTo::make('Video', 'video', nova('video'))->nullable()->showCreateRelationButton() : null,
         ]);
     }
 
