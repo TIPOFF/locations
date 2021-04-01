@@ -33,10 +33,11 @@ class Location extends BaseModel
         'php_tz',
     ];
 
-    public function getRouteKeyName()
+    /*@todo since we remove slug, what would be the field  binding the model?*/
+    /*public function getRouteKeyName()
     {
         return 'slug';
-    }
+    }*/
 
     protected static function boot()
     {
@@ -71,6 +72,16 @@ class Location extends BaseModel
     public function market()
     {
         return $this->belongsTo(app('market'));
+    }
+
+    public function page()
+    {
+        return $this->belongsTo(app('page'));
+    }
+
+    public function gmbAccount()
+    {
+        return $this->belongsTo(app('gmb_account'));
     }
 
     public function manager()
@@ -179,7 +190,7 @@ class Location extends BaseModel
 
     public function getPathAttribute()
     {
-        return "/{$this->market->slug}";
+        return "/{$this->market->page->slug}";
     }
 
     public function getPhoneLinkAttribute()
