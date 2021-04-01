@@ -12,21 +12,17 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique()->index();
+            $table->foreignIdFor(app('page'))->unique();
+            $table->foreignIdFor(app('market'));
             $table->string('name')->unique(); // Internal reference name
             $table->string('abbreviation', 4)->unique(); // 3 digit abbreviation (all caps) for location. Option to add 4th digit character if necessary.
             $table->string('title_part')->nullable(); // For when have more than one location in a market, this is used to generate formal title.
             $table->foreignIdFor(app('timezone'));
-            $table->foreignIdFor(app('market'));
             $table->foreignIdFor(app('domestic_address'))->nullable();
             $table->foreignIdFor(app('phone'))->nullable();
             $table->foreignIdFor(app('user'), 'manager_id')->nullable();
             $table->foreignIdFor(app('email_address'), 'contact_email_id')->nullable();
             $table->date('closed_at')->nullable();
-
-            $table->foreignIdFor(app('image'))->nullable(); // Cover image for location
-            $table->foreignIdFor(app('image'), 'ogimage_id')->nullable(); // External open graph image id. Featured image for social sharing. Will default to image_id unless this is used.
-            $table->foreignIdFor(app('video'))->nullable(); // Featured video for the location
 
             $table->foreignIdFor(app('gmb_account'))->nullable();
             $table->string('gmb_location')->nullable()->unique(); // GMB ID for API. Will be used to update all the other fields below.
