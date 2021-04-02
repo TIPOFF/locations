@@ -46,6 +46,7 @@ class Market extends BaseResource
     {
         return array_filter([
             Text::make('Name')->required(),
+            Slug::make('Slug')->from('Name'),
             nova('page') ? BelongsTo::make('Page', 'page', nova('page'))->required() : null,
             Text::make('Title'),
             nova('state') ? BelongsTo::make('State', 'state', nova('state'))->required() : null,

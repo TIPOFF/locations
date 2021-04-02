@@ -189,7 +189,7 @@ class Location extends BaseModel
 
     public function getPathAttribute()
     {
-        return "/{$this->market->page->slug}";
+        return "/{$this->market->slug}";
     }
 
     public function getPhoneLinkAttribute()

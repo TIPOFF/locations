@@ -43,6 +43,7 @@ class Location extends BaseResource
         return array_filter([
             nova('market') ? BelongsTo::make('Market', 'market', nova('market'))->required() : null,
             Text::make('Name')->required(),
+            Slug::make('Slug')->from('Name'),
             Text::make('Title')->required(),
             Text::make('Abbreviation')->required(),
             Text::make('Timezone')->required(),

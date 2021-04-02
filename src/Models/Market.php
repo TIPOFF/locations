@@ -35,10 +35,10 @@ class Market extends BaseModel
         parent::boot();
 
         static::creating(function (Market $market) {
-            $market->page->slug = $market->page->slug ?: Str::slug($market->city);
+            $market->slug = $market->slug ?: Str::slug($market->city);
             $invalidSlugs = config('locations.invalid_slugs') ?? [];
-            if (in_array($market->page->slug, $invalidSlugs)) {
-                $market->page->slug = Str::slug("{$market->page->slug}-{$market->state->slug}");
+            if (in_array($market->slug, $invalidSlugs)) {
+                $market->slug = Str::slug("{$market->slug}-{$market->state->slug}");
             }
         });
 
@@ -105,69 +105,68 @@ class Market extends BaseModel
         return 'America/New_York';
     }
 
-    /*@todo the redirect attribute may be moved to blog package*/
-    /*public function getPathAttribute()
+    public function getPathAttribute()
     {
         if (isset($this->redirect)) {
             return $this->redirect;
         }
 
         return "/{$this->slug}";
-    }*/
+    }
 
     public function getRoomsPathAttribute()
     {
-        return "/{$this->page->slug}/rooms";
+        return "/{$this->slug}/rooms";
     }
 
     public function getPrecautionsPathAttribute()
     {
-        return "/{$this->page->slug}/precautions";
+        return "/{$this->slug}/precautions";
     }
 
     public function getEmploymentPathAttribute()
     {
-        return "/{$this->page->slug}/employment";
+        return "/{$this->slug}/employment";
     }
 
     public function getTeamBuildingPathAttribute()
     {
-        return "/{$this->page->slug}/team-building";
+        return "/{$this->slug}/team-building";
     }
 
     public function getOnTheRunPathAttribute()
     {
-        return "/{$this->page->slug}/on-the-run";
+        return "/{$this->slug}/on-the-run";
     }
 
     public function getPartiesPathAttribute()
     {
-        return "/{$this->page->slug}/private-parties";
+        return "/{$this->slug}/private-parties";
     }
 
     public function getContactPathAttribute()
     {
-        return "/{$this->page->slug}/contact";
+        return "/{$this->slug}/contact";
     }
 
     public function getGiftsPathAttribute()
     {
-        return "/{$this->page->slug}/gift-certificates";
+        return "/{$this->slug}/gift-certificates";
     }
 
     public function getFaqPathAttribute()
     {
-        return "/{$this->page->slug}/faq";
+        return "/{$this->slug}/faq";
     }
 
     public function getBookingsPathAttribute()
     {
-        return "/{$this->page->slug}/book-online";
+        return "/{$this->slug}/book-online";
     }
 
     public function getReservationsPathAttribute()
     {
-        return "/{$this->page->slug}/reservations";
+        return "/{$this->slug}/reservations";
     }
 
     public function getDescriptionAttribute()
