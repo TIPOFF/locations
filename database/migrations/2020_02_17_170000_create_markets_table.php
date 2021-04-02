@@ -12,7 +12,8 @@ class CreateMarketsTable extends Migration
     {
         Schema::create('markets', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(app('page'))->unique(); // Content & slug for website frontend
+            $table->string('slug')->unique()->index(); // Will need to also check for unique slug in Page resource.
+            $table->foreignIdFor(app('page'))->unique(); // Content & slug for website frontend. Automatically created with Market creation.
             $table->string('name')->unique();
             $table->string('title')->unique(); // Market Title for Display. Used publicly.
             $table->foreignIdFor(app('state'));
