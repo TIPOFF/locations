@@ -12,11 +12,12 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(app('page'))->unique();
-            $table->foreignIdFor(app('market'));
+            $table->string('slug')->unique()->index(); // Will need to also check for unique slug in Page resource.
+            $table->foreignIdFor(app('page'))->unique(); // Content for website frontend. Automatically created with Location creation.
             $table->string('name')->unique(); // Internal reference name
             $table->string('abbreviation', 4)->unique(); // 3 digit abbreviation (all caps) for location. Option to add 4th digit character if necessary.
             $table->string('title_part')->nullable(); // For when have more than one location in a market, this is used to generate formal title.
+            $table->foreignIdFor(app('market'));
             $table->foreignIdFor(app('timezone'));
             $table->foreignIdFor(app('domestic_address'))->nullable();
             $table->foreignIdFor(app('phone'))->nullable();
