@@ -25,11 +25,10 @@ class Market extends BaseModel
         'closed_at' => 'datetime',
     ];
 
-    /*@todo since we remove slug, what would be the field  binding the model?*/
-    /*public function getRouteKeyName()
+    public function getRouteKeyName()
     {
         return 'slug';
-    }*/
+    }
 
     protected static function boot()
     {

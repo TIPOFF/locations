@@ -33,11 +33,10 @@ class Location extends BaseModel
         'php_tz',
     ];
 
-    /*@todo since we remove slug, what would be the field  binding the model?*/
-    /*public function getRouteKeyName()
+    public function getRouteKeyName()
     {
         return 'slug';
-    }*/
+    }
 
     protected static function boot()
     {
