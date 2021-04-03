@@ -17,7 +17,7 @@ class MarketFactory extends Factory
         $city = $this->faker->city;
 
         return [
-            'page_id'             => randomOrCreate(app('page')),
+            'slug'                => Str::slug($city),
             'name'                => $city,
             'title'               => $city,
             'state_id'            => randomOrCreate(app('state')),
