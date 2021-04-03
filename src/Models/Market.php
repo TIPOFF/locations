@@ -44,8 +44,10 @@ class Market extends BaseModel
                 return false;
             }
 
-            $market->page = Page::create($market->slug, $market->title);
-            $market->page_id = $page->id;
+            $page = Page::create($market->slug, $market->title);
+
+            $market->page_id = $page->id; //@todo does not create the relations
+            $page->market()->associate($market);
 
         });
 
@@ -69,9 +71,11 @@ class Market extends BaseModel
 
             $market->updatingSlug();
 
+            /*@todo this approach is better, the relations are not working*/
             $market->page()->slug = $market->slug;
             $market->page()->title = $market->title;
             $market->page()->save();
+
         });
 
         static::addGlobalScope('open', function (Builder $builder) {
