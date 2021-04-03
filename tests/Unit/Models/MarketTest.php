@@ -20,15 +20,15 @@ class MarketTest extends TestCase
         $this->assertNotNull($model);
     }
 
-     /** @test */
+    /** @test */
     public function cannot_create_repeat_slug_markets()
     {
         $model = Market::factory()->create([
-            'slug' => 'random_text'
+            'slug' => 'random_text',
         ]);
 
         $model2 = Market::factory()->create([
-            'slug' => 'random_text'
+            'slug' => 'random_text',
         ]);
 
         $this->assertEquals(1, Market::count());
@@ -38,11 +38,11 @@ class MarketTest extends TestCase
     public function cannot_update_slug_using_existing_one_markets()
     {
         $model = Market::factory()->create([
-            'slug' => 'random_text'
+            'slug' => 'random_text',
         ]);
 
         $model2 = Market::factory()->create([
-            'slug' => 'some_text'
+            'slug' => 'some_text',
         ]);
 
         $model2->slug = 'random_text';
@@ -57,11 +57,11 @@ class MarketTest extends TestCase
     public function can_update_slug_with_a_no_used_one_markets()
     {
         $model = Market::factory()->create([
-            'slug' => 'random_text'
+            'slug' => 'random_text',
         ]);
 
         $model2 = Market::factory()->create([
-            'slug' => 'some_text'
+            'slug' => 'some_text',
         ]);
 
         $model2->slug = 'new_text';
@@ -71,8 +71,6 @@ class MarketTest extends TestCase
 
         $this->assertEquals('some_text', $model2->slug);
     }
-
-
 
     /** @test */
     public function default_slug()
