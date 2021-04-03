@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Models;
 
+use DrewRoberts\Blog\Models\Page;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,6 @@ use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
-use DrewRoberts\Blog\Models\Page;
 
 class Market extends BaseModel
 {
@@ -36,17 +36,15 @@ class Market extends BaseModel
         parent::boot();
 
         static::creating(function (Market $market) {
-            
             $market->updatingSlug();
-            $other_market = Market::where('slug',$market->slug)->first();
+            $other_market = Market::where('slug', $market->slug)->first();
 
-            if($other_market){
+            if ($other_market) {
                 return false;
             }
 
             $market->page = Page::create($market->slug, $market->title);
             $market->page_id = $page->id;
-
         });
 
         static::saving(function ($market) {
@@ -60,10 +58,9 @@ class Market extends BaseModel
         });
 
         static::updating(function ($market) {
-            
-            $other_market = Market::where('slug',$market->slug)->where('id',"<>",$market->id)->first();
+            $other_market = Market::where('slug', $market->slug)->where('id', "<>", $market->id)->first();
 
-            if($other_market){
+            if ($other_market) {
                 return false;
             }
 
@@ -85,7 +82,7 @@ class Market extends BaseModel
 
     public function updatingSlug()
     {
-       $this->slug = $this->slug ?: Str::slug($this->city);
+        $this->slug = $this->slug ?: Str::slug($this->city);
         $invalidSlugs = config('locations.invalid_slugs') ?? [];
         if (in_array($this->slug, $invalidSlugs)) {
             $this->slug = Str::slug("{$this->slug}-{$this->state->slug}");
