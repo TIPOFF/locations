@@ -12,6 +12,7 @@ use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
+use DrewRoberts\Blog\Models\Page;
 
 class Market extends BaseModel
 {
@@ -35,11 +36,17 @@ class Market extends BaseModel
         parent::boot();
 
         static::creating(function (Market $market) {
-            $market->slug = $market->slug ?: Str::slug($market->city);
-            $invalidSlugs = config('locations.invalid_slugs') ?? [];
-            if (in_array($market->slug, $invalidSlugs)) {
-                $market->slug = Str::slug("{$market->slug}-{$market->state->slug}");
+            
+            $market->updatingSlug();
+            $other_market = Market::where('slug',$market->slug)->first();
+
+            if($other_market){
+                return false;
             }
+
+            $market->page = Page::create($market->slug, $market->title);
+            $market->page_id = $page->id;
+
         });
 
         static::saving(function ($market) {
@@ -52,6 +59,21 @@ class Market extends BaseModel
             }
         });
 
+        static::updating(function ($market) {
+            
+            $other_market = Market::where('slug',$market->slug)->where('id',"<>",$market->id)->first();
+
+            if($other_market){
+                return false;
+            }
+
+            $market->updatingSlug();
+
+            $market->page()->slug = $market->slug;
+            $market->page()->title = $market->title;
+            $market->page()->save();
+        });
+
         static::addGlobalScope('open', function (Builder $builder) {
             $builder->whereNull('markets.closed_at') || $builder->whereDate('markets.closed_at', '>', date('Y-m-d'));
         });
@@ -59,6 +81,15 @@ class Market extends BaseModel
         static::addGlobalScope('locationCount', function ($builder) {
             $builder->withCount('locations');
         });
+    }
+
+    public function updatingSlug()
+    {
+       $this->slug = $this->slug ?: Str::slug($this->city);
+        $invalidSlugs = config('locations.invalid_slugs') ?? [];
+        if (in_array($this->slug, $invalidSlugs)) {
+            $this->slug = Str::slug("{$this->slug}-{$this->state->slug}");
+        }
     }
 
     public function locations()
@@ -83,7 +114,7 @@ class Market extends BaseModel
 
     public function page()
     {
-        return $this->belongsTo(app('page'));
+        return $this->belongsTo(Page::class);
     }
 
     public function state()
