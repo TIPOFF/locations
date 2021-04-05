@@ -7,6 +7,7 @@ namespace Tipoff\Locations\Tests\Unit\Models;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;
 use Tipoff\Locations\Models\Market;
+use Tipoff\Authorization\Models\User;
 use Tipoff\Locations\Tests\TestCase;
 
 class MarketTest extends TestCase
@@ -20,23 +21,35 @@ class MarketTest extends TestCase
         $this->assertNotNull($model);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException Exception
+     */
     public function cannot_create_repeat_slug_markets()
     {
-        $model = Market::factory()->create([
+        $this->actingAs(User::factory()->create());
+
+        Market::factory()->create([
             'slug' => 'random_text',
         ]);
 
-        $model2 = Market::factory()->create([
+        $this->withoutExceptionHandling();
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("there is a market with the slug selected");
+
+        Market::factory()->create([
             'slug' => 'random_text',
         ]);
-
-        $this->assertEquals(1, Market::count());
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException Exception
+     */
     public function cannot_update_slug_using_existing_one_markets()
     {
+        $this->actingAs(User::factory()->create());
+
         $model = Market::factory()->create([
             'slug' => 'random_text',
         ]);
@@ -45,17 +58,18 @@ class MarketTest extends TestCase
             'slug' => 'some_text',
         ]);
 
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("there is a market with the slug selected");
+
         $model2->slug = 'random_text';
         $model2->save();
-
-        $model2->refresh();
-
-        $this->assertEquals('some_text', $model2->slug);
     }
 
     /** @test */
     public function can_update_slug_with_a_no_used_one_markets()
     {
+        $this->actingAs(User::factory()->create());
+        
         $model = Market::factory()->create([
             'slug' => 'random_text',
         ]);
