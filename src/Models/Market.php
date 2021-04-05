@@ -46,7 +46,6 @@ class Market extends BaseModel
                 $page = Page::query()->create(['slug' => $market->slug, 'title' => $market->title]);
                 $market->page_id = $page->id;
             }
-
         });
 
         static::saving(function ($market) {
@@ -70,7 +69,6 @@ class Market extends BaseModel
             $market->page()->slug = $market->slug;
             $market->page()->title = $market->title;
             $market->page()->save();
-
         });
 
         static::addGlobalScope('open', function (Builder $builder) {
