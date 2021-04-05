@@ -6,8 +6,8 @@ namespace Tipoff\Locations\Tests\Unit\Models;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;
-use Tipoff\Locations\Models\Market;
 use Tipoff\Authorization\Models\User;
+use Tipoff\Locations\Models\Market;
 use Tipoff\Locations\Tests\TestCase;
 
 class MarketTest extends TestCase
