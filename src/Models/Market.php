@@ -36,17 +36,16 @@ class Market extends BaseModel
         parent::boot();
 
         static::creating(function (Market $market) {
-            $market->updatingSlug();
             $other_market = Market::where('slug', $market->slug)->first();
 
             if ($other_market) {
-                return false;
+                throw new \Exception("there is a market with the slug selected");
             }
 
-            $page = Page::create($market->slug, $market->title);
-
-            $market->page_id = $page->id; //@todo does not create the relations
-            $page->market()->associate($market);
+            if (empty($market->page_id)) {
+                $page = Page::query()->create(['slug' => $market->slug, 'title' => $market->title]);
+                $market->page_id = $page->id;
+            }
 
         });
 
@@ -64,10 +63,8 @@ class Market extends BaseModel
             $other_market = Market::where('slug', $market->slug)->where('id', "<>", $market->id)->first();
 
             if ($other_market) {
-                return false;
+                throw new \Exception("there is a market with the slug selected");
             }
-
-            $market->updatingSlug();
 
             /*@todo this approach is better, the relations are not working*/
             $market->page()->slug = $market->slug;
@@ -83,15 +80,6 @@ class Market extends BaseModel
         static::addGlobalScope('locationCount', function ($builder) {
             $builder->withCount('locations');
         });
-    }
-
-    public function updatingSlug()
-    {
-        $this->slug = $this->slug ?: Str::slug($this->city);
-        $invalidSlugs = config('locations.invalid_slugs') ?? [];
-        if (in_array($this->slug, $invalidSlugs)) {
-            $this->slug = Str::slug("{$this->slug}-{$this->state->slug}");
-        }
     }
 
     public function locations()
