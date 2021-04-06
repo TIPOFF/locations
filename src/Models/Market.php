@@ -65,7 +65,6 @@ class Market extends BaseModel
             }
             
             Page::whereId($market->page->id)->update(['slug' => $market->slug, 'title' => $market->title]);
-
         });
 
         static::addGlobalScope('open', function (Builder $builder) {
