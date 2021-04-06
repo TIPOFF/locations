@@ -63,11 +63,9 @@ class Market extends BaseModel
             if ($other_market) {
                 throw new \Exception("there is a market with the slug selected");
             }
+            
+            Page::whereId($market->page->id)->update(['slug' => $market->slug, 'title' => $market->title]);
 
-            /*@todo this approach is better, the relations are not working*/
-            $market->page()->slug = $market->slug;
-            $market->page()->title = $market->title;
-            $market->page()->save();
         });
 
         static::addGlobalScope('open', function (Builder $builder) {
