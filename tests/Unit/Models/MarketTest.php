@@ -17,6 +17,7 @@ class MarketTest extends TestCase
     /** @test */
     public function create_market()
     {
+        $this->actingAs(User::factory()->create());
         $model = Market::factory()->create();
         $this->assertNotNull($model);
     }
@@ -83,7 +84,7 @@ class MarketTest extends TestCase
         
         $model2->refresh();
 
-        $this->assertEquals('some_text', $model2->slug);
+        $this->assertEquals('new_text', $model2->slug);
     }
 
     /** @test */
