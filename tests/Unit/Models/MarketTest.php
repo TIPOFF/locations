@@ -89,5 +89,4 @@ class MarketTest extends TestCase
         ]);
         $this->assertEquals(Str::slug($market->city), $market->slug);
     }
-
 }
