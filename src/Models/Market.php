@@ -8,6 +8,8 @@ use DrewRoberts\Blog\Models\Page;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Tipoff\Addresses\Models\Timezone;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -35,36 +37,23 @@ class Market extends BaseModel
         parent::boot();
 
         static::creating(function (Market $market) {
-            $other_market = Market::where('slug', $market->slug)->first();
-
-            if ($other_market) {
-                throw new \Exception("there is a market with the slug selected");
-            }
-
-            if (empty($market->page_id)) {
-                $page = Page::query()->create(['slug' => $market->slug, 'title' => $market->title]);
-                $market->page_id = $page->id;
+            $market->slug = $market->slug ?: Str::slug($market->city);
+            if ($market->page_id) {
+                $market->page->update($market->pageFields());
+            } else {
+                $market->page()->associate(
+                    Page::query()->create($market->pageFields())
+                );
             }
         });
 
-        static::saving(function ($market) {
-            if (empty($market->entered_at)) {
-                $market->entered_at = '2016-01-01';
-            }
-            if (empty($market->timezone_id)) {
-                // @todo refactor to fetch EST timezone and save it here
-                $market->timezone_id = 1;
-            }
+        static::saving(function (Market $market) {
+            $market->entered_at = $market->entered_at ?: '2016-01-01';
+            $market->timezone_id = $market->timezone_id ?: Timezone::fromAbbreviation('EST');
         });
 
-        static::updating(function ($market) {
-            $other_market = Market::where('slug', $market->slug)->where('id', "<>", $market->id)->first();
-
-            if ($other_market) {
-                throw new \Exception("there is a market with the slug selected");
-            }
-            
-            Page::whereId($market->page->id)->update(['slug' => $market->slug, 'title' => $market->title]);
+        static::updating(function (Market $market) {
+            $market->page->update($market->pageFields());
         });
 
         static::addGlobalScope('open', function (Builder $builder) {
@@ -74,6 +63,14 @@ class Market extends BaseModel
         static::addGlobalScope('locationCount', function ($builder) {
             $builder->withCount('locations');
         });
+    }
+
+    private function pageFields(): array
+    {
+        return [
+            'slug' => $this->slug,
+            'title' => $this->title,
+        ];
     }
 
     public function locations()

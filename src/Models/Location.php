@@ -6,10 +6,12 @@ namespace Tipoff\Locations\Models;
 
 use Assert\Assert;
 use Carbon\Carbon;
+use DrewRoberts\Blog\Models\Page;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Tipoff\Addresses\Models\Timezone;
 use Tipoff\Support\Contracts\Checkout\OrderInterface;
 use Tipoff\Support\Contracts\Checkout\OrderItemInterface;
 use Tipoff\Support\Models\BaseModel;
@@ -42,14 +44,23 @@ class Location extends BaseModel
     {
         parent::boot();
 
-        static::saving(function ($location) {
+        static::creating(function (Location $location) {
+            $location->slug = $location->slug ?: Str::slug($location->city);
+            if ($location->page_id) {
+                $location->page->update($location->pageFields());
+            } else {
+                $location->page()->associate(
+                    Page::query()->create($location->pageFields())
+                );
+            }
+        });
+
+        static::saving(function (Location $location) {
             Assert::lazy()
                 ->that($location->market_id)->notEmpty('A location must be in a market.')
                 ->verifyNow();
-            if (empty($location->timezone_id)) {
-                // @todo refactor to fetch EST timezone and save it here
-                $location->timezone_id = 1;
-            }
+            $location->timezone_id = $location->timezone_id ?: Timezone::fromAbbreviation('EST');
+
             if (empty($location->abbreviation)) {
                 do {
                     $abbreviation = Str::upper(Str::substr(Str::slug($location->name), 0, 3)) . Str::upper(Str::random(1));
@@ -58,9 +69,21 @@ class Location extends BaseModel
             }
         });
 
+        static::updating(function (Location $location) {
+            $location->page->update($location->pageFields());
+        });
+
         static::addGlobalScope('open', function (Builder $builder) {
             $builder->whereNull('locations.closed_at') || $builder->whereDate('locations.closed_at', '>=', date('Y-m-d'));
         });
+    }
+
+    private function pageFields(): array
+    {
+        return [
+            'slug' => $this->slug,
+            'title' => $this->title_part ?? $this->name,
+        ];
     }
 
     public function address()
@@ -270,7 +293,7 @@ class Location extends BaseModel
 
             return number_format($amount / 100, 2);
         }
-        
+
         return 0;
     }
 

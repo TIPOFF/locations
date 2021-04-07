@@ -22,10 +22,7 @@ class MarketTest extends TestCase
         $this->assertNotNull($model);
     }
 
-    /**
-     * @test
-     * @expectedException Exception
-     */
+    /** @test */
     public function cannot_create_repeat_slug_markets()
     {
         $this->actingAs(User::factory()->create());
@@ -36,17 +33,14 @@ class MarketTest extends TestCase
 
         $this->withoutExceptionHandling();
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("there is a market with the slug selected");
+        $this->expectExceptionMessage("UNIQUE constraint failed: pages.slug");
 
         Market::factory()->create([
             'slug' => 'random_text',
         ]);
     }
 
-    /**
-     * @test
-     * @expectedException Exception
-     */
+    /** @test */
     public function cannot_update_slug_using_existing_one_markets()
     {
         $this->actingAs(User::factory()->create());
@@ -60,7 +54,7 @@ class MarketTest extends TestCase
         ]);
 
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("there is a market with the slug selected");
+        $this->expectExceptionMessage("UNIQUE constraint failed: pages.slug");
 
         $model2->slug = 'random_text';
         $model2->save();
@@ -70,7 +64,7 @@ class MarketTest extends TestCase
     public function can_update_slug_with_a_no_used_one_markets()
     {
         $this->actingAs(User::factory()->create());
-        
+
         $model = Market::factory()->create([
             'slug' => 'random_text',
         ]);
@@ -81,7 +75,7 @@ class MarketTest extends TestCase
 
         $model2->slug = 'new_text';
         $model2->save();
-        
+
         $model2->refresh();
 
         $this->assertEquals('new_text', $model2->slug);
@@ -96,12 +90,4 @@ class MarketTest extends TestCase
         $this->assertEquals(Str::slug($market->city), $market->slug);
     }
 
-    /** @test */
-    public function restricted_slug()
-    {
-        $market = Market::factory()->create([
-            'slug' => 'company',
-        ]);
-        $this->assertEquals(Str::slug("company-{$market->state}"), $market->slug);
-    }
 }
