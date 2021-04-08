@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Tests\Unit\Models;
 
+use DrewRoberts\Blog\Exceptions\InvalidSlugException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;
 use Tipoff\Authorization\Models\User;
@@ -32,8 +33,8 @@ class MarketTest extends TestCase
         ]);
 
         $this->withoutExceptionHandling();
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("UNIQUE constraint failed: pages.slug");
+        $this->expectException(InvalidSlugException::class);
+        $this->expectExceptionMessage("Slug is not allowed.");
 
         Market::factory()->create([
             'slug' => 'random_text',
@@ -53,8 +54,8 @@ class MarketTest extends TestCase
             'slug' => 'some_text',
         ]);
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("UNIQUE constraint failed: pages.slug");
+        $this->expectException(InvalidSlugException::class);
+        $this->expectExceptionMessage("Slug is not allowed.");
 
         $model2->slug = 'random_text';
         $model2->save();
