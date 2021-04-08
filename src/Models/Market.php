@@ -68,6 +68,7 @@ class Market extends BaseModel
     private function pageFields(): array
     {
         return [
+            'parent_id' => null,
             'slug' => $this->slug,
             'title' => $this->title,
         ];

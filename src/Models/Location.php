@@ -81,6 +81,7 @@ class Location extends BaseModel
     private function pageFields(): array
     {
         return [
+            'parent_id' => $this->market->page->id,
             'slug' => $this->slug,
             'title' => $this->title_part ?? $this->name,
         ];
