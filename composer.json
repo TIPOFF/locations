@@ -16,9 +16,9 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "drewroberts/blog": "^4.3.0",
+        "drewroberts/blog": "^4.4.0",
         "tipoff/authorization": "^2.8.0",
-        "tipoff/support": "^2.0.0"
+        "tipoff/support": "^2.0.1"
     },
     "require-dev": {
         "tipoff/test-support": "^2.0.0"
