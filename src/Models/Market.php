@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Models;
 
+use DrewRoberts\Blog\Models\Page;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Tipoff\Addresses\Models\Timezone;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -36,20 +38,22 @@ class Market extends BaseModel
 
         static::creating(function (Market $market) {
             $market->slug = $market->slug ?: Str::slug($market->city);
-            $invalidSlugs = config('locations.invalid_slugs') ?? [];
-            if (in_array($market->slug, $invalidSlugs)) {
-                $market->slug = Str::slug("{$market->slug}-{$market->state}");
+            if ($market->page_id) {
+                $market->page->update($market->pageFields());
+            } else {
+                $market->page()->associate(
+                    Page::query()->create($market->pageFields())
+                );
             }
         });
 
-        static::saving(function ($market) {
-            if (empty($market->entered_at)) {
-                $market->entered_at = '2016-01-01';
-            }
-            if (empty($market->timezone_id)) {
-                // @todo refactor to fetch EST timezone and save it here
-                $market->timezone_id = 1;
-            }
+        static::saving(function (Market $market) {
+            $market->entered_at = $market->entered_at ?: '2016-01-01';
+            $market->timezone_id = $market->timezone_id ?: Timezone::fromAbbreviation('EST');
+        });
+
+        static::updating(function (Market $market) {
+            $market->page->update($market->pageFields());
         });
 
         static::addGlobalScope('open', function (Builder $builder) {
@@ -59,6 +63,15 @@ class Market extends BaseModel
         static::addGlobalScope('locationCount', function ($builder) {
             $builder->withCount('locations');
         });
+    }
+
+    private function pageFields(): array
+    {
+        return [
+            'parent_id' => null,
+            'slug' => $this->slug,
+            'title' => $this->title,
+        ];
     }
 
     public function locations()
@@ -79,6 +92,16 @@ class Market extends BaseModel
     public function map()
     {
         return $this->belongsTo(app('image'), 'map_image_id');
+    }
+
+    public function page()
+    {
+        return $this->belongsTo(Page::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(app('state'));
     }
 
     /**

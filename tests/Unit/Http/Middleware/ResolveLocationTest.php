@@ -18,7 +18,6 @@ class ResolveLocationTest extends TestCase
     /** @test */
     public function single_market_single_location()
     {
-        $this->logToStderr();
         Route::getLocation('test', 'test', function () {
             return LocationRouter::build('test');
         });
