@@ -1,4 +1,4 @@
-@extends('support::layout')
+@extends('support::base')
 
 @section('content')
     <h3>Select Location @if($market)for {{ $market->name }}@endif</h3>
