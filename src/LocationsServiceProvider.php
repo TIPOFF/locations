@@ -38,7 +38,6 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 \Tipoff\Locations\Nova\Location::class,
                 \Tipoff\Locations\Nova\Market::class,
             ])
-            ->hasWebRoute('web')
             ->hasCommands([
                 SyncLocations::class,
             ])
