@@ -75,6 +75,26 @@ class Market extends BaseModel
         ];
     }
 
+    public function page()
+    {
+        return $this->belongsTo(Page::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(app('state'));
+    }
+    
+    public function timezone()
+    {
+        return $this->belongsTo(app('timezone'));
+    }
+
+    public function map()
+    {
+        return $this->belongsTo(app('image'), 'map_image_id');
+    }
+
     public function locations()
     {
         return $this->hasMany(app('location'));
@@ -90,33 +110,9 @@ class Market extends BaseModel
         return $this->hasManyThrough(app('room'), app('location'));
     }
 
-    public function map()
-    {
-        return $this->belongsTo(app('image'), 'map_image_id');
-    }
-
-    public function page()
-    {
-        return $this->belongsTo(Page::class);
-    }
-
-    public function state()
-    {
-        return $this->belongsTo(app('state'));
-    }
-
-    /**
-     * Get a string for the php timezone of the market.
-     *
-     * @return string
-     */
     public function getPhpTzAttribute()
     {
-        if ($this->timezone == 'CST') {
-            return 'America/Chicago';
-        }
-
-        return 'America/New_York';
+        return $this->timezone->php;
     }
 
     public function getPathAttribute()
