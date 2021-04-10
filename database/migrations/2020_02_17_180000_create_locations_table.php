@@ -31,8 +31,8 @@ class CreateLocationsTable extends Migration
             $table->string('maps_url')->nullable()->unique(); // URL for location's Google My Business / Google Maps page.
             $table->string('review_url')->nullable()->unique(); // URL for a new review at the location.
 
-            $table->smallInteger('reviews')->nullable(); // Number of Reviews for Location
-            $table->unsignedDecimal('rating', 2, 1)->nullable(); // Aggregate Review Rating for Location
+            $table->smallInteger('aggregate_reviews')->nullable(); // Total aggregate number of Reviews for Location
+            $table->unsignedDecimal('aggregate_rating', 2, 1)->nullable(); // Aggregate Review Rating for Location
 
             $table->foreignIdFor(app('user'), 'creator_id');
             $table->foreignIdFor(app('user'), 'updater_id');
