@@ -9,7 +9,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Place;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -34,8 +34,8 @@ class Location extends BaseResource
     {
         return array_filter([
             ID::make()->sortable(),
+            nova('market') ? BelongsTo::make('Market', 'market', nova('market'))->sortable() : null,
             Text::make('Name')->sortable(),
-            Text::make('Phone'),
         ]);
     }
 
@@ -45,18 +45,14 @@ class Location extends BaseResource
             nova('market') ? BelongsTo::make('Market', 'market', nova('market'))->required() : null,
             Text::make('Name')->required(),
             Slug::make('Slug')->from('Name'),
-            Text::make('Title')->required(),
             Text::make('Abbreviation')->required(),
-            Text::make('Timezone')->required(),
-            nova('email_address') ? BelongsTo::make('Email Address', 'email_address', nova('email_address'))->sortable() : null,
+            nova('timezone') ? BelongsTo::make('Timezone', 'timezone', nova('timezone'))->required() : null,
 
-            new Panel('Address Information', $this->addressFields()),
+            new Panel('Info Fields', $this->infoFields()),
+            
+            new Panel('GMB Fields', $this->gmbFields()),
 
             nova('room') ? HasMany::make('Rooms', 'rooms', nova('room')) : null,
-
-            new Panel('Review Data', $this->reviewFields()),
-
-            new Panel('Hours of Operation', $this->hoursFields()),
 
             nova('order') ? HasMany::make('Orders', 'orders', nova('order')) : null,
 
@@ -72,65 +68,28 @@ class Location extends BaseResource
         ]);
     }
 
-    protected function addressFields()
+    protected function infoFields()
     {
         return [
-            Place::make('Address', 'address')->nullable(),
-            Text::make('Address Line 2', 'address2')->nullable(),
-            Text::make('City')->nullable(),
-            Text::make('State')->nullable(),
-            Text::make('ZIP')->nullable(),
-            Text::make('Phone')->nullable(),
+            nova('page') ? BelongsTo::make('Page', 'page', nova('page'))->exceptOnForms() : null,
+            nova('domestic_address') ? BelongsTo::make('Domestic Address', 'domestic_address', nova('domestic_address'))->nullable() : null,
+            nova('phone') ? BelongsTo::make('Phone', 'phone', nova('phone'))->nullable() : null,
+            Date::make('Closed At')->nullable(),
+            Text::make('Title Part')->nullable(),
+            nova('user') ? BelongsTo::make('Manager', 'manager', nova('user'))->nullable() : null,
+            nova('email_address') ? BelongsTo::make('Email Address', 'email_address', nova('email_address'))->nullable() : null,
+            Text::make('Maps URL', 'maps_url')->nullable(),
+            Text::make('Review URL', 'review_url')->nullable(),
+            Number::make('Reviews')->min(0)->max(99999999)->step(1)->nullable(),
+            Number::make('Rating')->min(1)->max(5)->step(0.1)->nullable(),
         ];
     }
-
-    protected function reviewFields()
+    
+    protected function gmbFields()
     {
         return [
-            Text::make('Reviews', 'gmb_reviews')->nullable(),
-            Text::make('Rating', 'gmb_rating')->nullable(),
-            Text::make('Map Link', function () {
-                return '<a href="' . $this->maps_url . '">' . $this->maps_url . '</a>';
-            })->asHtml()->nullable(),
-            Text::make('Review Link', function () {
-                return '<a href="' . $this->review_url . '">' . $this->review_url . '</a>';
-            })->asHtml()->nullable(),
-            Text::make('Latitude')->nullable(),
-            Text::make('Longitude')->nullable(),
-            Text::make('GMB ID', 'gmb_location')->required(),
-            Text::make('GMB Account')->nullable(),
-            Text::make('Place ID', 'place_location')->nullable(),
-            Text::make('Facebook')->nullable(),
-            Text::make('Tripadvisor')->nullable(),
-            Text::make('Yelp')->nullable(),
-        ];
-    }
-
-    protected function hoursFields()
-    {
-        return [
-            Text::make('Monday Open')->nullable(),
-            Text::make('Monday Close')->nullable(),
-            Text::make('Tuesday Open')->nullable(),
-            Text::make('Tuesday Close')->nullable(),
-            Text::make('Wednesday Open')->nullable(),
-            Text::make('Wednesday Close')->nullable(),
-            Text::make('Thursday Open')->nullable(),
-            Text::make('Thursday Close')->nullable(),
-            Text::make('Friday Open')->nullable(),
-            Text::make('Friday Close')->nullable(),
-            Text::make('Saturday Open')->nullable(),
-            Text::make('Saturday Close')->nullable(),
-            Text::make('Sunday Open')->nullable(),
-            Text::make('Sunday Close')->nullable(),
-        ];
-    }
-
-    protected function bookingFields()
-    {
-        return [
-            Date::make('Opened At')->required(),
-            Date::make('Closed At')->required(),
+            nova('gmb_account') ? BelongsTo::make('GMB Account', 'gmb_account', nova('gmb_account'))->nullable() : null,
+            Text::make('Gmb Location')->nullable(),
         ];
     }
 
