@@ -68,7 +68,7 @@ class Market extends BaseResource
         return [
             nova('page') ? BelongsTo::make('Page', 'page', nova('page'))->exceptOnForms() : null,
             nova('timezone') ? BelongsTo::make('Timezone', 'timezone', nova('timezone'))->nullable() : null,
-            DateTime::make('Entered At', 'entered_at')->nullable()
+            DateTime::make('Entered At', 'entered_at')->nullable(),
             DateTime::make('Closed At', 'closed_at')->nullable(),
             nova('image') ? BelongsTo::make('Map Image', 'map', nova('image'))->nullable()->showCreateRelationButton() : null,
         ];
