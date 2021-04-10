@@ -48,6 +48,7 @@ class Market extends BaseModel
         });
 
         static::saving(function (Market $market) {
+            $market->title = $market->title ?: $market->name;
             $market->entered_at = $market->entered_at ?: '2016-01-01';
             $market->timezone_id = $market->timezone_id ?: Timezone::fromAbbreviation('EST');
         });
