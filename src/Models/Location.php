@@ -45,7 +45,7 @@ class Location extends BaseModel
         parent::boot();
 
         static::creating(function (Location $location) {
-            $location->slug = $location->slug ?: Str::slug($location->city);
+            $location->slug = $location->slug ?: Str::slug($location->name);
             if ($location->page_id) {
                 $location->page->update($location->pageFields());
             } else {
@@ -59,7 +59,7 @@ class Location extends BaseModel
             Assert::lazy()
                 ->that($location->market_id)->notEmpty('A location must be in a market.')
                 ->verifyNow();
-            $location->timezone_id = $location->timezone_id ?: Timezone::fromAbbreviation('EST');
+            $location->timezone_id = $location->timezone_id ?: $location->market->timezone->id;
 
             if (empty($location->abbreviation)) {
                 do {
@@ -87,11 +87,6 @@ class Location extends BaseModel
         ];
     }
 
-    public function address()
-    {
-        return $this->hasOne(app('domestic_address'));
-    }
-
     public function market()
     {
         return $this->belongsTo(app('market'));
@@ -100,6 +95,21 @@ class Location extends BaseModel
     public function page()
     {
         return $this->belongsTo(app('page'));
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(app('timezone'));
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(app('domestic_address'));
+    }
+
+    public function phone()
+    {
+        return $this->belongsTo(app('phone'));
     }
 
     public function gmbAccount()
@@ -114,22 +124,12 @@ class Location extends BaseModel
 
     public function email()
     {
-        return $this->hasOne(app('email_address'));
-    }
-
-    public function contactEmail()
-    {
-        return $this->hasOne(app('email_address'), 'contact_email_id');
+        return $this->belongsTo(app('email_address'), 'contact_email_id');
     }
 
     public function contacts()
     {
         return $this->hasMany(app('contact'));
-    }
-
-    public function phone()
-    {
-        return $this->hasOne(app('phone'));
     }
 
     public function users()
@@ -169,7 +169,7 @@ class Location extends BaseModel
 
     public function competitor()
     {
-        return $this->hasOne(app('competitor'));
+        return $this->belongsTo(app('competitor'));
     }
 
     public function snapshots()
@@ -368,58 +368,27 @@ class Location extends BaseModel
         return $slot;
     }
 
-    /**
-     * Get current date time at location.
-     *
-     * @return Carbon
-     */
     public function getCurrentDateTime()
     {
         return Carbon::now($this->getPhpTzAttribute());
     }
 
-    /**
-     * Get a string for the php timezone of the location.
-     *
-     * @return string
-     */
     public function getPhpTzAttribute()
     {
-        if ($this->timezone == 'CST') {
-            return 'America/Chicago';
-        }
-
-        return 'America/New_York';
+        return $this->timezone->php;
     }
 
-    /**
-     * Get data/time at location.
-     *
-     * @return Carbon
-     */
     public function currentDateTime()
     {
         return Carbon::now()->setTimeZone($this->php_tz);
     }
 
-    /**
-     * Apply location timezone to data/time.
-     *
-     * @param Carbon|string $dateTime
-     * @return Carbon
-     */
     public function toLocalDateTime($dateTime)
     {
         return Carbon::parse($dateTime)->setTimeZone($this->php_tz);
     }
 
-    /**
-     * Apply UTC timezone to local data/time.
-     *
-     * @param Carbon|string $dateTime
-     * @return Carbon
-     */
-    public function toUtclDateTime($dateTime)
+    public function toUtcDateTime($dateTime)
     {
         return Carbon::parse($dateTime, $this->php_tz)->setTimeZone('UTC');
     }
