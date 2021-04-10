@@ -14,6 +14,16 @@ use Tipoff\Support\Nova\BaseResource;
 class GmbHour extends BaseResource
 {
     public static $model = \Tipoff\Locations\Models\GmbHour::class;
+    
+    public static function label()
+    {
+        return 'GMB Hours';
+    }
+
+    public static function singularLabel()
+    {
+        return 'GMB Hour';
+    }
 
     public static $title = 'id';
 
