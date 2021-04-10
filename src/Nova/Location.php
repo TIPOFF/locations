@@ -72,12 +72,12 @@ class Location extends BaseResource
     {
         return [
             nova('page') ? BelongsTo::make('Page', 'page', nova('page'))->exceptOnForms() : null,
-            nova('domestic_address') ? BelongsTo::make('Domestic Address', 'domestic_address', nova('domestic_address'))->nullable() : null,
+            nova('domestic_address') ? BelongsTo::make('Domestic Address', 'address', nova('domestic_address'))->nullable() : null,
             nova('phone') ? BelongsTo::make('Phone', 'phone', nova('phone'))->nullable() : null,
             Date::make('Closed At')->nullable(),
             Text::make('Title Part')->nullable(),
             nova('user') ? BelongsTo::make('Manager', 'manager', nova('user'))->nullable() : null,
-            nova('email_address') ? BelongsTo::make('Email Address', 'email_address', nova('email_address'))->nullable() : null,
+            nova('email_address') ? BelongsTo::make('Email Address', 'email', nova('email_address'))->nullable() : null,
             Text::make('Maps URL', 'maps_url')->nullable(),
             Text::make('Review URL', 'review_url')->nullable(),
             Number::make('Reviews')->min(0)->max(99999999)->step(1)->nullable(),
