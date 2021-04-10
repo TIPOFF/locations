@@ -80,8 +80,8 @@ class Location extends BaseResource
             nova('email_address') ? BelongsTo::make('Email Address', 'email', nova('email_address'))->nullable() : null,
             Text::make('Maps URL', 'maps_url')->nullable(),
             Text::make('Review URL', 'review_url')->nullable(),
-            Number::make('Reviews')->min(0)->max(99999999)->step(1)->nullable(),
-            Number::make('Rating')->min(1)->max(5)->step(0.1)->nullable(),
+            Number::make('Aggregate Reviews')->min(0)->max(99999999)->step(1)->nullable(),
+            Number::make('Aggregate Rating')->min(1)->max(5)->step(0.1)->nullable(),
         ];
     }
     
