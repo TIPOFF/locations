@@ -128,3 +128,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.9.1 - 2021-04-09
 
 - update nova resources
+
+## 2.9.2 - 2021-04-10
+
+- update models
