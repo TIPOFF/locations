@@ -124,3 +124,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.9.0 - 2021-04-09
 
 - location-based pages
+
+## 2.9.1 - 2021-04-09
+
+- update nova resources
