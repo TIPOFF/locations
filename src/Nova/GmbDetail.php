@@ -14,6 +14,16 @@ use Tipoff\Support\Nova\BaseResource;
 class GmbDetail extends BaseResource
 {
     public static $model = \Tipoff\Locations\Models\GmbDetail::class;
+    
+    public static function label()
+    {
+        return 'GMB Details';
+    }
+
+    public static function singularLabel()
+    {
+        return 'GMB Detail';
+    }
 
     public static $title = 'id';
 
