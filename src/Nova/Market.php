@@ -39,48 +39,39 @@ class Market extends BaseResource
     {
         return array_filter([
             ID::make()->sortable(),
+            nova('state') ? BelongsTo::make('State', 'state', nova('state'))->sortable() : null,
             Text::make('Name')->sortable(),
+            // @todo Add location count
         ]);
     }
 
     public function fields(Request $request)
     {
         return array_filter([
+            nova('state') ? BelongsTo::make('State', 'state', nova('state'))->required() : null,
             Text::make('Name')->required(),
             Slug::make('Slug')->from('Name'),
-            Text::make('Title'),
-            nova('state') ? BelongsTo::make('State', 'state', nova('state'))->required() : null,
-            Text::make('Timezone'),
-            DateTime::make('Entered At', 'entered_at'),
-            DateTime::make('Closed At', 'closed_at')->nullable(),
+            Text::make('Title')->nullable(),
+
+            new Panel('Info Fields', $this->infoFields()),
 
             nova('location') ? HasMany::make('Locations', 'locations', nova('location')) : null,
 
             nova('competitor') ? HasMany::make('Competitors', 'competitors', nova('competitor')) : null,
 
-            new Panel('Content Fields', $this->contentFields()),
-
-            new Panel('Media Fields', $this->mediaFields()),
-
             new Panel('Data Fields', $this->dataFields()),
         ]);
     }
 
-    protected function contentFields()
+    protected function infoFields()
     {
         return [
             nova('page') ? BelongsTo::make('Page', 'page', nova('page'))->exceptOnForms() : null,
-            Markdown::make('Content'),
-        ];
-    }
-
-    protected function mediaFields()
-    {
-        return array_filter([
-            nova('image') ? BelongsTo::make('Image', 'image', nova('image'))->nullable()->showCreateRelationButton() : null,
-            nova('image') ? BelongsTo::make('OG Image', 'ogimage', nova('image'))->nullable()->showCreateRelationButton() : null,
+            nova('timezone') ? BelongsTo::make('Timezone', 'timezone', nova('timezone'))->nullable() : null,
+            DateTime::make('Entered At', 'entered_at')->nullable()
+            DateTime::make('Closed At', 'closed_at')->nullable(),
             nova('image') ? BelongsTo::make('Map Image', 'map', nova('image'))->nullable()->showCreateRelationButton() : null,
-        ]);
+        ];
     }
 
     protected function dataFields(): array
