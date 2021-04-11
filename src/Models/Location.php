@@ -104,7 +104,7 @@ class Location extends BaseModel
 
     public function address()
     {
-        return $this->belongsTo(app('domestic_address'));
+        return $this->belongsTo(app('domestic_address'), 'domestic_address_id');
     }
 
     public function phone()
