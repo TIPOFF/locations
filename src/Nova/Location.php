@@ -45,11 +45,13 @@ class Location extends BaseResource
             nova('market') ? BelongsTo::make('Market', 'market', nova('market'))->required() : null,
             Text::make('Name')->required(),
             Slug::make('Slug')->from('Name'),
-            Text::make('Abbreviation')->required(),
+            Text::make('Abbreviation')
+                ->withMeta(['extraAttributes' => ['maxlength' => 4]])
+                ->required(),
             nova('timezone') ? BelongsTo::make('Timezone', 'timezone', nova('timezone'))->required() : null,
 
             new Panel('Info Fields', $this->infoFields()),
-            
+
             new Panel('GMB Fields', $this->gmbFields()),
 
             nova('room') ? HasMany::make('Rooms', 'rooms', nova('room')) : null,
@@ -84,7 +86,7 @@ class Location extends BaseResource
             Number::make('Aggregate Rating')->min(1)->max(5)->step(0.1)->nullable(),
         ];
     }
-    
+
     protected function gmbFields()
     {
         return [
