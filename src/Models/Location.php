@@ -114,7 +114,7 @@ class Location extends BaseModel
 
     public function gmbAccount()
     {
-        return $this->belongsTo(app('gmb_account'));
+        return $this->belongsTo(app('gmb_account'), 'gmb_account_id');
     }
 
     public function manager()
