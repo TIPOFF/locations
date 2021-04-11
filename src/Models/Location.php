@@ -112,7 +112,7 @@ class Location extends BaseModel
         return $this->belongsTo(app('phone'));
     }
 
-    public function gmbAccount()
+    public function gmb_account()
     {
         return $this->belongsTo(app('gmb_account'), 'gmb_account_id');
     }
