@@ -140,3 +140,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.9.4 - 2021-04-10
 
 - rename fields on location migration
+
+## 2.9.5 - 2021-04-11
+
+- update location nova resource
