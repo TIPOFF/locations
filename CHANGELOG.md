@@ -144,3 +144,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.9.5 - 2021-04-11
 
 - update location nova resource
+
+## 2.9.6 - 2021-04-11
+
+- update gmb account relationship on location
