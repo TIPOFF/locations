@@ -31,8 +31,8 @@ class TestCase extends BaseTestCase
             AddressesServiceProvider::class,
             MediaServiceProvider::class,
             SeoServiceProvider::class,
-            LocationsServiceProvider::class,
             BlogServiceProvider::class,
+            LocationsServiceProvider::class,
         ];
     }
 }
