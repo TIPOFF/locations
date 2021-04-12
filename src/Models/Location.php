@@ -60,6 +60,7 @@ class Location extends BaseModel
                 ->that($location->market_id)->notEmpty('A location must be in a market.')
                 ->verifyNow();
             $location->timezone_id = $location->timezone_id ?: $location->market->timezone->id;
+            $location->abbreviation = strtoupper($location->abbreviation);
 
             if (empty($location->abbreviation)) {
                 do {
