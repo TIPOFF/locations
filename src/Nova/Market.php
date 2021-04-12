@@ -25,7 +25,7 @@ class Market extends BaseResource
 
     public function title()
     {
-        return $this->name . ', ' . $this->state;
+        return $this->name . ', ' . $this->state->abbreviation;
     }
 
     public static $search = [

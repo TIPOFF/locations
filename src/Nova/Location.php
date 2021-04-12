@@ -48,7 +48,6 @@ class Location extends BaseResource
             Text::make('Abbreviation')
                 ->withMeta(['extraAttributes' => ['maxlength' => 4]])
                 ->required(),
-            nova('timezone') ? BelongsTo::make('Timezone', 'timezone', nova('timezone'))->required() : null,
 
             new Panel('Info Fields', $this->infoFields()),
 
@@ -74,6 +73,9 @@ class Location extends BaseResource
     {
         return [
             nova('page') ? BelongsTo::make('Page', 'page', nova('page'))->exceptOnForms() : null,
+            nova('timezone') ? BelongsTo::make('Timezone', 'timezone', nova('timezone'))
+                ->help('This value will be populated by the corresponding Market if left empty.')
+                ->nullable() : null,
             nova('domestic_address') ? BelongsTo::make('Domestic Address', 'address', nova('domestic_address'))->nullable() : null,
             nova('phone') ? BelongsTo::make('Phone', 'phone', nova('phone'))->nullable() : null,
             Date::make('Closed At')->nullable(),
