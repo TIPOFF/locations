@@ -30,6 +30,11 @@ class Location extends BaseResource
 
     public static $group = 'Locations';
 
+    public function timezone()
+    {
+        return ($this->market->timezone) ? $this->market->timezone->id : null;
+    }
+
     public function fieldsForIndex(NovaRequest $request)
     {
         return array_filter([
@@ -48,7 +53,7 @@ class Location extends BaseResource
             Text::make('Abbreviation')
                 ->withMeta(['extraAttributes' => ['maxlength' => 4]])
                 ->required(),
-            nova('timezone') ? BelongsTo::make('Timezone', 'timezone', nova('timezone'))->required() : null,
+            nova('timezone') ? BelongsTo::make('Timezone', 'timezone', nova('timezone'))->nullable()->default($this->timezone()) : null,
 
             new Panel('Info Fields', $this->infoFields()),
 
