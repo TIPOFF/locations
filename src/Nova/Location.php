@@ -102,20 +102,41 @@ class Location extends BaseResource
     protected function hoursFields()
     {
         return [
-            Text::make('Monday Open', 'gmb_hour.monday_open')->nullable(),
-            Text::make('Monday Close', 'gmb_hour.monday_close')->nullable(),
-            Text::make('Tuesday Open', 'gmb_hour.tuesday_open')->nullable(),
-            Text::make('Tuesday Close', 'gmb_hour.tuesday_close')->nullable(),
-            Text::make('Wednesday Open', 'gmb_hour.wednesday_open')->nullable(),
-            Text::make('Wednesday Close', 'gmb_hour.wednesday_close')->nullable(),
-            Text::make('Thursday Open', 'gmb_hour.thursday_open')->nullable(),
-            Text::make('Thursday Close', 'gmb_hour.thursday_close')->nullable(),
-            Text::make('Friday Open', 'gmb_hour.friday_open')->nullable(),
-            Text::make('Friday Close', 'gmb_hour.friday_close')->nullable(),
-            Text::make('Saturday Open', 'gmb_hour.saturday_open')->nullable(),
-            Text::make('Saturday Close', 'gmb_hour.saturday_close')->nullable(),
-            Text::make('Sunday Open', 'gmb_hour.sunday_open')->nullable(),
-            Text::make('Sunday Close', 'gmb_hour.sunday_close')->nullable(),
+            Text::make('Monday', function() {
+                return ($this->gmb_hour->monday_open && $this->gmb_hour->monday_close)
+                    ? $this->gmb_hour->monday_open . ' to ' . $this->gmb_hour->monday_close
+                    : 'Closed';
+            }),
+            Text::make('Tuesday', function() {
+                return ($this->gmb_hour->tuesday_open && $this->gmb_hour->tuesday_close)
+                    ? $this->gmb_hour->tuesday_open . ' to ' . $this->gmb_hour->tuesday_close
+                    : 'Closed';
+            })->nullable(),
+            Text::make('Wednesday', function() {
+                return ($this->gmb_hour->wednesday_open && $this->gmb_hour->wednesday_close)
+                    ? $this->gmb_hour->wednesday_open . ' to ' . $this->gmb_hour->wednesday_close
+                    : 'Closed';
+            })->nullable(),
+            Text::make('Thursday', function() {
+                return ($this->gmb_hour->thursday_open && $this->gmb_hour->thursday_close)
+                    ? $this->gmb_hour->thursday_open . ' to ' . $this->gmb_hour->thursday_close
+                    : 'Closed';
+            })->nullable(),
+            Text::make('Friday', function() {
+                return ($this->gmb_hour->friday_open && $this->gmb_hour->friday_close)
+                    ? $this->gmb_hour->friday_open . ' to ' . $this->gmb_hour->friday_close
+                    : 'Closed';
+            })->nullable(),
+            Text::make('Saturday', function() {
+                return ($this->gmb_hour->saturday_open && $this->gmb_hour->saturday_close)
+                    ? $this->gmb_hour->saturday_open . ' to ' . $this->gmb_hour->saturday_close
+                    : 'Closed';
+            })->nullable(),
+            Text::make('Sunday', function() {
+                return ($this->gmb_hour->sunday_open && $this->gmb_hour->sunday_close)
+                    ? $this->gmb_hour->sunday_open . ' to ' . $this->gmb_hour->sunday_close
+                    : 'Closed';
+            })->nullable(),
         ];
     }
 
