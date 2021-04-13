@@ -15,22 +15,38 @@ class GmbHourFactory extends Factory
     public function definition()
     {
         return [
-            'monday_open'       => $this->faker->time('H:i A'),
-            'monday_close'      => $this->faker->time('H:i A'),
-            'tuesday_open'      => $this->faker->time('H:i A'),
-            'tuesday_close'     => $this->faker->time('H:i A'),
-            'wednesday_open'    => $this->faker->time('H:i A'),
-            'wednesday_close'   => $this->faker->time('H:i A'),
-            'thursday_open'     => $this->faker->time('H:i A'),
-            'thursday_close'    => $this->faker->time('H:i A'),
-            'friday_open'       => $this->faker->time('H:i A'),
-            'friday_close'      => $this->faker->time('H:i A'),
-            'saturday_open'     => $this->faker->time('H:i A'),
-            'saturday_close'    => $this->faker->time('H:i A'),
-            'sunday_open'       => $this->faker->time('H:i A'),
-            'sunday_close'      => $this->faker->time('H:i A'),
+            'monday_open'       => $this->faker->time('g:iA'),
+            'monday_close'      => $this->faker->time('g:iA'),
+            'tuesday_open'      => $this->faker->time('g:iA'),
+            'tuesday_close'     => $this->faker->time('g:iA'),
+            'wednesday_open'    => $this->faker->time('g:iA'),
+            'wednesday_close'   => $this->faker->time('g:iA'),
+            'thursday_open'     => $this->faker->time('g:iA'),
+            'thursday_close'    => $this->faker->time('g:iA'),
+            'friday_open'       => $this->faker->time('g:iA'),
+            'friday_close'      => $this->faker->time('g:iA'),
+            'saturday_open'     => $this->faker->time('g:iA'),
+            'saturday_close'    => $this->faker->time('g:iA'),
+            'sunday_open'       => $this->faker->time('g:iA'),
+            'sunday_close'      => $this->faker->time('g:iA'),
             'location_id'       => randomOrCreate(app('location')),
             'created_at'        => Date::now()
         ];
+    }
+
+    /**
+     * Pass in a day where GmbHours indicate closed.
+     *
+     * @param string $day
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function closed($day)
+    {
+        return $this->state(function (array $attributes) use ($day) {
+            return [
+                $day . '_open' => null,
+                $day . '_close' => null,
+            ];
+        });
     }
 }
