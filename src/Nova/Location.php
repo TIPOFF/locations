@@ -53,6 +53,8 @@ class Location extends BaseResource
 
             new Panel('GMB Fields', $this->gmbFields()),
 
+            new Panel('Hours', $this->hoursFields()),
+
             nova('room') ? HasMany::make('Rooms', 'rooms', nova('room')) : null,
 
             nova('order') ? HasMany::make('Orders', 'orders', nova('order')) : null,
@@ -94,6 +96,26 @@ class Location extends BaseResource
         return [
             nova('gmb_account') ? BelongsTo::make('GMB Account', 'gmb_account', nova('gmb_account'))->nullable() : null,
             Text::make('Gmb Location')->nullable(),
+        ];
+    }
+
+    protected function hoursFields()
+    {
+        return [
+            Text::make('Monday Open', 'gmb_hour.monday_open')->nullable(),
+            Text::make('Monday Close', 'gmb_hour.monday_close')->nullable(),
+            Text::make('Tuesday Open', 'gmb_hour.tuesday_open')->nullable(),
+            Text::make('Tuesday Close', 'gmb_hour.tuesday_close')->nullable(),
+            Text::make('Wednesday Open', 'gmb_hour.wednesday_open')->nullable(),
+            Text::make('Wednesday Close', 'gmb_hour.wednesday_close')->nullable(),
+            Text::make('Thursday Open', 'gmb_hour.thursday_open')->nullable(),
+            Text::make('Thursday Close', 'gmb_hour.thursday_close')->nullable(),
+            Text::make('Friday Open', 'gmb_hour.friday_open')->nullable(),
+            Text::make('Friday Close', 'gmb_hour.friday_close')->nullable(),
+            Text::make('Saturday Open', 'gmb_hour.saturday_open')->nullable(),
+            Text::make('Saturday Close', 'gmb_hour.saturday_close')->nullable(),
+            Text::make('Sunday Open', 'gmb_hour.sunday_open')->nullable(),
+            Text::make('Sunday Close', 'gmb_hour.sunday_close')->nullable(),
         ];
     }
 

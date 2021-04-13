@@ -119,6 +119,16 @@ class Location extends BaseModel
         return $this->belongsTo(app('gmb_account'), 'gmb_account_id');
     }
 
+    public function gmb_detail()
+    {
+        return $this->hasOne(app('gmb_detail'));
+    }
+
+    public function gmb_hour()
+    {
+        return $this->hasOne(app('gmb_hour'))->latest();
+    }
+
     public function manager()
     {
         return $this->belongsTo(app('user'), 'manager_id');
