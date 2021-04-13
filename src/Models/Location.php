@@ -86,6 +86,7 @@ class Location extends BaseModel
             'parent_id' => $this->market->page->id,
             'slug' => $this->slug,
             'title' => $this->title_part ?? $this->name,
+            'location_based' => true,
         ];
     }
 

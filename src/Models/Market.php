@@ -72,6 +72,7 @@ class Market extends BaseModel
             'parent_id' => null,
             'slug' => $this->slug,
             'title' => $this->title,
+            'location_based' => true,
         ];
     }
 
@@ -84,7 +85,7 @@ class Market extends BaseModel
     {
         return $this->belongsTo(app('state'));
     }
-    
+
     public function timezone()
     {
         return $this->belongsTo(app('timezone'));
