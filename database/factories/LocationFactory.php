@@ -24,6 +24,7 @@ class LocationFactory extends Factory
             'page_id'               => Page::factory()->create(),
             'market_id'             => randomOrCreate(app('market')),
             'timezone_id'           => randomOrCreate(app('timezone')),
+            'contact_email_id'      => randomOrCreate(app('email_address')),
             'domestic_address_id'   => randomOrCreate(app('domestic_address')),
             'phone_id'              => randomOrCreate(app('phone')),
             'creator_id'            => randomOrCreate(app('user')),
