@@ -156,3 +156,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.9.8 - 2021-04-12
 
 - nova resources for gmb details & hours
+
+## 2.9.9 - 2021-04-12
+
+- bump dependencies
