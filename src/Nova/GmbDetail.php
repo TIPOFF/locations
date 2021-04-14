@@ -28,7 +28,7 @@ class GmbDetail extends BaseResource
     public static $title = 'id';
 
     public static $search = [
-        'id', 'name', 'address', 'address2', 'city', 'state', 'zip', 'phone', 'latitude', 'longitude',
+        'id', 'name', 'latitude', 'longitude',
     ];
     
     public static $group = 'Locations';
