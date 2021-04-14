@@ -43,7 +43,8 @@ class Market extends BaseModel
                 $market->page->update($market->pageFields());
             } else {
                 $market->page()->associate(
-                    Page::query()->create(array_merge($market->pageFields(), [
+                    Page::query()->create(
+                        array_merge($market->pageFields(), [
                             'layout_id' => Layout::query()->where('view', 'locations::page.market.base')->firstOrFail()->id,
                         ])
                     )

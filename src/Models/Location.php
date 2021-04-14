@@ -51,7 +51,8 @@ class Location extends BaseModel
                 $location->page->update($location->pageFields());
             } else {
                 $location->page()->associate(
-                    Page::query()->create(array_merge($location->pageFields(), [
+                    Page::query()->create(
+                        array_merge($location->pageFields(), [
                             'layout_id' => Layout::query()->where('view', 'locations::page.location.base')->firstOrFail()->id,
                         ])
                     )
