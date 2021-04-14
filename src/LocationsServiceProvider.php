@@ -92,13 +92,16 @@ class LocationsServiceProvider extends TipoffServiceProvider
                     // changes in location / market counts after routes have been cached!
 
                     Route::middleware(ResolveLocation::class)
-                        ->post('company/' . $uri, $action);
+                        ->post('company/' . $uri, $action)
+                        ->name($routeName);
 
                     Route::middleware(ResolveLocation::class)
-                        ->post('{market}/{location}/' . $uri, $action);
+                        ->post('{market}/{location}/' . $uri, $action)
+                        ->name('market.location.' . $routeName);
 
                     Route::middleware(ResolveLocation::class)
-                        ->post('{market}/' . $uri, $action);
+                        ->post('{market}/' . $uri, $action)
+                        ->name('market.' . $routeName);
                 });
         });
 

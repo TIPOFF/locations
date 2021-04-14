@@ -42,6 +42,7 @@ class Market extends BaseModel
             if ($market->page_id) {
                 $market->page->update($market->pageFields());
             } else {
+                /** @psalm-suppress UndefinedMagicPropertyFetch */
                 $market->page()->associate(
                     Page::query()->create(
                         array_merge($market->pageFields(), [

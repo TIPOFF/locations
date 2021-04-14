@@ -50,6 +50,7 @@ class Location extends BaseModel
             if ($location->page_id) {
                 $location->page->update($location->pageFields());
             } else {
+                /** @psalm-suppress UndefinedMagicPropertyFetch */
                 $location->page()->associate(
                     Page::query()->create(
                         array_merge($location->pageFields(), [
