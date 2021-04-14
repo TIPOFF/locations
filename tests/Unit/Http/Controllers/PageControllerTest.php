@@ -67,7 +67,6 @@ class PageControllerTest extends TestCase
             ->assertOk()
             ->assertSee("-- M:{$market->id} --");
 
-        $this->logToStderr();
         $this->get($this->webUrl("{$market->slug}/{$location->slug}"))
             ->assertOk()
             ->assertSee("-- M:{$market->id} L:{$location->id} --");
