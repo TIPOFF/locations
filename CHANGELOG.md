@@ -166,3 +166,9 @@ All notable changes to `locations` will be documented in this file.
 - market & location pages pmarked as location_based
 - display recent gmb hours on location 
 - update nova search
+
+## 2.10.0 - 2021-04-14
+
+- market layouts
+- location layouts
+- routing for location-based pages
