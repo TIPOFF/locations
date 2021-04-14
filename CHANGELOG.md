@@ -160,3 +160,9 @@ All notable changes to `locations` will be documented in this file.
 ## 2.9.9 - 2021-04-12
 
 - bump dependencies
+
+## 2.9.10 - 2021-04-12
+
+- market & location pages pmarked as location_based
+- display recent gmb hours on location 
+- update nova search
