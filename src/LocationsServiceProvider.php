@@ -84,6 +84,27 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 });
         });
 
+        Route::macro('postLocation', function (string $routeName, string $uri, $action = null) {
+            Route::middleware(config('tipoff.web.middleware_group'))
+                ->group(function () use ($uri, $action, $routeName) {
+
+                    // NOTE - all 3 variations are always being registered to allow
+                    // changes in location / market counts after routes have been cached!
+
+                    Route::middleware(ResolveLocation::class)
+                        ->post('company/' . $uri, $action)
+                        ->name($routeName);
+
+                    Route::middleware(ResolveLocation::class)
+                        ->post('{market}/{location}/' . $uri, $action)
+                        ->name('market.location.' . $routeName);
+
+                    Route::middleware(ResolveLocation::class)
+                        ->post('{market}/' . $uri, $action)
+                        ->name('market.' . $routeName);
+                });
+        });
+
         View::composer('locations::location_select', LocationSelectComposer::class);
     }
 }

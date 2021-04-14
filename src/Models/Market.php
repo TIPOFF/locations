@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Models;
 
+use DrewRoberts\Blog\Models\Layout;
 use DrewRoberts\Blog\Models\Page;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
@@ -41,8 +42,13 @@ class Market extends BaseModel
             if ($market->page_id) {
                 $market->page->update($market->pageFields());
             } else {
+                /** @psalm-suppress UndefinedMagicPropertyFetch */
                 $market->page()->associate(
-                    Page::query()->create($market->pageFields())
+                    Page::query()->create(
+                        array_merge($market->pageFields(), [
+                            'layout_id' => Layout::query()->where('view', 'locations::page.market.base')->firstOrFail()->id,
+                        ])
+                    )
                 );
             }
         });
@@ -72,7 +78,7 @@ class Market extends BaseModel
             'parent_id' => null,
             'slug' => $this->slug,
             'title' => $this->title,
-            'location_based' => true,
+            'is_location' => true,
         ];
     }
 

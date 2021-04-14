@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Database\Factories;
 
+use DrewRoberts\Blog\Models\Layout;
 use DrewRoberts\Blog\Models\Page;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,7 +22,9 @@ class MarketFactory extends Factory
             'slug'                => Str::slug($city),
             'name'                => $city,
             'title'               => $city,
-            'page_id'             => Page::factory()->create(),
+            'page_id'             => Page::factory()->create([
+                'layout_id' =>  Layout::query()->where('view', 'locations::page.market.base')->firstOrFail()->id,
+            ]),
             'state_id'            => randomOrCreate(app('state')),
             'entered_at'          => $this->faker->date(),
             'timezone_id'         => randomOrCreate(app('timezone')),

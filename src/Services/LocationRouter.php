@@ -9,7 +9,7 @@ use Tipoff\Locations\Models\Market;
 
 class LocationRouter
 {
-    public static function build(string $routeName, ?Location $location = null): string
+    public static function build(string $routeName, ?Location $location = null, ?bool $absolute = true): string
     {
         /** @var Location $location */
         $location = $location ?: app(LocationResolver::TIPOFF_LOCATION);
@@ -18,15 +18,15 @@ class LocationRouter
             return route('market.location.'.$routeName, [
                 'market' => $market,
                 'location' => $location,
-            ]);
+            ], $absolute);
         }
 
         if (Market::query()->count() !== 1) {
             return route('market.'.$routeName, [
                 'market' => $market,
-            ]);
+            ], $absolute);
         }
 
-        return route($routeName);
+        return route($routeName, [], $absolute);
     }
 }

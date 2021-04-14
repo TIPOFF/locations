@@ -19,7 +19,7 @@ class MarketResolverTest extends TestCase
     {
         $market = Market::factory()->create();
 
-        $result = (new MarketResolver())->resolve();
+        $result = (new MarketResolver())();
         $this->assertEquals($market->id, $result->id);
     }
 
@@ -28,7 +28,7 @@ class MarketResolverTest extends TestCase
     {
         $this->expectException(UnresolvedMarket::class);
 
-        (new MarketResolver)->resolve();
+        (new MarketResolver)();
     }
 
     /** @test */
@@ -38,6 +38,6 @@ class MarketResolverTest extends TestCase
 
         $this->expectException(UnresolvedMarket::class);
 
-        (new MarketResolver)->resolve();
+        (new MarketResolver)();
     }
 }

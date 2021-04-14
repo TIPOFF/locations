@@ -16,7 +16,7 @@ class MarketResolver
         return app()->has(self::TIPOFF_MARKET) ? app(self::TIPOFF_MARKET) : null;
     }
 
-    public function resolve($market = null): Market
+    public function __invoke($market = null): Market
     {
         $market = $market ?? static::market();
         if (! $market instanceof Market) {
