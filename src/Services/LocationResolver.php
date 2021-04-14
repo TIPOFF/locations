@@ -17,11 +17,11 @@ class LocationResolver
         return app()->has(self::TIPOFF_LOCATION) ? app(self::TIPOFF_LOCATION) : null;
     }
 
-    public function resolve(?Market $market = null, $location = null): Location
+    public function __invoke(?Market $market = null, $location = null): Location
     {
         $location = $location ?? static::location();
         if (! $location instanceof Location) {
-            $market = $market ?: app(MarketResolver::class)->resolve();
+            $market = $market ?: app(MarketResolver::class)();
             if ($market->locations()->count() !== 1) {
                 throw new UnresolvedLocation($market);
             }

@@ -23,7 +23,7 @@ class LocationResolverTest extends TestCase
             'market_id' => $market,
         ]);
 
-        $result = (new LocationResolver)->resolve($market);
+        $result = (new LocationResolver)($market);
         $this->assertEquals($location->id, $result->id);
     }
 
@@ -34,7 +34,7 @@ class LocationResolverTest extends TestCase
 
         $this->expectException(UnresolvedLocation::class);
 
-        (new LocationResolver)->resolve($market);
+        (new LocationResolver)($market);
     }
 
     /** @test */
@@ -47,6 +47,6 @@ class LocationResolverTest extends TestCase
 
         $this->expectException(UnresolvedLocation::class);
 
-        (new LocationResolver)->resolve($market);
+        (new LocationResolver)($market);
     }
 }

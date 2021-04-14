@@ -6,6 +6,7 @@ namespace Tipoff\Locations\Models;
 
 use Assert\Assert;
 use Carbon\Carbon;
+use DrewRoberts\Blog\Models\Layout;
 use DrewRoberts\Blog\Models\Page;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Builder;
@@ -50,7 +51,10 @@ class Location extends BaseModel
                 $location->page->update($location->pageFields());
             } else {
                 $location->page()->associate(
-                    Page::query()->create($location->pageFields())
+                    Page::query()->create(array_merge($location->pageFields(), [
+                            'layout_id' => Layout::query()->where('view', 'locations::page.location.base')->firstOrFail()->id,
+                        ])
+                    )
                 );
             }
         });
@@ -86,7 +90,7 @@ class Location extends BaseModel
             'parent_id' => $this->market->page->id,
             'slug' => $this->slug,
             'title' => $this->title_part ?? $this->name,
-            'location_based' => true,
+            'is_location' => true,
         ];
     }
 

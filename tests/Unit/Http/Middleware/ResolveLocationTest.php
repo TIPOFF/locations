@@ -30,12 +30,10 @@ class ResolveLocationTest extends TestCase
             ->assertSee("http://localhost/company/test");
 
         $this->get("{$market->slug}/test")
-            ->assertOk()
-            ->assertSee("http://localhost/company/test");
+            ->assertRedirect('company/test');
 
         $this->get("{$market->slug}/{$location->slug}/test")
-            ->assertOk()
-            ->assertSee("http://localhost/company/test");
+            ->assertRedirect('company/test');
     }
 
     /** @test */
@@ -64,8 +62,7 @@ class ResolveLocationTest extends TestCase
             ->assertSee("http://localhost/{$market->slug}/test");
 
         $this->get("{$market->slug}/{$location->slug}/test")
-            ->assertOk()
-            ->assertSee("http://localhost/{$market->slug}/test");
+            ->assertRedirect("{$market->slug}/test");
     }
 
     /** @test */
