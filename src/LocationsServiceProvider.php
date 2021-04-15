@@ -56,6 +56,9 @@ class LocationsServiceProvider extends TipoffServiceProvider
         Route::model('market', Market::class);
         Route::model('location', Location::class);
 
+        // Make sure we dont accidentally steal any nova API routes
+        Route::pattern('market', '^(?!(nova-api|nova-vendor))[^\/]+$');
+
         /**
          * Route macro for registering a location based route.  Note the `$routeName`, not the `$uri`,
          * is the first parameter.
