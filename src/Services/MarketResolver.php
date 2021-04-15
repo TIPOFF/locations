@@ -13,7 +13,18 @@ class MarketResolver
 
     public static function market(): ?Market
     {
-        return app()->has(self::TIPOFF_MARKET) ? app(self::TIPOFF_MARKET) : null;
+        if (app()->has(self::TIPOFF_MARKET)) {
+            return app(self::TIPOFF_MARKET);
+        }
+
+        if ($marketId = session(self::TIPOFF_MARKET)) {
+            /** @var Market $market */
+            $market = Market::query()->findOrFail($marketId);
+            app()->instance(self::TIPOFF_MARKET, $market);
+            return $market;
+        }
+
+        return null;
     }
 
     public function __invoke($market = null): Market
@@ -28,6 +39,8 @@ class MarketResolver
         }
 
         app()->instance(self::TIPOFF_MARKET, $market);
+        /** @psalm-suppress UndefinedMagicPropertyFetch */
+        session([self::TIPOFF_MARKET => $market->id]);
 
         return $market;
     }
