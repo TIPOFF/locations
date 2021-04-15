@@ -172,3 +172,7 @@ All notable changes to `locations` will be documented in this file.
 - market layouts
 - location layouts
 - routing for location-based pages
+
+## 2.10.1 - 2021-04-15
+
+- update layout views
