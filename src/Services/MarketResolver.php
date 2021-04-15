@@ -21,6 +21,7 @@ class MarketResolver
             /** @var Market $market */
             $market = Market::query()->findOrFail($marketId);
             app()->instance(self::TIPOFF_MARKET, $market);
+
             return $market;
         }
 
