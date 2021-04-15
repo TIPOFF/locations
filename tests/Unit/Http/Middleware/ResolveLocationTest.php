@@ -55,7 +55,7 @@ class ResolveLocationTest extends TestCase
 
         $this->get("company/test")
             ->assertOk()
-            ->assertSee("Select Location");
+            ->assertSee("-- SELECT:0 --");
 
         $this->get("{$market->slug}/test")
             ->assertOk()
@@ -84,11 +84,11 @@ class ResolveLocationTest extends TestCase
 
         $this->get("company/test")
             ->assertOk()
-            ->assertSee("Select Location");
+            ->assertSee("-- SELECT:0 --");
 
         $this->get("{$market->slug}/test")
             ->assertOk()
-            ->assertSee("Select Location for {$market->name}");
+            ->assertSee("-- SELECT:{$market->id} --");
 
         $this->get("{$market->slug}/{$location->slug}/test")
             ->assertOk()

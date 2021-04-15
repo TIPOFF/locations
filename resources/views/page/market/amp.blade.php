@@ -1,9 +1,7 @@
 @extends('support::amp')
 
 @section('content')
-    {{-- DO NOT REMOVE - page identity tag --}}
-    <!-- M:{{ $page->market->id }} -->
-
+    @include('locations::page.market.partials._identity_tag')
 
     {{-- Place holder content - safe to replace --}}
     <ul>

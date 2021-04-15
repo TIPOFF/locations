@@ -1,8 +1,7 @@
 @extends('support::base')
 
 @section('content')
-    {{-- DO NOT REMOVE - page identity tag --}}
-    <!-- M:{{ $page->market->id }} L:{{ $child_page->location->id }} -->
+    @include('locations::page.location.partials._identity_tag')
 
     {{-- Place holder content - safe to replace --}}
     <ul>

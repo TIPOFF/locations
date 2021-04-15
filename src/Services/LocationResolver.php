@@ -14,7 +14,19 @@ class LocationResolver
 
     public static function location(): ?Location
     {
-        return app()->has(self::TIPOFF_LOCATION) ? app(self::TIPOFF_LOCATION) : null;
+        if (app()->has(self::TIPOFF_LOCATION)) {
+            return app(self::TIPOFF_LOCATION);
+        }
+
+        if ($locationId = session(self::TIPOFF_LOCATION)) {
+            /** @var Location $location */
+            $location = Location::query()->findOrFail($locationId);
+            app()->instance(self::TIPOFF_LOCATION, $location);
+
+            return $location;
+        }
+
+        return null;
     }
 
     public function __invoke(?Market $market = null, $location = null): Location
@@ -30,6 +42,8 @@ class LocationResolver
         }
 
         app()->instance(self::TIPOFF_LOCATION, $location);
+        /** @psalm-suppress UndefinedMagicPropertyFetch */
+        session([self::TIPOFF_LOCATION => $location->id]);
 
         return $location;
     }
