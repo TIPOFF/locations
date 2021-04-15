@@ -22,6 +22,7 @@ class LocationResolver
             /** @var Location $location */
             $location = Location::query()->findOrFail($locationId);
             app()->instance(self::TIPOFF_LOCATION, $location);
+
             return $location;
         }
 
