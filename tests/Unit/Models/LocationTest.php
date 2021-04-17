@@ -112,4 +112,26 @@ class LocationTest extends TestCase
 
         $this->app->instance(OrderInterface::class, $service);
     }
+
+    /** @test */
+    public function cannot_repeat_name()
+    {
+        $location1 = Location::factory()->create();
+        $this->expectException(\Exception::class);
+        $this->expectErrorMessageMatches('/Integrity constraint violation: 19 UNIQUE constraint failed/');
+        $location2 = Location::factory()->create([
+            'name' => $location1->name,
+        ]);
+    }
+
+    /** @test */
+    public function cannot_repeat_slug()
+    {
+        $location1 = Location::factory()->create();
+        $this->expectException(\Exception::class);
+        $this->expectErrorMessage('Slug is not allowed.');
+        $location2 = Location::factory()->create([
+            'slug' => $location1->slug,
+        ]);
+    }
 }
