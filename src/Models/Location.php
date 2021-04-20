@@ -13,14 +13,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Tipoff\Addresses\Models\Timezone;
+use Tipoff\Support\Contracts\Addresses\TimezoneInterface;
 use Tipoff\Support\Contracts\Checkout\OrderInterface;
 use Tipoff\Support\Contracts\Checkout\OrderItemInterface;
+use Tipoff\Support\Contracts\Locations\LocationInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
 
-class Location extends BaseModel
+class Location extends BaseModel implements LocationInterface
 {
     use HasPackageFactory;
     use HasMedia;
@@ -410,5 +412,10 @@ class Location extends BaseModel
     public function toUtcDateTime($dateTime)
     {
         return Carbon::parse($dateTime, $this->php_tz)->setTimeZone('UTC');
+    }
+
+    public function getTimezone(): TimezoneInterface
+    {
+        return $this->timezone;
     }
 }

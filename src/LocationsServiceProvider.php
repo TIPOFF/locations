@@ -18,6 +18,7 @@ use Tipoff\Locations\Policies\GmbHourPolicy;
 use Tipoff\Locations\Policies\LocationPolicy;
 use Tipoff\Locations\Policies\MarketPolicy;
 use Tipoff\Locations\ViewComposers\LocationSelectComposer;
+use Tipoff\Support\Contracts\Locations\LocationInterface;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 
@@ -37,6 +38,9 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 \Tipoff\Locations\Nova\GmbHour::class,
                 \Tipoff\Locations\Nova\Location::class,
                 \Tipoff\Locations\Nova\Market::class,
+            ])
+            ->hasModelInterfaces([
+                LocationInterface::class => Location::class,
             ])
             ->hasCommands([
                 SyncLocations::class,
