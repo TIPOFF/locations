@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use Sixlive\TextCopy\TextCopy;
 use Tipoff\Support\Nova\BaseResource;
 
 class Market extends BaseResource
@@ -34,6 +35,15 @@ class Market extends BaseResource
 
     public static $group = 'Locations';
 
+    public function actions(Request $request)
+    {
+        return [
+            (new Actions\PreviewMarket())
+                ->onlyOnTableRow()
+                ->withoutConfirmation(),
+        ];
+    }
+
     public function fieldsForIndex(NovaRequest $request)
     {
         return array_filter([
@@ -50,6 +60,9 @@ class Market extends BaseResource
             nova('state') ? BelongsTo::make('State', 'state', nova('state'))->required() : null,
             Text::make('Name')->required(),
             Slug::make('Slug')->from('Name'),
+            TextCopy::make('Link',  function () {
+                return config('app.url') . config('tipoff.web.uri_prefix') . $this->path;
+            })->hideWhenCreating()->hideWhenUpdating(),
             Text::make('Title')->nullable(),
 
             new Panel('Info Fields', $this->infoFields()),
