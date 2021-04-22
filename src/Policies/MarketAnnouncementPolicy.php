@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tipoff\Locations\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Tipoff\Locations\Models\Market;
 use Tipoff\Locations\Models\MarketAnnouncement;
 use Tipoff\Support\Contracts\Models\UserInterface;
 
