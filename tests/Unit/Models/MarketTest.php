@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;
 use Tipoff\Authorization\Models\User;
 use Tipoff\Locations\Models\Market;
+use Tipoff\Locations\Models\MarketAnnouncement;
 use Tipoff\Locations\Tests\TestCase;
 
 class MarketTest extends TestCase
@@ -80,6 +81,19 @@ class MarketTest extends TestCase
         $model2->refresh();
 
         $this->assertEquals('new_text', $model2->slug);
+    }
+
+    /** @test */
+    public function market_has_announcements()
+    {
+        $this->actingAs(User::factory()->create());
+        $model = Market::factory()->create([
+            'slug' => 'random_text',
+        ]);
+        $announcement = MarketAnnouncement::factory()->create([
+            'market_id' => $model->id
+        ]);
+        $this->assertTrue($model->announcements->contains($announcement));
     }
 
     /** @test */
