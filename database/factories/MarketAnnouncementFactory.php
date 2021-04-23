@@ -14,10 +14,9 @@ class MarketAnnouncementFactory extends Factory
     public function definition()
     {
         return [
-            'market_id' => randomOrCreate(app('market')),
-            'title' => $this->faker->title,
-            'description' => 'test',
-
+            'market_id'             => randomOrCreate(app('market')),
+            'title'                 => $this->faker->title,
+            'description'           => $this->faker->sentence,
             'creator_id'            => randomOrCreate(app('user')),
             'updater_id'            => randomOrCreate(app('user'))
         ];
