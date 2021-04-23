@@ -91,7 +91,7 @@ class MarketTest extends TestCase
             'slug' => 'random_text',
         ]);
         $announcement = MarketAnnouncement::factory()->create([
-            'market_id' => $model->id
+            'market_id' => $model->id,
         ]);
         $this->assertTrue($model->announcements->contains($announcement));
     }
