@@ -82,6 +82,11 @@ class Market extends BaseModel
         ];
     }
 
+    public function announcements()
+    {
+        return $this->hasMany(MarketAnnouncement::class);
+    }
+
     public function page()
     {
         return $this->belongsTo(Page::class);

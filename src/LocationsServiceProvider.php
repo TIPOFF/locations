@@ -13,9 +13,11 @@ use Tipoff\Locations\Models\GmbDetail;
 use Tipoff\Locations\Models\GmbHour;
 use Tipoff\Locations\Models\Location;
 use Tipoff\Locations\Models\Market;
+use Tipoff\Locations\Models\MarketAnnouncement;
 use Tipoff\Locations\Policies\GmbDetailPolicy;
 use Tipoff\Locations\Policies\GmbHourPolicy;
 use Tipoff\Locations\Policies\LocationPolicy;
+use Tipoff\Locations\Policies\MarketAnnouncementPolicy;
 use Tipoff\Locations\Policies\MarketPolicy;
 use Tipoff\Locations\ViewComposers\LocationSelectComposer;
 use Tipoff\Support\Contracts\Locations\LocationInterface;
@@ -32,6 +34,7 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 GmbHour::class => GmbHourPolicy::class,
                 Location::class => LocationPolicy::class,
                 Market::class => MarketPolicy::class,
+                MarketAnnouncement::class => MarketAnnouncementPolicy::class,
             ])
             ->hasNovaResources([
                 \Tipoff\Locations\Nova\GmbDetail::class,

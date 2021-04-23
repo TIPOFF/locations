@@ -67,6 +67,8 @@ class Market extends BaseResource
 
             new Panel('Info Fields', $this->infoFields()),
 
+            nova('market_announcement') ? HasMany::make('Market Announcements', 'announcements', nova('market_announcement')) : null,
+
             nova('location') ? HasMany::make('Locations', 'locations', nova('location')) : null,
 
             nova('competitor') ? HasMany::make('Competitors', 'competitors', nova('competitor')) : null,
