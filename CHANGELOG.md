@@ -180,3 +180,7 @@ All notable changes to `locations` will be documented in this file.
 ## 2.11.0 - 2021-04-20
 
 - locations interface
+
+## 2.12.0 - 2021-04-23
+
+- market announcements
