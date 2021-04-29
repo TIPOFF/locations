@@ -1,7 +1,6 @@
 @extends('support::base')
 
 @section('content')
-    @include('locations::page.location.partials._identity_tag')
 
     {{-- Place holder content - safe to replace --}}
     <ul>
