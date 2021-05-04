@@ -58,12 +58,12 @@ class Market extends BaseResource
     {
         return array_filter([
             nova('state') ? BelongsTo::make('State', 'state', nova('state'))->required() : null,
-            Text::make('Name')->required(),
-            Slug::make('Slug')->from('Name'),
+            Text::make('Name')->rules('required','unique:markets,name'),
+            Slug::make('Slug')->from('Name')->rules('required','unique:markets,slug'),
             TextCopy::make('Link',  function () {
                 return config('app.url') . config('tipoff.web.uri_prefix') . $this->path;
             })->hideWhenCreating()->hideWhenUpdating(),
-            Text::make('Title')->nullable(),
+            Text::make('Title')->nullable()->rules('unique:markets,title'),
 
             new Panel('Info Fields', $this->infoFields()),
 
