@@ -30,7 +30,7 @@ class Market extends BaseResource
     }
 
     public static $search = [
-        'id',
+        'id', 'name', 'title'
     ];
 
     public static $group = 'Locations';
@@ -50,6 +50,7 @@ class Market extends BaseResource
             ID::make()->sortable(),
             nova('state') ? BelongsTo::make('State', 'state', nova('state'))->sortable() : null,
             Text::make('Name')->sortable(),
+            Text::make('Title')->sortable(),
             // @todo Add location count
         ]);
     }
