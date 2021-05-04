@@ -53,14 +53,16 @@ class Location extends BaseResource
     {
         return array_filter([
             nova('market') ? BelongsTo::make('Market', 'market', nova('market'))->required() : null,
-            Text::make('Name')->required(),
-            Slug::make('Slug')->from('Name'),
+            Text::make('Name')->rules('required')->creationRules('unique:locations,name')->updateRules('unique:locations,name,{{resourceId}}'),
+            Slug::make('Slug')->from('Name')->rules('required')->creationRules('unique:locations,slug')->updateRules('unique:locations,slug,{{resourceId}}'),
             TextCopy::make('Link',  function () {
                 return config('app.url') . config('tipoff.web.uri_prefix') . $this->path;
             })->hideWhenCreating()->hideWhenUpdating(),
             Text::make('Abbreviation')
                 ->withMeta(['extraAttributes' => ['maxlength' => 4]])
-                ->required(),
+                ->rules('required')
+                ->creationRules('unique:locations,abbreviation')
+                ->updateRules('unique:locations,abbreviation,{{resourceId}}'),
 
             new Panel('Info Fields', $this->infoFields()),
 
@@ -97,8 +99,8 @@ class Location extends BaseResource
             Text::make('Title Part')->nullable(),
             nova('user') ? BelongsTo::make('Manager', 'manager', nova('user'))->nullable() : null,
             nova('email_address') ? BelongsTo::make('Email Address', 'email', nova('email_address'))->nullable() : null,
-            Text::make('Maps URL', 'maps_url')->nullable(),
-            Text::make('Review URL', 'review_url')->nullable(),
+            Text::make('Maps URL', 'maps_url')->nullable()->creationRules('unique:locations,maps_url', 'nullable')->updateRules('unique:locations,maps_url,{{resourceId}}', 'nullable'),
+            Text::make('Review URL', 'review_url')->nullable()->creationRules('unique:locations,review_url', 'nullable')->updateRules('unique:locations,review_url,{{resourceId}}', 'nullable'),
             Number::make('Aggregate Reviews')->min(0)->max(99999999)->step(1)->nullable(),
             Number::make('Aggregate Rating')->min(1)->max(5)->step(0.1)->nullable(),
         ];
@@ -108,7 +110,7 @@ class Location extends BaseResource
     {
         return [
             nova('gmb_account') ? BelongsTo::make('GMB Account', 'gmb_account', nova('gmb_account'))->nullable() : null,
-            Text::make('Gmb Location')->nullable(),
+            Text::make('Gmb Location')->nullable()->creationRules('unique:locations,gmb_location', 'nullable')->updateRules('unique:locations,gmb_location,{{resourceId}}', 'nullable'),
         ];
     }
 
