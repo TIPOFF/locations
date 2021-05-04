@@ -30,10 +30,10 @@ class LocationsServiceProvider extends TipoffServiceProvider
     {
         $package
             ->hasPolicies([
-                GmbDetail::class          => GmbDetailPolicy::class,
-                GmbHour::class            => GmbHourPolicy::class,
-                Location::class           => LocationPolicy::class,
-                Market::class             => MarketPolicy::class,
+                GmbDetail::class => GmbDetailPolicy::class,
+                GmbHour::class => GmbHourPolicy::class,
+                Location::class => LocationPolicy::class,
+                Market::class => MarketPolicy::class,
                 MarketAnnouncement::class => MarketAnnouncementPolicy::class,
             ])
             ->hasNovaResources([
