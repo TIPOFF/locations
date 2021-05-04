@@ -30,10 +30,10 @@ class LocationsServiceProvider extends TipoffServiceProvider
     {
         $package
             ->hasPolicies([
-                GmbDetail::class => GmbDetailPolicy::class,
-                GmbHour::class => GmbHourPolicy::class,
-                Location::class => LocationPolicy::class,
-                Market::class => MarketPolicy::class,
+                GmbDetail::class          => GmbDetailPolicy::class,
+                GmbHour::class            => GmbHourPolicy::class,
+                Location::class           => LocationPolicy::class,
+                Market::class             => MarketPolicy::class,
                 MarketAnnouncement::class => MarketAnnouncementPolicy::class,
             ])
             ->hasNovaResources([
@@ -51,6 +51,8 @@ class LocationsServiceProvider extends TipoffServiceProvider
             ->name('locations')
             ->hasViews()
             ->hasConfigFile();
+
+        $this->configRoutes();
     }
 
     public function bootingPackage()
@@ -60,6 +62,11 @@ class LocationsServiceProvider extends TipoffServiceProvider
         // Must happen AFTER SubstituteBindings middleware has been applied
         app(Kernel::class)->appendToMiddlewarePriority(ResolveLocation::class);
 
+        View::composer('locations::location_select', LocationSelectComposer::class);
+    }
+
+    protected function configRoutes()
+    {
         Route::model('market', Market::class);
         Route::model('location', Location::class);
 
@@ -114,7 +121,5 @@ class LocationsServiceProvider extends TipoffServiceProvider
                         ->name('market.' . $routeName);
                 });
         });
-
-        View::composer('locations::location_select', LocationSelectComposer::class);
     }
 }
