@@ -18,6 +18,9 @@ class AddLocationPermissions extends BasePermissionsMigration
             'update markets' => ['Owner', 'Executive'],
             'view gmb details' => ['Owner', 'Executive', 'Staff'],
             'view gmb hours' => ['Owner', 'Executive', 'Staff'],
+            'view market announcements' => ['Owner', 'Executive', 'Staff'],
+            'create market announcements' => ['Owner', 'Executive'],
+            'update market announcements' => ['Owner', 'Executive'],
         ];
 
         $this->createPermissions($permissions);
