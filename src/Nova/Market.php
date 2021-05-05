@@ -30,7 +30,7 @@ class Market extends BaseResource
     }
 
     public static $search = [
-        'id', 'name', 'title'
+        'id', 'name', 'title',
     ];
 
     public static $group = 'Locations';

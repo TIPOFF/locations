@@ -22,7 +22,7 @@ class MarketAnnouncement extends BaseResource
     public static $title = 'title';
 
     public static $search = [
-        'id', 'title'
+        'id', 'title',
     ];
 
     public static $group = 'Locations';
