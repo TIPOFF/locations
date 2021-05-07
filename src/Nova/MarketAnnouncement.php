@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tipoff\Locations\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -21,7 +22,7 @@ class MarketAnnouncement extends BaseResource
     public static $title = 'title';
 
     public static $search = [
-        'id',
+        'id', 'title',
     ];
 
     public static $group = 'Locations';
@@ -30,16 +31,19 @@ class MarketAnnouncement extends BaseResource
     {
         return array_filter([
             ID::make()->sortable(),
-            Text::make('Title', 'title'),
+            Text::make('Title', 'title')->sortable(),
+            nova('market') ? BelongsTo::make('Market', 'market', nova('market'))->sortable() : null,
         ]);
     }
 
     public function fields(Request $request)
     {
         return array_filter([
-            Text::make('Title', 'title'),
-            Textarea::make('Description', 'description'),
+            Text::make('Title', 'title')->rules('required'),
+            Textarea::make('Description', 'description')->rules('required'),
+            nova('market') ? BelongsTo::make('Market', 'market', nova('market'))->sortable()->rules('required') : null,
             Boolean::make('Active', 'active'),
+
         ]);
     }
 

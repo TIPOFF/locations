@@ -41,6 +41,7 @@ class LocationsServiceProvider extends TipoffServiceProvider
                 \Tipoff\Locations\Nova\GmbHour::class,
                 \Tipoff\Locations\Nova\Location::class,
                 \Tipoff\Locations\Nova\Market::class,
+                \Tipoff\Locations\Nova\MarketAnnouncement::class,
             ])
             ->hasModelInterfaces([
                 LocationInterface::class => Location::class,
