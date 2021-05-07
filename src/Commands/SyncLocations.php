@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tipoff\Locations\Commands;
 
-use Google_Service_MyBusiness;
 use Illuminate\Console\Command;
 use Tipoff\GoogleApi\Facades\GoogleOauth;
 use Tipoff\GoogleApi\GoogleServices;
