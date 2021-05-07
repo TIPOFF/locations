@@ -6,6 +6,8 @@ namespace Tipoff\Locations\Commands;
 
 use Google_Service_MyBusiness;
 use Illuminate\Console\Command;
+use Tipoff\GoogleApi\Facades\GoogleOauth;
+use Tipoff\GoogleApi\GoogleServices;
 use Tipoff\Locations\Models\Location;
 
 class SyncLocations extends Command
@@ -42,7 +44,13 @@ class SyncLocations extends Command
         // @todo Needs Refactoring
         $accounts = ['accounts/108772742689976468845/locations', 'accounts/116666006358174413896/locations'];
 
-        $myBusiness = app()->make(Google_Service_MyBusiness::class);
+        // Get access token from Google Oauth package.
+        $accessToken = GoogleOauth::accessToken('my-business');
+
+        /** @var GoogleServices $googleServices */
+        $googleServices = app(GoogleServices::class)->setAccessToken($accessToken);
+
+        $myBusiness = $googleServices->myBusiness();
 
         foreach ($accounts as $account) {
             $gmblocations = $myBusiness->accounts_locations->get($account)->toSimpleObject()->locations;

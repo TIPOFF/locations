@@ -99,7 +99,7 @@ class Location extends BaseResource
             nova('email_address') ? BelongsTo::make('Email Address', 'email', nova('email_address'))->nullable() : null,
             Text::make('Maps URL', 'maps_url')->nullable(),
             Text::make('Review URL', 'review_url')->nullable(),
-            Number::make('Aggregate Reviews')->rules('integer', 'digits_between:1,6')->min(0)->max(999999)->step(1)->nullable(),
+            Number::make('Aggregate Reviews')->rules(['integer', 'digits_between:1,6'])->min(0)->max(999999)->step(1)->nullable(),
             Number::make('Aggregate Rating')->min(1)->max(5)->step(0.1)->nullable(),
         ];
     }
