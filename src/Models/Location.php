@@ -203,6 +203,15 @@ class Location extends BaseModel implements LocationInterface
         return $this->hasManyThrough(app('slot'), app('room'));
     }
 
+    public function getBookingsPathAttribute()
+    {
+        if ($this->market->locations_count === 1) {
+            return "/{$this->market->slug}/book-online";
+        }
+
+        return "/{$this->market->slug}/book-online/{$this->slug}";
+    }
+
     public function getSelectorTitleAttribute()
     {
         if ($this->market->locations_count > 1) {
@@ -220,11 +229,11 @@ class Location extends BaseModel implements LocationInterface
     public function getStreetAddressAttribute()
     {
         $add2 = '';
-        if ($this->address()->address_line_2) {
-            $add2 = ' ' . $this->address()->address_line_2;
+        if ($this->address->address_line_2) {
+            $add2 = ' ' . $this->address->address_line_2;
         }
 
-        return "{$this->address()->address_line_1}{$add2}";
+        return "{$this->address->address_line_1}{$add2}";
     }
 
     public function getFullAddressAttribute()
